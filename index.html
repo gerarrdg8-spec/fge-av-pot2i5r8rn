@@ -3,62 +3,67 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Montserrat:wght@400;600;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Sans+Condensed:wght@600;700&display=swap">
 
 <style>
 /* Colors de la Fundació GironaEst, presos del logotip de gironaest.cat:
    verd fosc #2AA537 · verd de marca #75B72B · verd clar #93C02C · gris #838280
    Sèries Q1/Q2/Q3 validades per a daltonisme en clar i en fosc. */
 :root{
-  --ground:#F6F8F4; --surface:#FFFFFF; --ink:#16241A; --ink-2:#48544B; --muted:#7A857C;
-  --line:#DEE4DC; --line-2:#BAC4B8; --fila:#F1F4EE; --graella:#E5EBE2;
-  --nit:#17301C; --verd-pregon:#1E7A2F; --verd:#75B72B; --verd-viu:#2AA537;
-  --verd-clar:#93C02C; --verd-text:#3C7A18; --sobre-verd:#17301C;
-  --q1:#4E8A26; --q2:#0F6CA8; --q3:#8C3A3A;
-  --avis:#8A5A00; --avis-fons:#FBF3E2;
-  --st-no:#B03A2E; --st-proces:#9A6B00; --st-si:#2E7D32;
-  --ombra:0 1px 2px rgba(22,36,26,.06), 0 8px 28px rgba(22,36,26,.08);
+  --titol:"IBM Plex Sans Condensed","IBM Plex Sans",Arial,sans-serif;
+  --cos:"IBM Plex Sans","Helvetica Neue",Arial,sans-serif;
+  --xifra:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --ground:#EEF1F5; --surface:#FFFFFF; --ink:#101B2E; --ink-2:#3B4759; --muted:#6B7789;
+  --line:#D4DBE4; --line-2:#A7B2C1; --fila:#F5F7FA; --graella:#E2E8EF;
+  --nit:#0B1B2B; --primari:#12496B; --accent-clar:#B45F2B; --accent-viu:#D0742F;
+  --accent:#B45F2B; --primari-text:#0E5578; --sobre-accent:#FFFFFF;
+  --q1:#12496B; --q2:#1E7FA8; --q3:#B45F2B;
+  --avis:#8A5A12; --avis-fons:#FAF3E7;
+  --st-no:#A3302B; --st-proces:#8A5A12; --st-si:#1F6B4F;
+  --ombra:0 1px 0 rgba(16,27,46,.04), 0 10px 26px rgba(16,27,46,.07);
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
-    --ground:#0C130E; --surface:#151E17; --ink:#E8EFE9; --ink-2:#B2C0B5; --muted:#87968A;
-    --line:#26332A; --line-2:#394838; --fila:#1A251C; --graella:#222E25;
-    --nit:#0A130C; --verd-pregon:#1B6A2A; --verd-text:#9FCB43;
-    --q1:#6BA836; --q2:#3E8FCE; --q3:#C56666;
-    --avis:#E7B24C; --avis-fons:#241D0E;
-    --st-no:#E27A6D; --st-proces:#D9A441; --st-si:#6FBF63;
-    --ombra:0 1px 2px rgba(0,0,0,.4), 0 10px 34px rgba(0,0,0,.5);
+    --ground:#0A1220; --surface:#111C2C; --ink:#E6ECF4; --ink-2:#AEBBCC; --muted:#7F8DA2;
+    --line:#23324A; --line-2:#38495F; --fila:#16233A; --graella:#1E2C43;
+    --nit:#060E19; --primari:#1B6E96; --accent-clar:#D07F45; --accent-viu:#E5934F;
+    --accent:#D07F45; --primari-text:#5FB6D6; --sobre-accent:#0A1220;
+    --q1:#4FA3C7; --q2:#7FC4DE; --q3:#D07F45;
+    --avis:#D9A441; --avis-fons:#1E1708;
+    --st-no:#E0736B; --st-proces:#D9A441; --st-si:#4FB08A;
+    --ombra:0 1px 0 rgba(0,0,0,.3), 0 12px 30px rgba(0,0,0,.5);
   }
 }
 :root[data-theme="dark"]{
-  --ground:#0C130E; --surface:#151E17; --ink:#E8EFE9; --ink-2:#B2C0B5; --muted:#87968A;
-  --line:#26332A; --line-2:#394838; --fila:#1A251C; --graella:#222E25;
-  --nit:#0A130C; --verd-pregon:#1B6A2A; --verd-text:#9FCB43;
-  --q1:#6BA836; --q2:#3E8FCE; --q3:#C56666;
-  --avis:#E7B24C; --avis-fons:#241D0E;
-  --st-no:#E27A6D; --st-proces:#D9A441; --st-si:#6FBF63;
-  --ombra:0 1px 2px rgba(0,0,0,.4), 0 10px 34px rgba(0,0,0,.5);
+  --ground:#0A1220; --surface:#111C2C; --ink:#E6ECF4; --ink-2:#AEBBCC; --muted:#7F8DA2;
+  --line:#23324A; --line-2:#38495F; --fila:#16233A; --graella:#1E2C43;
+  --nit:#060E19; --primari:#1B6E96; --accent-clar:#D07F45; --accent-viu:#E5934F;
+  --accent:#D07F45; --primari-text:#5FB6D6; --sobre-accent:#0A1220;
+  --q1:#4FA3C7; --q2:#7FC4DE; --q3:#D07F45;
+  --avis:#D9A441; --avis-fons:#1E1708;
+  --st-no:#E0736B; --st-proces:#D9A441; --st-si:#4FB08A;
+  --ombra:0 1px 0 rgba(0,0,0,.3), 0 12px 30px rgba(0,0,0,.5);
 }
 
 *{box-sizing:border-box}
 body{margin:0;background:var(--ground);color:var(--ink);
-  font-family:"Archivo","Helvetica Neue",Arial,sans-serif;font-size:15px;line-height:1.55;
+  font-family:var(--cos);font-size:15px;line-height:1.55;
   -webkit-font-smoothing:antialiased}
-h1,h2,h3,h4{margin:0;font-family:"Montserrat","Archivo",sans-serif;text-wrap:balance}
+h1,h2,h3,h4{margin:0;font-family:var(--titol);text-wrap:balance}
 p{margin:0}
 a{color:inherit}
-:focus-visible{outline:2px solid var(--verd-clar);outline-offset:2px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 
 .barra{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:14px 22px;
-  background:var(--nit);color:#fff;border-bottom:3px solid var(--verd)}
-.barra .marca{font-family:"Montserrat",sans-serif;font-weight:800;letter-spacing:.14em;font-size:13px;text-transform:uppercase}
+  background:var(--nit);color:#fff;border-bottom:3px solid var(--accent-clar)}
+.barra .marca{font-family:var(--titol);font-weight:800;letter-spacing:.14em;font-size:13px;text-transform:uppercase}
 .barra .sep{width:1px;height:18px;background:rgba(255,255,255,.24)}
 .barra .temp{font-size:12.5px;letter-spacing:.1em;color:rgba(255,255,255,.72);text-transform:uppercase}
 .barra nav{margin-left:auto;display:flex;gap:8px}
 .barra nav a{text-decoration:none;font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;font-weight:600;
   padding:7px 13px;border-radius:2px;color:rgba(255,255,255,.8);border:1px solid rgba(255,255,255,.2)}
-.barra nav a[aria-current="page"]{background:var(--verd-clar);color:var(--nit);border-color:var(--verd-clar)}
-.barra nav a:hover{border-color:var(--verd-clar);color:#fff}
+.barra nav a[aria-current="page"]{background:var(--accent);color:var(--nit);border-color:var(--accent)}
+.barra nav a:hover{border-color:var(--accent);color:#fff}
 .barra nav a[aria-current="page"]:hover{color:var(--nit)}
 
 .wrap{max-width:1340px;margin:0 auto;padding:26px 22px 80px}
@@ -66,9 +71,9 @@ a{color:inherit}
 .boto{display:inline-flex;align-items:center;gap:8px;cursor:pointer;font:inherit;font-size:12.5px;
   font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:9px 16px;border-radius:2px;
   border:1px solid var(--line-2);background:var(--surface);color:var(--ink);text-decoration:none}
-.boto:hover{border-color:var(--verd-viu);color:var(--verd-text)}
-.boto.principal{background:var(--verd-pregon);border-color:var(--verd-pregon);color:#fff}
-.boto.principal:hover{background:var(--verd-viu);border-color:var(--verd-viu);color:#fff}
+.boto:hover{border-color:var(--accent-viu);color:var(--primari-text)}
+.boto.principal{background:var(--primari);border-color:var(--primari);color:#fff}
+.boto.principal:hover{background:var(--accent-viu);border-color:var(--accent-viu);color:#fff}
 .eines{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:0 0 20px}
 .eines .nota{font-size:12.5px;color:var(--muted)}
 
@@ -80,14 +85,14 @@ a{color:inherit}
 .jugadors{display:flex;gap:6px;flex-wrap:wrap;margin:20px 0 8px}
 .jugadors button{font:inherit;font-size:12px;font-weight:600;letter-spacing:.04em;cursor:pointer;
   padding:7px 12px;border-radius:2px;border:1px solid var(--line);background:var(--surface);color:var(--ink-2)}
-.jugadors button:hover{border-color:var(--verd-viu);color:var(--ink)}
-.jugadors button[aria-pressed="true"]{background:var(--verd-pregon);border-color:var(--verd-pregon);color:#fff}
+.jugadors button:hover{border-color:var(--accent-viu);color:var(--ink)}
+.jugadors button[aria-pressed="true"]{background:var(--primari);border-color:var(--primari);color:#fff}
 .jugadors button .n{opacity:.65;margin-right:6px}
 
 .fitxa-jug{display:flex;gap:14px;flex-wrap:wrap;align-items:center;background:var(--surface);
-  border:1px solid var(--line);border-left:4px solid var(--verd-clar);border-radius:3px;
+  border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:3px;
   padding:14px 18px;margin-bottom:22px;box-shadow:var(--ombra)}
-.fitxa-jug input.nom{font:inherit;font-family:"Montserrat",sans-serif;font-weight:800;font-size:22px;
+.fitxa-jug input.nom{font:inherit;font-family:var(--titol);font-weight:800;font-size:22px;
   letter-spacing:-.02em;border:0;border-bottom:1px dashed var(--line-2);background:transparent;
   color:inherit;padding:2px 4px;min-width:240px;flex:1 1 240px}
 .fitxa-jug input.nom::placeholder{color:var(--muted);font-weight:600}
@@ -95,8 +100,8 @@ a{color:inherit}
 
 /* --- blocs --- */
 .bloc{margin:0 0 34px}
-.bloc > h2{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--verd-text);
-  font-weight:700;padding-bottom:8px;border-bottom:2px solid var(--verd-clar);display:inline-block;margin-bottom:14px}
+.bloc > h2{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--primari-text);
+  font-weight:700;padding-bottom:8px;border-bottom:2px solid var(--accent);display:inline-block;margin-bottom:14px}
 .bloc > h2 .cua{color:var(--muted);letter-spacing:.1em;margin-left:10px;font-weight:600}
 
 .marc{background:var(--surface);border:1px solid var(--line);border-radius:3px;
@@ -104,8 +109,8 @@ a{color:inherit}
 table.r{border-collapse:separate;border-spacing:0;width:100%;min-width:1080px;font-size:12.5px}
 table.r th,table.r td{border-right:1px solid var(--graella);border-bottom:1px solid var(--graella);
   padding:7px 10px;vertical-align:top;text-align:left}
-table.r thead th{position:sticky;top:0;z-index:3;background:var(--verd-pregon);color:#fff;
-  font-family:"Montserrat",sans-serif;font-weight:700;font-size:10px;letter-spacing:.12em;
+table.r thead th{position:sticky;top:0;z-index:3;background:var(--primari);color:#fff;
+  font-family:var(--titol);font-weight:700;font-size:10px;letter-spacing:.12em;
   text-transform:uppercase;vertical-align:middle;border-right-color:rgba(255,255,255,.18)}
 table.r thead th.niv{background:var(--nit)}
 table.r thead th small{display:block;font-weight:500;letter-spacing:.02em;text-transform:none;
@@ -113,7 +118,7 @@ table.r thead th small{display:block;font-weight:500;letter-spacing:.02em;text-t
 table.r td.qual{background:var(--fila);font-weight:600;width:170px;min-width:170px;color:var(--ink)}
 table.r td.qual span{display:block;font-weight:400;font-size:11px;color:var(--muted);margin-top:2px}
 table.r td.niv{width:19%;min-width:150px;color:var(--ink-2);font-size:11.5px;line-height:1.42}
-table.r td.q{width:58px;min-width:58px;padding:0;text-align:center;background:var(--verd-pregon)}
+table.r td.q{width:58px;min-width:58px;padding:0;text-align:center;background:var(--primari)}
 table.r td.o{width:150px;min-width:150px;padding:0}
 
 select.p{-webkit-appearance:none;appearance:none;font:inherit;width:100%;height:34px;border:0;
@@ -122,10 +127,10 @@ select.p{-webkit-appearance:none;appearance:none;font:inherit;width:100%;height:
 select.p:hover{background:color-mix(in srgb,#fff 12%,transparent)}
 select.p option{color:#16241A;background:#fff;font-weight:600}
 select.p.buida{color:rgba(255,255,255,.45)}
-select.p:focus{outline:2px solid var(--verd-clar);outline-offset:-2px}
+select.p:focus{outline:2px solid var(--accent);outline-offset:-2px}
 input.o{font:inherit;width:100%;height:34px;border:0;background:transparent;color:var(--ink-2);
   font-size:11.5px;padding:0 9px}
-input.o:focus{outline:2px solid var(--verd-clar);outline-offset:-2px}
+input.o:focus{outline:2px solid var(--accent);outline-offset:-2px}
 input.o::placeholder{color:transparent}
 input.o:hover::placeholder{color:var(--muted)}
 
@@ -134,21 +139,21 @@ input.o:hover::placeholder{color:var(--muted)}
 .pct{background:var(--surface);border:1px solid var(--line);border-radius:3px;padding:12px 14px;
   box-shadow:var(--ombra);min-width:132px}
 .pct label{display:block;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:600}
-.pct input{font:inherit;font-family:"Montserrat",sans-serif;font-weight:700;font-size:20px;width:74px;
+.pct input{font:inherit;font-family:var(--titol);font-weight:700;font-size:20px;width:74px;
   border:0;border-bottom:1px dashed var(--line-2);background:transparent;color:inherit;padding:2px 0;
   -moz-appearance:textfield}
 .pct input::-webkit-outer-spin-button,.pct input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
 .pct .u{color:var(--muted);font-weight:600}
-.pct.total{background:var(--verd-pregon);border-color:var(--verd-pregon);color:#fff}
+.pct.total{background:var(--primari);border-color:var(--primari);color:#fff}
 .pct.total label{color:rgba(255,255,255,.75)}
-.pct.total .v{font-family:"Montserrat",sans-serif;font-weight:800;font-size:24px}
+.pct.total .v{font-family:var(--titol);font-weight:800;font-size:24px}
 
 /* resum trimestral */
 .resum{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
-.resum-c{border:1px solid var(--line);border-top:3px solid var(--verd-clar);border-radius:2px;
+.resum-c{border:1px solid var(--line);border-top:3px solid var(--accent);border-radius:2px;
   padding:12px 14px;background:var(--surface);box-shadow:var(--ombra)}
 .resum-c .re{font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);font-weight:600}
-.resum-c .rn{font-family:"Montserrat",sans-serif;font-weight:800;font-size:26px;line-height:1.1;
+.resum-c .rn{font-family:var(--titol);font-weight:800;font-size:26px;line-height:1.1;
   font-variant-numeric:tabular-nums;margin-top:3px}
 .resum-c .rq{display:flex;gap:10px;margin-top:6px;font-size:11px;color:var(--ink-2);font-variant-numeric:tabular-nums}
 .resum-c .rq i{width:8px;height:8px;border-radius:2px;display:inline-block;margin-right:4px;vertical-align:0}
@@ -161,52 +166,52 @@ input.o:hover::placeholder{color:var(--muted)}
 .full{background:var(--surface);border:1px solid var(--line);border-radius:3px;box-shadow:var(--ombra);
   display:grid;grid-template-columns:64px minmax(0,1fr);overflow:hidden}
 .full + .full{margin-top:26px}
-.banda{background:var(--verd-pregon);color:#fff;display:flex;align-items:center;justify-content:center}
-.banda span{writing-mode:vertical-rl;transform:rotate(180deg);font-family:"Montserrat",sans-serif;
+.banda{background:var(--primari);color:#fff;display:flex;align-items:center;justify-content:center}
+.banda span{writing-mode:vertical-rl;transform:rotate(180deg);font-family:var(--titol);
   font-weight:800;font-size:18px;letter-spacing:.26em;text-transform:uppercase;white-space:nowrap}
 .cos{padding:30px clamp(20px,4vw,46px) 34px;min-width:0}
-.titol-informe{font-family:"Montserrat",sans-serif;font-weight:800;text-align:center;
+.titol-informe{font-family:var(--titol);font-weight:800;text-align:center;
   font-size:clamp(21px,3.5vw,34px);line-height:1.12;letter-spacing:-.015em;
   padding-bottom:16px;border-bottom:2px solid var(--nit)}
 .titol-informe small{display:block;font-size:.44em;font-weight:600;letter-spacing:.22em;
-  color:var(--verd-text);margin-top:7px;text-transform:uppercase}
+  color:var(--primari-text);margin-top:7px;text-transform:uppercase}
 .fila-seccio{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
   margin-top:18px;padding-bottom:9px;border-bottom:1px solid var(--line)}
-.etiqueta-seccio{font-family:"Montserrat",sans-serif;font-weight:800;font-size:13px;letter-spacing:.22em;
-  text-transform:uppercase;color:var(--verd-text)}
-.programa select{font:inherit;font-family:"Montserrat",sans-serif;font-weight:700;font-size:11px;
-  letter-spacing:.12em;text-transform:uppercase;color:var(--sobre-verd);background:var(--verd-clar);
+.etiqueta-seccio{font-family:var(--titol);font-weight:800;font-size:13px;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--primari-text)}
+.programa select{font:inherit;font-family:var(--titol);font-weight:700;font-size:11px;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--sobre-accent);background:var(--accent);
   border:0;border-radius:2px;padding:5px 10px;cursor:pointer;-webkit-appearance:none;appearance:none;text-align:center}
 .programa select option{background:#fff;color:var(--ink);letter-spacing:0}
-.qui{font-family:"Montserrat",sans-serif;font-weight:700;font-size:13px;color:var(--muted)}
+.qui{font-family:var(--titol);font-weight:700;font-size:13px;color:var(--muted)}
 
 .identitat{display:grid;grid-template-columns:92px minmax(0,1fr) auto;gap:20px;align-items:center;margin-top:22px}
 @media (max-width:760px){.identitat{grid-template-columns:1fr}}
 .foto{width:92px;height:92px;border:1px solid var(--line-2);border-radius:2px;background:var(--fila);
   display:flex;align-items:center;justify-content:center;font-size:9.5px;letter-spacing:.14em;
   text-transform:uppercase;color:var(--muted);text-align:center;padding:6px}
-.identitat h2{font-family:"Montserrat",sans-serif;font-size:clamp(25px,4.2vw,42px);font-weight:800;
+.identitat h2{font-family:var(--titol);font-size:clamp(25px,4.2vw,42px);font-weight:800;
   letter-spacing:-.03em;line-height:1.02}
 .identitat h2 .buit{color:var(--muted)}
 .fitxa{display:flex;flex-direction:column;gap:4px;text-align:right;font-size:13px}
 .fitxa .l{display:flex;gap:8px;justify-content:flex-end;align-items:baseline;flex-wrap:wrap}
-.fitxa .l b{font-family:"Montserrat",sans-serif;font-weight:700;font-size:10.5px;letter-spacing:.14em;
+.fitxa .l b{font-family:var(--titol);font-weight:700;font-size:10.5px;letter-spacing:.14em;
   text-transform:uppercase;color:var(--muted)}
-.fitxa input{font:inherit;font-family:"Montserrat",sans-serif;font-weight:700;border:0;
+.fitxa input{font:inherit;font-family:var(--titol);font-weight:700;border:0;
   border-bottom:1px dashed var(--line-2);background:transparent;color:inherit;text-align:right;
   padding:1px 2px;min-width:36px}
-.fitxa input:hover{border-bottom-color:var(--verd-viu)}
+.fitxa input:hover{border-bottom-color:var(--accent-viu)}
 .fitxa input::placeholder{color:var(--muted);font-weight:500}
-.fitxa .mit{font-family:"Montserrat",sans-serif;font-weight:700}
+.fitxa .mit{font-family:var(--titol);font-weight:700}
 
 .seccio{margin-top:30px}
-.seccio > h3{font-family:"Montserrat",sans-serif;font-weight:800;font-size:13px;letter-spacing:.2em;
-  text-transform:uppercase;padding-bottom:7px;border-bottom:2px solid var(--verd-clar);display:inline-block}
+.seccio > h3{font-family:var(--titol);font-weight:800;font-size:13px;letter-spacing:.2em;
+  text-transform:uppercase;padding-bottom:7px;border-bottom:2px solid var(--accent);display:inline-block}
 .seccio.centrat{text-align:center}
 .seccio.centrat > h3{border-bottom-color:var(--nit)}
 .duo{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:28px;margin-top:18px}
 .trio{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:26px;margin-top:18px}
-.sub{font-family:"Montserrat",sans-serif;font-weight:700;font-size:11.5px;letter-spacing:.16em;
+.sub{font-family:var(--titol);font-weight:700;font-size:11.5px;letter-spacing:.16em;
   text-transform:uppercase;text-align:center;margin:0 0 10px}
 .sub em{display:block;font-style:normal;font-size:10px;letter-spacing:.1em;color:var(--muted);
   font-weight:600;margin-top:2px}
@@ -220,19 +225,19 @@ input.o:hover::placeholder{color:var(--muted)}
 .pista .fill{position:absolute;left:0;top:0;bottom:0;border-radius:0 3px 3px 0}
 .pista .tic{position:absolute;top:-2px;bottom:-2px;width:1px;background:var(--surface);opacity:.7}
 .pista .vq{position:absolute;right:-22px;top:-3px;font-size:10px;font-weight:700;
-  font-variant-numeric:tabular-nums;font-family:"Montserrat",sans-serif}
+  font-variant-numeric:tabular-nums;font-family:var(--titol)}
 .grup-fila .pistes{padding-right:24px}
 
 .camp-text{border:1px dashed var(--line-2);border-radius:2px;padding:11px 13px;min-height:70px;
   font-size:13.5px;line-height:1.6;color:var(--ink-2);text-align:left;white-space:pre-wrap}
-.camp-text:hover{border-color:var(--verd-viu)}
-.camp-text:focus{outline:2px solid var(--verd-clar);outline-offset:-1px;border-style:solid}
+.camp-text:hover{border-color:var(--accent-viu)}
+.camp-text:focus{outline:2px solid var(--accent);outline-offset:-1px;border-style:solid}
 .camp-text.gran{min-height:120px;font-size:14.5px;max-width:78ch;margin:0 auto}
 .camp-text.mitja{min-height:82px;max-width:80ch;margin:0 auto}
 .camp-text:empty::before{content:attr(data-ph);color:var(--muted);font-style:italic}
 
 table.detall{width:100%;border-collapse:collapse;font-size:12px}
-table.detall caption{text-align:left;font-family:"Montserrat",sans-serif;font-weight:700;font-size:10.5px;
+table.detall caption{text-align:left;font-family:var(--titol);font-weight:700;font-size:10.5px;
   letter-spacing:.16em;text-transform:uppercase;color:var(--ink);padding:14px 0 6px}
 table.detall th,table.detall td{border-bottom:1px solid var(--line);padding:5px 8px;text-align:left}
 table.detall thead th{font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:600}
@@ -248,9 +253,9 @@ table.detall tr.tot td{border-bottom:2px solid var(--nit);font-weight:700;backgr
 .cap-eines{display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:space-between;margin-bottom:16px}
 .nota-pag{font-size:12px;color:var(--muted)}
 
-.plafo{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--verd-clar);
+.plafo{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--accent);
   border-radius:3px;padding:18px 20px;margin:0 0 20px;box-shadow:var(--ombra)}
-.plafo-t{font-family:"Montserrat",sans-serif;font-weight:700;font-size:12px;letter-spacing:.16em;text-transform:uppercase}
+.plafo-t{font-family:var(--titol);font-weight:700;font-size:12px;letter-spacing:.16em;text-transform:uppercase}
 .plafo-p{margin:6px 0 12px;font-size:14px;color:var(--ink-2);max-width:72ch}
 .plafo textarea{width:100%;height:120px;resize:vertical;font-family:ui-monospace,"SF Mono",Menlo,monospace;
   font-size:11.5px;line-height:1.45;padding:10px 12px;border:1px solid var(--line-2);border-radius:3px;
@@ -260,63 +265,63 @@ table.detall tr.tot td{border-bottom:2px solid var(--nit);font-weight:700;backgr
 .tip{position:fixed;pointer-events:none;z-index:50;background:var(--nit);color:#fff;padding:6px 9px;
   border-radius:3px;font-size:11.5px;line-height:1.35;box-shadow:0 6px 20px rgba(0,0,0,.3);
   opacity:0;transition:opacity .12s;max-width:280px}
-.tip b{font-family:"Montserrat",sans-serif}
+.tip b{font-family:var(--titol)}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 
 /* ---------- PÀGINA D'ENTRADA ---------- */
 .portada{min-height:calc(100vh - 190px);display:flex;align-items:center;justify-content:center;padding:20px 0}
-.porta{background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--verd-clar);
+.porta{background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--accent);
   border-radius:4px;box-shadow:var(--ombra);padding:38px clamp(24px,5vw,44px);width:100%;max-width:460px}
-.porta .marca-p{font-family:"Montserrat",sans-serif;font-weight:800;letter-spacing:.2em;font-size:11px;
-  text-transform:uppercase;color:var(--verd-text);text-align:center}
+.porta .marca-p{font-family:var(--titol);font-weight:800;letter-spacing:.2em;font-size:11px;
+  text-transform:uppercase;color:var(--primari-text);text-align:center}
 .porta h1{font-size:clamp(24px,4vw,32px);font-weight:800;letter-spacing:-.02em;text-align:center;margin-top:8px}
 .porta .peu-p{text-align:center;color:var(--muted);font-size:13.5px;margin-top:8px}
 .porta form{display:flex;flex-direction:column;gap:18px;margin-top:28px}
 .porta .c{display:flex;flex-direction:column;gap:6px}
 .porta label{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:700}
-.porta select,.porta input{font:inherit;font-family:"Montserrat",sans-serif;font-weight:700;font-size:17px;
+.porta select,.porta input{font:inherit;font-family:var(--titol);font-weight:700;font-size:17px;
   padding:12px 14px;border:1px solid var(--line-2);border-radius:3px;background:var(--surface);
   color:var(--ink);width:100%}
 .porta select{-webkit-appearance:none;appearance:none;cursor:pointer;
   background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),linear-gradient(135deg,var(--muted) 50%,transparent 50%);
   background-position:calc(100% - 20px) 22px,calc(100% - 14px) 22px;background-size:6px 6px;background-repeat:no-repeat}
-.porta select:focus,.porta input:focus{border-color:var(--verd-viu);outline:2px solid var(--verd-clar);outline-offset:-1px}
-.porta .entrar{font:inherit;font-family:"Montserrat",sans-serif;font-weight:800;font-size:14px;
+.porta select:focus,.porta input:focus{border-color:var(--accent-viu);outline:2px solid var(--accent);outline-offset:-1px}
+.porta .entrar{font:inherit;font-family:var(--titol);font-weight:800;font-size:14px;
   letter-spacing:.16em;text-transform:uppercase;padding:15px;border:0;border-radius:3px;cursor:pointer;
-  background:var(--verd-pregon);color:#fff;margin-top:4px}
-.porta .entrar:hover{background:var(--verd-viu)}
+  background:var(--primari);color:#fff;margin-top:4px}
+.porta .entrar:hover{background:var(--accent-viu)}
 .porta .entrar:disabled{background:var(--line-2);cursor:not-allowed}
 .enllac-ex{font:inherit;font-size:13px;background:none;border:0;padding:0;cursor:pointer;
-  color:var(--verd-text);text-decoration:underline;text-underline-offset:3px}
-.enllac-ex:hover{color:var(--verd-viu)}
+  color:var(--primari-text);text-decoration:underline;text-underline-offset:3px}
+.enllac-ex:hover{color:var(--accent-viu)}
 
 /* ---------- REGISTRE DIARI ---------- */
 .cap-registre{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
-  background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--verd-clar);
+  background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--accent);
   border-radius:3px;padding:16px 20px;box-shadow:var(--ombra);margin-bottom:20px}
-.cap-registre .qui-r{font-family:"Montserrat",sans-serif;font-weight:800;font-size:22px;letter-spacing:-.02em}
+.cap-registre .qui-r{font-family:var(--titol);font-weight:800;font-size:22px;letter-spacing:-.02em}
 .cap-registre .quan{font-size:13px;color:var(--muted);margin-top:2px}
 .reg-marc{background:var(--surface);border:1px solid var(--line);border-radius:3px;
   box-shadow:var(--ombra);overflow-x:auto}
 table.reg{border-collapse:separate;border-spacing:0;width:100%;min-width:900px;font-size:12.5px}
 table.reg th,table.reg td{border-right:1px solid var(--graella);border-bottom:1px solid var(--graella);
   padding:0;text-align:center}
-table.reg thead th{background:var(--nit);color:#fff;font-family:"Montserrat",sans-serif;font-weight:700;
+table.reg thead th{background:var(--nit);color:#fff;font-family:var(--titol);font-weight:700;
   font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;padding:9px 5px;
   border-right-color:rgba(255,255,255,.16);vertical-align:middle;line-height:1.25}
 table.reg thead th:first-child{text-align:left;padding-left:14px}
 table.reg td.jug-r{text-align:left;padding:8px 14px;background:var(--fila);min-width:190px;
   font-weight:600;white-space:nowrap}
-table.reg td.jug-r .d{font-family:"Montserrat",sans-serif;font-weight:800;color:var(--muted);
+table.reg td.jug-r .d{font-family:var(--titol);font-weight:800;color:var(--muted);
   display:inline-block;width:24px;font-variant-numeric:tabular-nums}
 table.reg td.cl{min-width:64px;padding:3px}
-table.reg tfoot td{background:var(--fila);font-family:"Montserrat",sans-serif;font-weight:800;
+table.reg tfoot td{background:var(--fila);font-family:var(--titol);font-weight:800;
   font-size:14px;padding:9px 4px;font-variant-numeric:tabular-nums;border-top:2px solid var(--nit)}
 table.reg tfoot td:first-child{text-align:left;padding-left:14px;font-size:11px;letter-spacing:.14em;
   text-transform:uppercase;color:var(--muted)}
 
 .marca-b{width:100%;height:34px;border:1.5px solid var(--line);border-radius:3px;background:transparent;
-  cursor:pointer;font:inherit;font-family:"Montserrat",sans-serif;font-weight:800;font-size:13px;
+  cursor:pointer;font:inherit;font-family:var(--titol);font-weight:800;font-size:13px;
   color:var(--line-2);display:flex;align-items:center;justify-content:center;transition:none}
 .marca-b:hover{border-color:var(--marca-c);color:var(--marca-c)}
 .marca-b[aria-pressed="true"]{background:var(--marca-c);border-color:var(--marca-c);color:#fff}
@@ -328,14 +333,14 @@ td.cl.mal{--marca-c:var(--st-no)} td.cl.info{--marca-c:var(--q2)} td.cl.neutre{-
 .boto.gran{font-size:13.5px;padding:14px 26px}
 
 /* ---------- PÀGINA D'EQUIP ---------- */
-.cap-equip{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--verd-clar);
+.cap-equip{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--accent);
   border-radius:3px;padding:22px 24px;box-shadow:var(--ombra);margin-bottom:26px}
 .cap-equip .dades{display:flex;gap:26px;flex-wrap:wrap;align-items:flex-end}
 .cap-equip .c{display:flex;flex-direction:column;gap:3px}
 .cap-equip label{font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);font-weight:600}
-.cap-equip input{font:inherit;font-family:"Montserrat",sans-serif;font-weight:800;border:0;
+.cap-equip input{font:inherit;font-family:var(--titol);font-weight:800;border:0;
   border-bottom:1px dashed var(--line-2);background:transparent;color:inherit;padding:2px 3px}
-.cap-equip input:hover,.cap-equip input:focus{border-bottom-color:var(--verd-viu)}
+.cap-equip input:hover,.cap-equip input:focus{border-bottom-color:var(--accent-viu)}
 .cap-equip input.gran{font-size:26px;letter-spacing:-.02em;min-width:280px}
 .cap-equip input.petit{font-size:16px;min-width:130px}
 .cap-equip input::placeholder{color:var(--muted);font-weight:600}
@@ -343,27 +348,27 @@ td.cl.mal{--marca-c:var(--st-no)} td.cl.info{--marca-c:var(--q2)} td.cl.neutre{-
 .plantilla-t{width:100%;border-collapse:separate;border-spacing:0;font-size:13.5px;
   background:var(--surface);border:1px solid var(--line);border-radius:3px;box-shadow:var(--ombra);overflow:hidden}
 .plantilla-t th,.plantilla-t td{padding:10px 14px;text-align:left;border-bottom:1px solid var(--graella)}
-.plantilla-t thead th{background:var(--verd-pregon);color:#fff;font-family:"Montserrat",sans-serif;
+.plantilla-t thead th{background:var(--primari);color:#fff;font-family:var(--titol);
   font-weight:700;font-size:10px;letter-spacing:.13em;text-transform:uppercase}
 .plantilla-t tbody tr:last-child td{border-bottom:0}
 .plantilla-t tbody tr:hover td{background:var(--fila)}
-.plantilla-t td.dorsal{width:52px;font-family:"Montserrat",sans-serif;font-weight:800;
+.plantilla-t td.dorsal{width:52px;font-family:var(--titol);font-weight:800;
   color:var(--muted);font-variant-numeric:tabular-nums}
-.plantilla-t td.jug a{font-family:"Montserrat",sans-serif;font-weight:700;font-size:15px;
-  color:inherit;text-decoration:none;border-bottom:2px solid var(--verd-clar)}
-.plantilla-t td.jug a:hover{border-bottom-color:var(--verd-viu);color:var(--verd-text)}
+.plantilla-t td.jug a{font-family:var(--titol);font-weight:700;font-size:15px;
+  color:inherit;text-decoration:none;border-bottom:2px solid var(--accent)}
+.plantilla-t td.jug a:hover{border-bottom-color:var(--accent-viu);color:var(--primari-text)}
 .plantilla-t td.jug .sense{color:var(--muted);font-weight:600}
 .plantilla-t td.n{text-align:center;font-variant-numeric:tabular-nums;font-weight:700;
-  font-family:"Montserrat",sans-serif;width:88px}
-.plantilla-t td.n small{display:block;font-family:"Archivo",sans-serif;font-weight:400;
+  font-family:var(--titol);width:88px}
+.plantilla-t td.n small{display:block;font-family:var(--cos);font-weight:400;
   font-size:10.5px;color:var(--muted);letter-spacing:.02em}
 .plantilla-t td.acc{text-align:right;white-space:nowrap;width:190px}
-.plantilla-t td.acc a.acc-p{background:var(--verd-pregon);border-color:var(--verd-pregon);color:#fff}
-.plantilla-t td.acc a.acc-p:hover{background:var(--verd-viu);border-color:var(--verd-viu);color:#fff}
+.plantilla-t td.acc a.acc-p{background:var(--primari);border-color:var(--primari);color:#fff}
+.plantilla-t td.acc a.acc-p:hover{background:var(--accent-viu);border-color:var(--accent-viu);color:#fff}
 .plantilla-t td.acc a{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
   text-decoration:none;color:var(--ink-2);border:1px solid var(--line-2);border-radius:2px;
   padding:5px 9px;margin-left:6px;display:inline-block}
-.plantilla-t td.acc a:hover{border-color:var(--verd-viu);color:var(--verd-text)}
+.plantilla-t td.acc a:hover{border-color:var(--accent-viu);color:var(--primari-text)}
 .xip{display:inline-flex;align-items:center;gap:6px;font-size:10.5px;font-weight:700;
   letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border-radius:2px;
   border:1px solid currentColor}
@@ -373,7 +378,7 @@ td.cl.mal{--marca-c:var(--st-no)} td.cl.info{--marca-c:var(--q2)} td.cl.neutre{-
 
 .pendent{background:var(--avis-fons);border:1px solid color-mix(in srgb,var(--avis) 35%,transparent);
   border-left:4px solid var(--avis);border-radius:3px;padding:16px 18px;margin-top:26px}
-.pendent h3{font-family:"Montserrat",sans-serif;font-size:13px;font-weight:700;color:var(--avis);margin-bottom:5px}
+.pendent h3{font-family:var(--titol);font-size:13px;font-weight:700;color:var(--avis);margin-bottom:5px}
 .pendent p{font-size:14px;color:var(--ink-2);max-width:72ch}
 
 /* taula d'indicadors de l'equip */
@@ -382,30 +387,30 @@ td.cl.mal{--marca-c:var(--st-no)} td.cl.info{--marca-c:var(--q2)} td.cl.neutre{-
 table.ind{border-collapse:separate;border-spacing:0;width:100%;min-width:940px;font-size:12.5px}
 table.ind th,table.ind td{border-right:1px solid var(--graella);border-bottom:1px solid var(--graella);
   padding:0;text-align:center}
-table.ind thead th{background:var(--nit);color:#fff;font-family:"Montserrat",sans-serif;font-weight:700;
+table.ind thead th{background:var(--nit);color:#fff;font-family:var(--titol);font-weight:700;
   font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:9px 8px;
   border-right-color:rgba(255,255,255,.16);vertical-align:middle}
 table.ind thead th:first-child{text-align:left}
 table.ind td.tipus{text-align:left;padding:10px 14px;background:var(--fila);min-width:180px}
-table.ind td.tipus b{font-family:"Montserrat",sans-serif;font-weight:700;font-size:14px;display:block}
+table.ind td.tipus b{font-family:var(--titol);font-weight:700;font-size:14px;display:block}
 table.ind td.tipus .comptes{display:flex;gap:6px;margin-top:5px}
 table.ind td.tipus .comptes label{font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;
   color:var(--muted);font-weight:600;display:flex;align-items:center;gap:4px}
-table.ind td.tipus .comptes input{width:46px;font:inherit;font-family:"Montserrat",sans-serif;
+table.ind td.tipus .comptes input{width:46px;font:inherit;font-family:var(--titol);
   font-weight:700;font-size:12px;text-align:center;border:1px solid var(--line-2);border-radius:2px;
   background:var(--surface);color:inherit;padding:2px 3px;-moz-appearance:textfield}
-table.ind .vt{font-family:"Montserrat",sans-serif;font-weight:800;font-size:17px;
+table.ind .vt{font-family:var(--titol);font-weight:800;font-size:17px;
   font-variant-numeric:tabular-nums;display:block;padding-top:9px}
 table.ind .cel small{display:block;font-size:10px;color:var(--muted);padding-bottom:9px;margin-top:1px}
 table.ind td.cel.calc{background:color-mix(in srgb,var(--st-si) 8%,transparent)}
 table.ind td.cel.buida{color:var(--line-2);font-size:16px;font-weight:700}
 table.ind td.tipus .marca-d{font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;
   color:var(--muted);font-weight:700;border:1px solid var(--line);border-radius:2px;padding:2px 6px}
-table.ind input.ic{width:100%;height:44px;font:inherit;font-family:"Montserrat",sans-serif;font-weight:800;
+table.ind input.ic{width:100%;height:44px;font:inherit;font-family:var(--titol);font-weight:800;
   font-size:15px;text-align:center;border:0;background:transparent;color:var(--ink);
   font-variant-numeric:tabular-nums;-moz-appearance:textfield}
 table.ind input::-webkit-outer-spin-button,table.ind input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
-table.ind input.ic:focus{outline:2px solid var(--verd-clar);outline-offset:-2px}
+table.ind input.ic:focus{outline:2px solid var(--accent);outline-offset:-2px}
 table.ind input.ic::placeholder{color:var(--line-2)}
 table.ind td.cel{position:relative;min-width:74px}
 table.ind td.cel::after{content:"";position:absolute;left:0;right:0;bottom:0;height:3px;background:var(--marca-c);opacity:.55}
@@ -432,12 +437,12 @@ td.cel.mal{--marca-c:var(--st-no)} td.cel.info{--marca-c:var(--q2)} td.cel.neutr
 
 /* formalitat destacada dins l'informe */
 .form-inf{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin-top:16px}
-.form-c{border:1px solid var(--line);border-top:3px solid var(--verd-clar);border-radius:2px;
+.form-c{border:1px solid var(--line);border-top:3px solid var(--accent);border-radius:2px;
   padding:12px 14px;background:var(--surface);text-align:center}
 .form-c .fe{font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);font-weight:600}
-.form-c .fv{font-family:"Montserrat",sans-serif;font-weight:800;font-size:27px;line-height:1.1;
+.form-c .fv{font-family:var(--titol);font-weight:800;font-size:27px;line-height:1.1;
   font-variant-numeric:tabular-nums;margin-top:3px}
-.form-c.total{background:var(--verd-pregon);border-color:var(--verd-pregon);border-top-color:var(--nit);color:#fff}
+.form-c.total{background:var(--primari);border-color:var(--primari);border-top-color:var(--nit);color:#fff}
 .form-c.total .fe{color:rgba(255,255,255,.75)}
 
 /* gràfic de barres vertical */
@@ -446,13 +451,85 @@ td.cel.mal{--marca-c:var(--st-no)} td.cel.info{--marca-c:var(--q2)} td.cel.neutr
 .cols .guia{position:absolute;left:0;right:0;border-top:1px dashed var(--graella);pointer-events:none}
 .col{flex:1 1 0;position:relative;height:100%;min-width:0}
 .col .columna{position:absolute;left:0;right:0;bottom:0;margin:0 auto;max-width:46px;
-  background:var(--verd-pregon);border-radius:3px 3px 0 0}
-.col .vc{position:absolute;left:0;right:0;text-align:center;font-family:"Montserrat",sans-serif;
+  background:var(--primari);border-radius:3px 3px 0 0}
+.col .vc{position:absolute;left:0;right:0;text-align:center;font-family:var(--titol);
   font-weight:800;font-size:14px;font-variant-numeric:tabular-nums}
 .cols-et{display:flex;justify-content:space-around;gap:10px;padding:7px 4px 0}
 .cols-et span{flex:1 1 0;text-align:center;font-size:10.5px;color:var(--ink-2);line-height:1.2;
   min-width:0;overflow-wrap:anywhere;hyphens:auto}
 .eix{display:flex;justify-content:space-between;font-size:9.5px;color:var(--muted);margin-top:6px}
+
+/* =========================================================
+   LLENGUATGE DE FORMES
+   Cantonades vives, regles de cabell i un distintiu de pestanya
+   de coure a la vora superior de cada bloc. Les xifres van en
+   monoespaiada perquè les columnes de números quadrin sempre.
+   ========================================================= */
+*{border-radius:0 !important}
+
+/* xifres tabulars a tot arreu on hi ha números */
+.n, .vt, .rn, .fv, .vc, .dorsal,
+table.reg tfoot td, table.detall td.n, table.detall th.n,
+.resum-c .rn, .form-c .fv, .cap-equip input.petit,
+.porta input[type="date"]{
+  font-family:var(--xifra) !important;
+  font-variant-numeric:tabular-nums;
+  letter-spacing:-.01em;
+}
+select.p, table.ind input.ic, .pct input{font-family:var(--xifra) !important}
+
+/* el distintiu: un segment de coure a dalt a l'esquerra */
+.porta, .cap-registre, .cap-equip, .resum-c, .form-c, .targeta, .plafo, .marc, .ind-marc, .reg-marc{
+  position:relative;
+}
+.porta::before, .cap-registre::before, .cap-equip::before, .resum-c::before, .form-c::before, .plafo::before{
+  content:"";position:absolute;top:0;left:0;width:38px;height:3px;background:var(--accent);
+}
+.porta{border-top:1px solid var(--line)}
+.cap-registre, .cap-equip, .plafo{border-left:1px solid var(--line);border-top:1px solid var(--line)}
+.resum-c, .form-c{border-top:1px solid var(--line)}
+.form-c.total::before{background:var(--accent-viu)}
+
+/* títols de secció: regla fina i etiqueta condensada */
+.bloc > h2, .seccio > h3, section > h2{border-bottom-width:1px !important}
+.bloc > h2, .etiqueta-seccio, .titol-seccio{letter-spacing:.24em}
+h1, h2, h3, h4{letter-spacing:-.005em}
+.cap-quadre h1, .porta h1, .identitat h2{letter-spacing:-.02em}
+
+/* barra superior: filet de coure i pestanyes rectes */
+.barra{border-bottom:2px solid var(--accent)}
+.barra nav a{border-radius:0}
+.barra nav a[aria-current="page"]{background:var(--accent);color:#fff;border-color:var(--accent)}
+.barra nav a[aria-current="page"]:hover{color:#fff}
+.barra .marca{letter-spacing:.22em}
+
+/* botons: rectes, amb pes */
+.boto{border-width:1px;letter-spacing:.12em}
+.boto.principal{background:var(--primari);border-color:var(--primari)}
+.boto.principal:hover{background:var(--nit);border-color:var(--nit)}
+.porta .entrar{background:var(--primari);letter-spacing:.2em}
+.porta .entrar:hover{background:var(--nit)}
+
+/* taules: capçaleres condensades i denses */
+table.r thead th, table.ind thead th, table.reg thead th, .plantilla-t thead th{
+  font-family:var(--titol) !important;letter-spacing:.1em;
+}
+.plantilla-t thead th{background:var(--nit)}
+table.r thead th{background:var(--primari)}
+table.r thead th.niv{background:var(--nit)}
+table.r td.q{background:var(--primari)}
+tr.valor td.num, td.num{background:var(--primari)}
+
+/* marques del registre: quadrats plens, sense arrodonir */
+.marca-b{border-width:1px;font-family:var(--xifra) !important}
+
+/* columnes del gràfic: planes i massisses */
+.col .columna{background:var(--primari)}
+.cols{border-bottom-width:1px}
+
+/* semàfor: pastilles rectes amb el punt quadrat */
+.semafor button .llum{border-radius:0 !important;width:9px;height:9px}
+.xip .llum{border-radius:0 !important}
 
 /* ---------- IMPRESSIÓ ---------- */
 @page{size:A4 portrait;margin:11mm}
@@ -1077,7 +1154,7 @@ function vistaQuadre(){
             ${p.respons.map((r, ri) => `<tr>
               <td class="qual">${esc(r.nom)}</td>
               ${r.q.map((val, qi) => `<td class="q">${tria(val, `data-resp="${ri}" data-q="${qi}"`, `${r.nom} ${QS[qi]}`)}</td>`).join("")}
-              <td class="q" style="background:var(--verd-clar);color:var(--sobre-verd);font-weight:700;
+              <td class="q" style="background:var(--accent);color:var(--sobre-accent);font-weight:700;
                   padding:7px 10px;text-align:center" data-mitr="${ri}">${num(mitjanaDe(r.q)) || "·"}</td>
             </tr>`).join("")}
           </tbody>
@@ -1218,15 +1295,16 @@ function totalsEquip(tipus){
 
 /* ============ GRÀFICS ============ */
 /* Cada trimestre porta color I forma de marca: la identitat mai depèn només del color. */
-const FORMES = ["cercle", "quadrat", "triangle"];
+const FORMES = ["diamant", "quadrat", "triangle"];
 function marca(x, y, forma, color, r = 4){
-  if (forma === "quadrat") return `<rect x="${x-r}" y="${y-r}" width="${2*r}" height="${2*r}" fill="${color}" stroke="var(--surface)" stroke-width="1.5"/>`;
   if (forma === "triangle") return `<polygon points="${x},${y-r-1} ${x+r+1},${y+r} ${x-r-1},${y+r}" fill="${color}" stroke="var(--surface)" stroke-width="1.5"/>`;
-  return `<circle cx="${x}" cy="${y}" r="${r}" fill="${color}" stroke="var(--surface)" stroke-width="1.5"/>`;
+  if (forma === "quadrat") return `<rect x="${x-r}" y="${y-r}" width="${2*r}" height="${2*r}" fill="${color}" stroke="var(--surface)" stroke-width="1.5"/>`;
+  /* per defecte, diamant: cap forma rodona en aquest sistema */
+  return `<polygon points="${x},${y-r-1} ${x+r+1},${y} ${x},${y+r+1} ${x-r-1},${y}" fill="${color}" stroke="var(--surface)" stroke-width="1.5"/>`;
 }
 function llegendaQ(){
   return `<div class="llegenda">${QS.map((q, i) => {
-    const m = {cercle: `<circle cx="6" cy="6" r="4.5" fill="${COLQ[i]}"/>`,
+    const m = {diamant: `<polygon points="6,1 11,6 6,11 1,6" fill="${COLQ[i]}"/>`,
                quadrat: `<rect x="1.5" y="1.5" width="9" height="9" fill="${COLQ[i]}"/>`,
                triangle: `<polygon points="6,1 11,10.5 1,10.5" fill="${COLQ[i]}"/>`}[FORMES[i]];
     return `<span><svg width="12" height="12" aria-hidden="true">${m}</svg>${q}</span>`;
@@ -1328,7 +1406,7 @@ function vistaInforme(idx){
   const programa = p.fitxa?.programa || PROGRAMES[0];
 
   /* una sola sèrie: la mitjana dels tres trimestres */
-  const serieMitjana = items => [{nom: "Mitjana", color: "var(--verd-pregon)", vals: items.map(mitjanaItem)}];
+  const serieMitjana = items => [{nom: "Mitjana", color: "var(--primari)", vals: items.map(mitjanaItem)}];
   const radarMotrius = radar(motrius.items.map(i => i.curt), serieMitjana(motrius.items));
   const radarRespons = radar(p.respons.map(r => r.nom), serieMitjana(p.respons));
   const cols = b => columnes(b.items.map(i => ({nom: i.curt, v: mitjanaItem(i)})));
