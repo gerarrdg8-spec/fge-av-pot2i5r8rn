@@ -263,6 +263,84 @@ table.detall tr.tot td{border-bottom:2px solid var(--nit);font-weight:700;backgr
 .tip b{font-family:"Montserrat",sans-serif}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 
+/* ---------- PÀGINA D'EQUIP ---------- */
+.cap-equip{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--verd-clar);
+  border-radius:3px;padding:22px 24px;box-shadow:var(--ombra);margin-bottom:26px}
+.cap-equip .dades{display:flex;gap:26px;flex-wrap:wrap;align-items:flex-end}
+.cap-equip .c{display:flex;flex-direction:column;gap:3px}
+.cap-equip label{font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.cap-equip input{font:inherit;font-family:"Montserrat",sans-serif;font-weight:800;border:0;
+  border-bottom:1px dashed var(--line-2);background:transparent;color:inherit;padding:2px 3px}
+.cap-equip input:hover,.cap-equip input:focus{border-bottom-color:var(--verd-viu)}
+.cap-equip input.gran{font-size:26px;letter-spacing:-.02em;min-width:280px}
+.cap-equip input.petit{font-size:16px;min-width:130px}
+.cap-equip input::placeholder{color:var(--muted);font-weight:600}
+
+.plantilla-t{width:100%;border-collapse:separate;border-spacing:0;font-size:13.5px;
+  background:var(--surface);border:1px solid var(--line);border-radius:3px;box-shadow:var(--ombra);overflow:hidden}
+.plantilla-t th,.plantilla-t td{padding:10px 14px;text-align:left;border-bottom:1px solid var(--graella)}
+.plantilla-t thead th{background:var(--verd-pregon);color:#fff;font-family:"Montserrat",sans-serif;
+  font-weight:700;font-size:10px;letter-spacing:.13em;text-transform:uppercase}
+.plantilla-t tbody tr:last-child td{border-bottom:0}
+.plantilla-t tbody tr:hover td{background:var(--fila)}
+.plantilla-t td.dorsal{width:52px;font-family:"Montserrat",sans-serif;font-weight:800;
+  color:var(--muted);font-variant-numeric:tabular-nums}
+.plantilla-t td.jug a{font-family:"Montserrat",sans-serif;font-weight:700;font-size:15px;
+  color:inherit;text-decoration:none;border-bottom:2px solid var(--verd-clar)}
+.plantilla-t td.jug a:hover{border-bottom-color:var(--verd-viu);color:var(--verd-text)}
+.plantilla-t td.jug .sense{color:var(--muted);font-weight:600}
+.plantilla-t td.n{text-align:center;font-variant-numeric:tabular-nums;font-weight:700;
+  font-family:"Montserrat",sans-serif;width:88px}
+.plantilla-t td.n small{display:block;font-family:"Archivo",sans-serif;font-weight:400;
+  font-size:10.5px;color:var(--muted);letter-spacing:.02em}
+.plantilla-t td.acc{text-align:right;white-space:nowrap;width:190px}
+.plantilla-t td.acc a{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  text-decoration:none;color:var(--ink-2);border:1px solid var(--line-2);border-radius:2px;
+  padding:5px 9px;margin-left:6px;display:inline-block}
+.plantilla-t td.acc a:hover{border-color:var(--verd-viu);color:var(--verd-text)}
+.xip{display:inline-flex;align-items:center;gap:6px;font-size:10.5px;font-weight:700;
+  letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border-radius:2px;
+  border:1px solid currentColor}
+.xip .llum{width:8px;height:8px;border-radius:50%;background:currentColor}
+.xip.no{color:var(--st-no)} .xip.proces{color:var(--st-proces)} .xip.si{color:var(--st-si)}
+.xip.cap{color:var(--muted);border-style:dashed}
+
+.pendent{background:var(--avis-fons);border:1px solid color-mix(in srgb,var(--avis) 35%,transparent);
+  border-left:4px solid var(--avis);border-radius:3px;padding:16px 18px;margin-top:26px}
+.pendent h3{font-family:"Montserrat",sans-serif;font-size:13px;font-weight:700;color:var(--avis);margin-bottom:5px}
+.pendent p{font-size:14px;color:var(--ink-2);max-width:72ch}
+
+/* taula d'indicadors de l'equip */
+.ind-marc{background:var(--surface);border:1px solid var(--line);border-radius:3px;
+  box-shadow:var(--ombra);overflow-x:auto}
+table.ind{border-collapse:separate;border-spacing:0;width:100%;min-width:940px;font-size:12.5px}
+table.ind th,table.ind td{border-right:1px solid var(--graella);border-bottom:1px solid var(--graella);
+  padding:0;text-align:center}
+table.ind thead th{background:var(--nit);color:#fff;font-family:"Montserrat",sans-serif;font-weight:700;
+  font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:9px 8px;
+  border-right-color:rgba(255,255,255,.16);vertical-align:middle}
+table.ind thead th:first-child{text-align:left}
+table.ind td.tipus{text-align:left;padding:10px 14px;background:var(--fila);min-width:180px}
+table.ind td.tipus b{font-family:"Montserrat",sans-serif;font-weight:700;font-size:14px;display:block}
+table.ind td.tipus .comptes{display:flex;gap:6px;margin-top:5px}
+table.ind td.tipus .comptes label{font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);font-weight:600;display:flex;align-items:center;gap:4px}
+table.ind td.tipus .comptes input{width:46px;font:inherit;font-family:"Montserrat",sans-serif;
+  font-weight:700;font-size:12px;text-align:center;border:1px solid var(--line-2);border-radius:2px;
+  background:var(--surface);color:inherit;padding:2px 3px;-moz-appearance:textfield}
+table.ind input.ic{width:100%;height:44px;font:inherit;font-family:"Montserrat",sans-serif;font-weight:800;
+  font-size:15px;text-align:center;border:0;background:transparent;color:var(--ink);
+  font-variant-numeric:tabular-nums;-moz-appearance:textfield}
+table.ind input::-webkit-outer-spin-button,table.ind input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+table.ind input.ic:focus{outline:2px solid var(--verd-clar);outline-offset:-2px}
+table.ind input.ic::placeholder{color:var(--line-2)}
+table.ind td.cel{position:relative;min-width:74px}
+table.ind td.cel::after{content:"";position:absolute;left:0;right:0;bottom:0;height:3px;background:var(--marca-c);opacity:.55}
+td.cel.bo{--marca-c:var(--st-si)} td.cel.avis{--marca-c:var(--st-proces)}
+td.cel.mal{--marca-c:var(--st-no)} td.cel.info{--marca-c:var(--q2)} td.cel.neutre{--marca-c:var(--line-2)}
+.ind-llegenda{display:flex;gap:16px;flex-wrap:wrap;margin-top:10px;font-size:11.5px;color:var(--muted)}
+.ind-llegenda i{width:14px;height:3px;display:inline-block;margin-right:6px;vertical-align:3px}
+
 /* semàfor del repte individual */
 .semafor{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;justify-content:center}
 .semafor button{font:inherit;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
@@ -431,7 +509,13 @@ function carrega(){
     const cru = localStorage.getItem(CLAU);
     if (!cru) return nou();
     const d = JSON.parse(cru);
-    return Array.isArray(d) && d.length === 12 ? fusiona(d) : nou();
+    if (Array.isArray(d)) return d.length === 12 ? fusiona(d) : nou();
+    if (d && Array.isArray(d.jugadors)){
+      EQUIP = Object.assign(equipBuit(), d.equip || {});
+      TIPUS_SESSIO.forEach(([k]) => { EQUIP.indicadors[k] = Object.assign({dies: null, reg: null}, (d.equip?.indicadors || {})[k] || {}); });
+      return d.jugadors.length === 12 ? fusiona(d.jugadors) : nou();
+    }
+    return nou();
   }catch(e){ return nou(); }
 }
 let DADES = carrega();
@@ -439,8 +523,27 @@ let ACTUAL = 1;
 let pendent = null;
 function desa(){
   clearTimeout(pendent);
-  pendent = setTimeout(() => { try{ localStorage.setItem(CLAU, JSON.stringify(DADES)); }catch(e){} }, 250);
+  pendent = setTimeout(() => {
+    try{ localStorage.setItem(CLAU, JSON.stringify({equip: EQUIP, jugadors: DADES})); }catch(e){}
+  }, 250);
 }
+
+const INDICADORS = [
+  ["assistencia", "Assistència", "bo"], ["retard", "Retard", "avis"],
+  ["justif", "Justif.", "info"], ["noPres", "No pres.", "mal"],
+  ["noRoba", "No roba", "neutre"], ["noDutxa", "No dutxa", "neutre"],
+  ["compLleu", "Comp. lleu", "avis"], ["compGreu", "Comp. greu", "mal"],
+  ["familia", "Família", "neutre"], ["transport", "Transport", "neutre"]
+];
+const TIPUS_SESSIO = [["entrenament", "Entrenament"], ["partit", "Partit"]];
+
+function equipBuit(){
+  return {
+    nom: null, dataInici: null, dataFi: null,
+    indicadors: Object.fromEntries(TIPUS_SESSIO.map(([k]) => [k, {dies: null, reg: null}]))
+  };
+}
+let EQUIP = equipBuit();
 
 /* ============ CÀLCULS ============ */
 const mitjanaDe = xs => { const v = xs.filter(x => typeof x === "number"); return v.length ? v.reduce((a, b) => a + b, 0) / v.length : null; };
@@ -482,6 +585,112 @@ function tria(valor, attrs, etiqueta){
   const opcions = ["", 1, 2, 3, 4].map(o =>
     `<option value="${o}"${String(valor ?? "") === String(o) ? " selected" : ""}>${o === "" ? "·" : o}</option>`).join("");
   return `<select class="p${valor == null ? " buida" : ""}" ${attrs} aria-label="${esc(etiqueta)}">${opcions}</select>`;
+}
+
+/* ============ VISTA: EQUIP ============ */
+function vistaEquip(){
+  const camp = (k, cls, ph, tipus) => `<input class="${cls}" type="${tipus || "text"}"
+    value="${esc(EQUIP[k] || "")}" placeholder="${esc(ph)}" data-equip="${k}" aria-label="${esc(ph)}">`;
+
+  const capIndicadors = INDICADORS.map(([, et]) => `<th>${esc(et)}</th>`).join("");
+  const files = TIPUS_SESSIO.map(([k, et]) => {
+    const d = EQUIP.indicadors[k] || {};
+    return `<tr>
+      <td class="tipus">
+        <b>${esc(et)}</b>
+        <span class="comptes">
+          <label>Dies <input type="number" min="0" value="${d.dies ?? ""}" data-ind="${k}" data-camp="dies" aria-label="Dies d'${esc(et)}"></label>
+          <label>Reg. <input type="number" min="0" value="${d.reg ?? ""}" data-ind="${k}" data-camp="reg" aria-label="Registres d'${esc(et)}"></label>
+        </span>
+      </td>
+      ${INDICADORS.map(([ck, et2, to]) => `<td class="cel ${to}">
+        <input class="ic" type="number" min="0" value="${d[ck] ?? ""}" placeholder="0"
+          data-ind="${k}" data-camp="${ck}" aria-label="${esc(et2)} · ${esc(et)}">
+      </td>`).join("")}
+    </tr>`;
+  }).join("");
+
+  const XIP = {no: "No assolit", proces: "En procés", si: "Assolit"};
+  const jugadors = DADES.map(p => {
+    const m = mitjanaGlobal(p), ft = formalitatTotal(p);
+    const est = p.textos?.repteEstat || "";
+    return `<tr>
+      <td class="dorsal">${esc(p.fitxa?.dorsal || p.idx)}</td>
+      <td class="jug">${p.nom
+        ? `<a href="#/quadre/${p.idx}">${esc(p.nom)}</a>`
+        : `<a href="#/quadre/${p.idx}" class="sense">Jugador ${p.idx} · sense nom</a>`}</td>
+      <td class="n">${num(m) || "·"}<small>${m === null ? "sense puntuar" : nivell(m)}</small></td>
+      <td class="n">${ft === null ? "·" : Math.round(ft) + "%"}<small>formalitat</small></td>
+      <td><span class="xip ${est || "cap"}"><span class="llum"></span>${est ? XIP[est] : "Sense repte"}</span></td>
+      <td class="acc">
+        <a href="#/quadre/${p.idx}">Avaluació</a>
+        <a href="#/informe/${p.idx}">Informe</a>
+      </td>
+    </tr>`;
+  }).join("");
+
+  return `
+  <div class="cap-quadre">
+    <h1>Informes de l'equip</h1>
+    <p>Indicadors de la temporada per tipus de sessió, i la plantilla amb l'estat de cada jugador/a.
+      Clica un nom per anar a la seva avaluació.</p>
+  </div>
+
+  <div class="cap-equip">
+    <div class="dades">
+      <div class="c"><label for="eq-nom">Equip</label>${camp("nom", "gran", "SUB 12 C")}</div>
+      <div class="c"><label for="eq-ini">Data inici</label>${camp("dataInici", "petit", "Data inici", "date")}</div>
+      <div class="c"><label for="eq-fi">Data fi</label>${camp("dataFi", "petit", "Data fi", "date")}</div>
+    </div>
+  </div>
+
+  <section class="bloc">
+    <h2>Indicadors <span class="cua">per tipus de sessió</span></h2>
+    <div class="ind-marc">
+      <table class="ind">
+        <thead><tr><th>Tipus</th>${capIndicadors}</tr></thead>
+        <tbody>${files}</tbody>
+      </table>
+    </div>
+    <div class="ind-llegenda">
+      <span><i style="background:var(--st-si)"></i>positiu</span>
+      <span><i style="background:var(--st-proces)"></i>a vigilar</span>
+      <span><i style="background:var(--st-no)"></i>greu</span>
+      <span><i style="background:var(--q2)"></i>justificat</span>
+      <span><i style="background:var(--line-2)"></i>informatiu</span>
+    </div>
+  </section>
+
+  <section class="bloc">
+    <h2>Plantilla <span class="cua">${DADES.filter(p => p.nom).length} de 12 amb nom</span></h2>
+    <table class="plantilla-t">
+      <thead><tr>
+        <th>#</th><th>Jugador/a</th><th style="text-align:center">Mitjana</th>
+        <th style="text-align:center">Formalitat</th><th>Repte</th><th></th>
+      </tr></thead>
+      <tbody>${jugadors}</tbody>
+    </table>
+  </section>
+
+  <div class="eines" style="margin-top:24px">
+    <button class="boto" type="button" id="obreCopia">Còpia de seguretat</button>
+    <label class="boto" for="pujaDades">Carrega una còpia</label>
+    <input type="file" id="pujaDades" accept=".json,application/json,.txt,text/plain" hidden>
+    <span class="nota" id="avisDades">${POT_DESAR ? "" : "Aquest navegador no desa res en aquesta finestra: fes-te la còpia abans de tancar-la."}</span>
+  </div>
+
+  <div class="plafo" id="plafoCopia" hidden>
+    <p class="plafo-t">Còpia de seguretat</p>
+    <p class="plafo-p">Aquest text és tot l'equip i els dotze jugadors. Copia'l i desa'l on vulguis.
+      Per recuperar-ho, enganxa'l aquí i prem <strong>Restaura</strong>.</p>
+    <textarea id="areaCopia" spellcheck="false" aria-label="Dades de l'equip en text"></textarea>
+    <div class="plafo-b">
+      <button class="boto principal" type="button" id="copiaText">Copia el text</button>
+      <button class="boto" type="button" id="restauraText">Restaura des del text</button>
+      <button class="boto" type="button" id="tancaCopia">Tanca</button>
+      <span class="nota" id="avisCopia"></span>
+    </div>
+  </div>`;
 }
 
 /* ============ VISTA: AVALUACIÓ ============ */
@@ -562,6 +771,7 @@ function vistaQuadre(){
     </section>`;
 
   return `
+  <a class="tornar" href="#/equip" style="margin-bottom:14px">← Torna a l'equip</a>
   <div class="cap-quadre">
     <h1>Avaluació</h1>
     <p>Rúbrica completa: rendiment tàctic i valors socioafectius. Tria la nota d'1 a 4 a cada trimestre;
@@ -737,7 +947,7 @@ function vistaInforme(idx){
 
   return `
   <div class="cap-eines">
-    <a class="tornar" href="#/quadre">← Torna a l'avaluació</a>
+    <a class="tornar" href="#/quadre/${p.idx}">← Torna a l'avaluació</a>
     <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
       <span class="nota-pag">2 pàgines · perfil i informe escrit</span>
       <button class="boto principal" type="button" id="fesPdf">⤓ Descarrega en PDF</button>
@@ -847,6 +1057,12 @@ function onEntrada(e){
   let p = d.p ? DADES.find(x => x.idx === Number(d.p)) : actual();
   if (!p) return;
 
+  if (d.equip !== undefined){ EQUIP[d.equip] = el.value.trim() || null; return desa(); }
+  if (d.ind !== undefined){
+    const n = el.value === "" ? null : Math.max(0, Math.round(Number(el.value)));
+    EQUIP.indicadors[d.ind][d.camp] = isNaN(n) ? null : n;
+    return desa();
+  }
   if (d.text !== undefined){ p.textos[d.text] = el.innerText.replace(/ /g, " ").trim(); return desa(); }
   if (d.fitxa !== undefined){ p.fitxa[d.fitxa] = el.value.trim(); return desa(); }
   if (d.nom !== undefined){
@@ -891,7 +1107,7 @@ function refrescaResum(p){
 }
 
 /* ============ CÒPIES DE SEGURETAT ============ */
-const textCopia = () => JSON.stringify({versio: 2, desat: new Date().toISOString(), jugadors: DADES}, null, 1);
+const textCopia = () => JSON.stringify({versio: 3, desat: new Date().toISOString(), equip: EQUIP, jugadors: DADES}, null, 1);
 function obreCopia(){
   const plafo = document.getElementById("plafoCopia");
   plafo.hidden = false;
@@ -914,8 +1130,12 @@ function aplicaCopia(cru, avisId){
     const d = JSON.parse(cru);
     const j = Array.isArray(d) ? d : d.jugadors;
     if (!Array.isArray(j)) throw new Error("format");
+    if (d && d.equip){
+      EQUIP = Object.assign(equipBuit(), d.equip);
+      TIPUS_SESSIO.forEach(([k]) => { EQUIP.indicadors[k] = Object.assign({dies: null, reg: null}, (d.equip.indicadors || {})[k] || {}); });
+    }
     DADES = fusiona(j);
-    try{ localStorage.setItem(CLAU, JSON.stringify(DADES)); }catch(e){}
+    try{ localStorage.setItem(CLAU, JSON.stringify({equip: EQUIP, jugadors: DADES})); }catch(e){}
     pinta();
     const el = document.getElementById(avisId);
     if (el) el.textContent = "Còpia restaurada.";
@@ -940,15 +1160,19 @@ function fesPdf(nom){
 
 /* ============ ROUTER ============ */
 function pinta(){
-  const h = location.hash || "#/quadre";
+  const h = location.hash || "#/equip";
   const app = document.getElementById("app");
   const mInf = h.match(/^#\/informe\/(\d+)/);
+  const mQua = h.match(/^#\/quadre(?:\/(\d+))?/);
   if (mInf) ACTUAL = Number(mInf[1]);
-  app.innerHTML = mInf ? vistaInforme(ACTUAL) : vistaQuadre();
+  else if (mQua && mQua[1]) ACTUAL = Number(mQua[1]);
+  const vista = mInf ? "informe" : (mQua ? "quadre" : "equip");
+  app.innerHTML = vista === "informe" ? vistaInforme(ACTUAL) : vista === "quadre" ? vistaQuadre() : vistaEquip();
 
   document.getElementById("nav").innerHTML =
-    `<a href="#/quadre"${mInf ? "" : ' aria-current="page"'}>Avaluació</a>` +
-    `<a href="#/informe/${ACTUAL}"${mInf ? ' aria-current="page"' : ""}>Informe</a>`;
+    `<a href="#/equip"${vista === "equip" ? ' aria-current="page"' : ""}>Equip</a>` +
+    `<a href="#/quadre/${ACTUAL}"${vista === "quadre" ? ' aria-current="page"' : ""}>Avaluació</a>` +
+    `<a href="#/informe/${ACTUAL}"${vista === "informe" ? ' aria-current="page"' : ""}>Informe</a>`;
 
   app.querySelectorAll("[data-tip]").forEach(el => {
     el.addEventListener("mouseenter", e => mostraTip(e, el.dataset.tip));
