@@ -320,6 +320,10 @@ table.reg tfoot td:first-child{text-align:left;padding-left:14px;font-size:11px;
 td.cl.bo{--marca-c:var(--st-si)} td.cl.avis{--marca-c:var(--st-proces)}
 td.cl.mal{--marca-c:var(--st-no)} td.cl.info{--marca-c:var(--q2)} td.cl.neutre{--marca-c:var(--muted)}
 
+.validar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:18px}
+.validar .nota{font-size:13px;color:var(--muted);max-width:60ch}
+.boto.gran{font-size:13.5px;padding:14px 26px}
+
 /* ---------- PÀGINA D'EQUIP ---------- */
 .cap-equip{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--verd-clar);
   border-radius:3px;padding:22px 24px;box-shadow:var(--ombra);margin-bottom:26px}
@@ -351,6 +355,8 @@ td.cl.mal{--marca-c:var(--st-no)} td.cl.info{--marca-c:var(--q2)} td.cl.neutre{-
 .plantilla-t td.n small{display:block;font-family:"Archivo",sans-serif;font-weight:400;
   font-size:10.5px;color:var(--muted);letter-spacing:.02em}
 .plantilla-t td.acc{text-align:right;white-space:nowrap;width:190px}
+.plantilla-t td.acc a.acc-p{background:var(--verd-pregon);border-color:var(--verd-pregon);color:#fff}
+.plantilla-t td.acc a.acc-p:hover{background:var(--verd-viu);border-color:var(--verd-viu);color:#fff}
 .plantilla-t td.acc a{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
   text-decoration:none;color:var(--ink-2);border:1px solid var(--line-2);border-radius:2px;
   padding:5px 9px;margin-left:6px;display:inline-block}
@@ -385,6 +391,12 @@ table.ind td.tipus .comptes label{font-size:9.5px;letter-spacing:.1em;text-trans
 table.ind td.tipus .comptes input{width:46px;font:inherit;font-family:"Montserrat",sans-serif;
   font-weight:700;font-size:12px;text-align:center;border:1px solid var(--line-2);border-radius:2px;
   background:var(--surface);color:inherit;padding:2px 3px;-moz-appearance:textfield}
+table.ind .vt{font-family:"Montserrat",sans-serif;font-weight:800;font-size:17px;
+  font-variant-numeric:tabular-nums;display:block;padding-top:9px}
+table.ind .cel small{display:block;font-size:10px;color:var(--muted);padding-bottom:9px;margin-top:1px}
+table.ind td.cel.buida{color:var(--line-2);font-size:16px;font-weight:700}
+table.ind td.tipus .marca-d{font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);font-weight:700;border:1px solid var(--line);border-radius:2px;padding:2px 6px}
 table.ind input.ic{width:100%;height:44px;font:inherit;font-family:"Montserrat",sans-serif;font-weight:800;
   font-size:15px;text-align:center;border:0;background:transparent;color:var(--ink);
   font-variant-numeric:tabular-nums;-moz-appearance:textfield}
@@ -517,6 +529,7 @@ const CAMPS_FITXA = [
   ["anysFGE", "Anys a la FGE", "3"], ["educador", "Educador/a · tècnic/a", "Nom i cognoms"]
 ];
 const PROGRAMES = ["Fundació GironaEst", "Perfeccionament Catalunya"];
+const NJUGADORS = 15;
 
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const num = (v, d = 1) => (v === null || v === undefined || v === "" || isNaN(v)) ? "" : Number(v).toFixed(d).replace(".", ",");
@@ -543,7 +556,7 @@ function jugadorBuit(idx){
     }))
   };
 }
-function nou(){ return Array.from({length: 12}, (_, i) => jugadorBuit(i + 1)); }
+function nou(){ return Array.from({length: NJUGADORS}, (_, i) => jugadorBuit(i + 1)); }
 
 function fusiona(desat){
   return nou().map((p, i) => {
@@ -566,13 +579,13 @@ function carrega(){
     const cru = localStorage.getItem(CLAU);
     if (!cru) return nou();
     const d = JSON.parse(cru);
-    if (Array.isArray(d)) return d.length === 12 ? fusiona(d) : nou();
+    if (Array.isArray(d)) return fusiona(d);
     if (d && Array.isArray(d.jugadors)){
       EQUIP = Object.assign(equipBuit(), d.equip || {});
       REGISTRES = d.registres || {};
       if (d.sessio) SESSIO = Object.assign(SESSIO, d.sessio);
       TIPUS_SESSIO.forEach(([k]) => { EQUIP.indicadors[k] = Object.assign({dies: null, reg: null}, (d.equip?.indicadors || {})[k] || {}); });
-      return d.jugadors.length === 12 ? fusiona(d.jugadors) : nou();
+      return fusiona(d.jugadors);
     }
     return nou();
   }catch(e){ return nou(); }
@@ -593,8 +606,10 @@ const INDICADORS = [
   ["justif", "Justif.", "info"], ["noPres", "No pres.", "mal"],
   ["noRoba", "No roba", "neutre"], ["noDutxa", "No dutxa", "neutre"],
   ["compLleu", "Comp. lleu", "avis"], ["compGreu", "Comp. greu", "mal"],
-  ["familia", "Família", "neutre"], ["transport", "Transport", "neutre"]
+  ["familia", "Família", "neutre", "partit"], ["transport", "Transport", "neutre", "partit"]
 ];
+/* els indicadors amb quart element "partit" no s'apliquen als entrenaments */
+const indicadorsDe = tipus => INDICADORS.filter(i => !i[3] || i[3] === tipus);
 const TIPUS_SESSIO = [["entrenament", "Entrenament"], ["partit", "Partit"]];
 
 function equipBuit(){
@@ -650,8 +665,7 @@ function tria(valor, attrs, etiqueta){
 
 /* ============ ENTRADA I REGISTRE DIARI ============ */
 const EQUIPS = ["Juvenil"];
-const NJUGADORS = 15;
-let SESSIO = {equip: EQUIPS[0], data: ""};
+let SESSIO = {equip: EQUIPS[0], data: "", tipus: "entrenament"};
 
 function avui(){
   const d = new Date();
@@ -668,7 +682,9 @@ function dataLlarga(iso){
   const de = "aeiouàèéíòóú".includes(mes[0]) ? "d'" : "de ";
   return `${dies[dt.getDay()]}, ${d} ${de}${mes} de ${a}`;
 }
-const clauSessio = () => `${SESSIO.equip}|${SESSIO.data}`;
+const clauSessio = () => `${SESSIO.equip}|${SESSIO.data}|${SESSIO.tipus}`;
+const parteixClau = c => { const [equip, data, tipus] = c.split("|"); return {equip, data, tipus: tipus || "entrenament"}; };
+const nomTipus = t => (TIPUS_SESSIO.find(([k]) => k === t) || [, "Entrenament"])[1];
 function registreDe(){
   if (!REGISTRES[clauSessio()]) REGISTRES[clauSessio()] = {};
   return REGISTRES[clauSessio()];
@@ -693,6 +709,12 @@ function vistaInici(){
           </select>
         </div>
         <div class="c">
+          <label for="in-tipus">Tipus de sessió</label>
+          <select id="in-tipus">
+            ${TIPUS_SESSIO.map(([k, et]) => `<option value="${k}"${k === SESSIO.tipus ? " selected" : ""}>${esc(et)}</option>`).join("")}
+          </select>
+        </div>
+        <div class="c">
           <label for="in-data">Dia</label>
           <input id="in-data" type="date" value="${esc(SESSIO.data || avui())}">
         </div>
@@ -704,16 +726,17 @@ function vistaInici(){
 
 function vistaRegistre(){
   const reg = registreDe();
-  const totals = Object.fromEntries(INDICADORS.map(([k]) => [k, 0]));
+  const items = indicadorsDe(SESSIO.tipus);
+  const totals = Object.fromEntries(items.map(([k]) => [k, 0]));
 
   const files = Array.from({length: NJUGADORS}, (_, i) => {
     const n = i + 1;
     const r = reg[n] || {};
-    INDICADORS.forEach(([k]) => { if (r[k]) totals[k]++; });
+    items.forEach(([k]) => { if (r[k]) totals[k]++; });
     const nom = nomJugador(n);
     return `<tr>
       <td class="jug-r"><span class="d">${n}</span>${nom ? esc(nom) : `<span style="color:var(--muted);font-weight:500">Jugador ${n}</span>`}</td>
-      ${INDICADORS.map(([k, et, to]) => `<td class="cl ${to}">
+      ${items.map(([k, et, to]) => `<td class="cl ${to}">
         <button type="button" class="marca-b" data-reg="${n}" data-item="${k}"
           aria-pressed="${!!r[k]}" aria-label="${esc(et)} · jugador ${n}">${r[k] ? "✓" : ""}</button>
       </td>`).join("")}
@@ -723,99 +746,97 @@ function vistaRegistre(){
   return `
   <div class="cap-registre">
     <div>
-      <div class="qui-r">${esc(SESSIO.equip)}</div>
+      <div class="qui-r">${esc(SESSIO.equip)} · ${esc(nomTipus(SESSIO.tipus))}</div>
       <div class="quan">${esc(dataLlarga(SESSIO.data))}</div>
     </div>
-    <div style="display:flex;gap:10px;flex-wrap:wrap">
-      <a class="boto" href="#/inici">Canvia equip o dia</a>
-      <a class="boto" href="#/equip">Informes de l'equip</a>
-    </div>
+    <a class="boto" href="#/inici">Canvia equip, tipus o dia</a>
   </div>
 
   <div class="reg-marc">
     <table class="reg">
       <thead><tr>
         <th>Jugador/a</th>
-        ${INDICADORS.map(([, et]) => `<th>${esc(et)}</th>`).join("")}
+        ${items.map(([, et]) => `<th>${esc(et)}</th>`).join("")}
       </tr></thead>
       <tbody>${files}</tbody>
       <tfoot><tr>
         <td>Total del dia</td>
-        ${INDICADORS.map(([k]) => `<td data-tot="${k}">${totals[k]}</td>`).join("")}
+        ${items.map(([k]) => `<td data-tot="${k}">${totals[k]}</td>`).join("")}
       </tr></tfoot>
     </table>
   </div>
 
-  <p style="margin-top:14px;font-size:13px;color:var(--muted)">
-    Clica una casella per marcar-la. Es desa sol; pots tornar-hi quan vulguis.
-  </p>`;
+  <div class="validar">
+    <p class="nota">Clica una casella per marcar-la. Es desa sol.${
+      SESSIO.tipus === "entrenament" ? " Família i transport només es demanen als partits." : ""}</p>
+    <button class="boto principal gran" type="button" id="validar">Validar i veure el resum →</button>
+  </div>`;
 }
 
-/* ============ VISTA: EQUIP ============ */
-function vistaEquip(){
+/* ============ VISTA: RESUM DE L'EQUIP ============ */
+function vistaResum(){
   const camp = (k, cls, ph, tipus) => `<input class="${cls}" type="${tipus || "text"}"
     value="${esc(EQUIP[k] || "")}" placeholder="${esc(ph)}" data-equip="${k}" aria-label="${esc(ph)}">`;
 
   const capIndicadors = INDICADORS.map(([, et]) => `<th>${esc(et)}</th>`).join("");
   const files = TIPUS_SESSIO.map(([k, et]) => {
-    const d = EQUIP.indicadors[k] || {};
+    const t = totalsEquip(k);
     return `<tr>
       <td class="tipus">
         <b>${esc(et)}</b>
         <span class="comptes">
-          <label>Dies <input type="number" min="0" value="${d.dies ?? ""}" data-ind="${k}" data-camp="dies" aria-label="Dies d'${esc(et)}"></label>
-          <label>Reg. <input type="number" min="0" value="${d.reg ?? ""}" data-ind="${k}" data-camp="reg" aria-label="Registres d'${esc(et)}"></label>
+          <span class="marca-d">Dies ${t.dies}</span><span class="marca-d">Reg. ${t.reg}</span>
         </span>
       </td>
-      ${INDICADORS.map(([ck, et2, to]) => `<td class="cel ${to}">
-        <input class="ic" type="number" min="0" value="${d[ck] ?? ""}" placeholder="0"
-          data-ind="${k}" data-camp="${ck}" aria-label="${esc(et2)} · ${esc(et)}">
-      </td>`).join("")}
+      ${INDICADORS.map(([ck, , to, nomes]) => {
+        if (nomes && nomes !== k) return `<td class="cel neutre buida">–</td>`;
+        const pct = t.reg ? Math.round(t[ck] / t.reg * 100) : null;
+        return `<td class="cel ${to}"><span class="vt">${t[ck]}</span>${
+          pct === null ? "" : `<small>${pct}%</small>`}</td>`;
+      }).join("")}
     </tr>`;
   }).join("");
 
   const XIP = {no: "No assolit", proces: "En procés", si: "Assolit"};
-  const jugadors = DADES.map(p => {
-    const m = mitjanaGlobal(p), ft = formalitatTotal(p);
-    const est = p.textos?.repteEstat || "";
-    const r = resumRegistre(p.idx);
+  const jugadors = Array.from({length: NJUGADORS}, (_, i) => {
+    const n = i + 1;
+    const p = DADES.find(x => x.idx === n);
+    const r = resumRegistre(n);
     const pct = r.dies ? Math.round(r.assistencia / r.dies * 100) : null;
     const incid = r.compLleu + r.compGreu + r.noPres;
+    const m = p ? mitjanaGlobal(p) : null;
+    const est = p?.textos?.repteEstat || "";
+    const nom = nomJugador(n);
     return `<tr>
-      <td class="dorsal">${esc(p.fitxa?.dorsal || p.idx)}</td>
-      <td class="jug">${p.nom
-        ? `<a href="#/quadre/${p.idx}">${esc(p.nom)}</a>`
-        : `<a href="#/quadre/${p.idx}" class="sense">Jugador ${p.idx} · sense nom</a>`}</td>
+      <td class="dorsal">${n}</td>
+      <td class="jug">${nom ? esc(nom) : `<span class="sense">Jugador ${n}</span>`}</td>
       <td class="n">${r.dies ? `${r.assistencia}/${r.dies}` : "·"}<small>${pct === null ? "sense registres" : pct + "% assistència"}</small></td>
       <td class="n">${r.dies ? r.retard : "·"}<small>retards</small></td>
+      <td class="n">${r.dies ? r.justif : "·"}<small>justificats</small></td>
       <td class="n">${r.dies ? incid : "·"}<small>incidències</small></td>
-      <td class="n">${num(m) || "·"}<small>${m === null ? "sense puntuar" : nivell(m)}</small></td>
-      <td class="n">${ft === null ? "·" : Math.round(ft) + "%"}<small>formalitat</small></td>
+      <td class="n">${num(m) || "·"}<small>${m === null ? "sense avaluar" : nivell(m)}</small></td>
       <td><span class="xip ${est || "cap"}"><span class="llum"></span>${est ? XIP[est] : "Sense repte"}</span></td>
-      <td class="acc">
-        <a href="#/quadre/${p.idx}">Avaluació</a>
-        <a href="#/informe/${p.idx}">Informe</a>
-      </td>
+      <td class="acc">${p ? `<a class="acc-p" href="#/quadre/${n}">Avaluació trimestral</a>` : ""}</td>
     </tr>`;
   }).join("");
 
   return `
   <div class="cap-quadre">
-    <h1>Informes de l'equip</h1>
-    <p>Indicadors de la temporada per tipus de sessió, i la plantilla amb l'estat de cada jugador/a.
-      Clica un nom per anar a la seva avaluació.</p>
+    <h1>Resum de l'equip</h1>
+    <p>Els comptes surten del que has marcat als registres diaris. Filtra per dates si vols un període concret.</p>
   </div>
 
   <div class="cap-equip">
     <div class="dades">
-      <div class="c"><label for="eq-nom">Equip</label>${camp("nom", "gran", "SUB 12 C")}</div>
-      <div class="c"><label for="eq-ini">Data inici</label>${camp("dataInici", "petit", "Data inici", "date")}</div>
-      <div class="c"><label for="eq-fi">Data fi</label>${camp("dataFi", "petit", "Data fi", "date")}</div>
+      <div class="c"><label>Equip</label>${camp("nom", "gran", SESSIO.equip || "Juvenil")}</div>
+      <div class="c"><label>Data inici</label>${camp("dataInici", "petit", "Data inici", "date")}</div>
+      <div class="c"><label>Data fi</label>${camp("dataFi", "petit", "Data fi", "date")}</div>
+      <a class="boto" href="#/registre" style="margin-left:auto">Torna al registre</a>
     </div>
   </div>
 
   <section class="bloc">
-    <h2>Indicadors <span class="cua">per tipus de sessió</span></h2>
+    <h2>Indicadors <span class="cua">totals i percentatge sobre els registres</span></h2>
     <div class="ind-marc">
       <table class="ind">
         <thead><tr><th>Tipus</th>${capIndicadors}</tr></thead>
@@ -828,19 +849,20 @@ function vistaEquip(){
       <span><i style="background:var(--st-no)"></i>greu</span>
       <span><i style="background:var(--q2)"></i>justificat</span>
       <span><i style="background:var(--line-2)"></i>informatiu</span>
+      <span>– no s'aplica a aquest tipus de sessió</span>
     </div>
   </section>
 
   <section class="bloc">
-    <h2>Plantilla <span class="cua">assistència i incidències, del registre diari</span></h2>
+    <h2>Jugadors <span class="cua">clica per avaluar</span></h2>
     <div class="ind-marc" style="box-shadow:none;border:0"><table class="plantilla-t">
       <thead><tr>
         <th>#</th><th>Jugador/a</th>
         <th style="text-align:center">Assistència</th>
         <th style="text-align:center">Retards</th>
+        <th style="text-align:center">Justificats</th>
         <th style="text-align:center">Incidències</th>
-        <th style="text-align:center">Mitjana</th>
-        <th style="text-align:center">Formalitat</th><th>Repte</th><th></th>
+        <th style="text-align:center">Mitjana</th><th>Repte</th><th></th>
       </tr></thead>
       <tbody>${jugadors}</tbody>
     </table></div>
@@ -855,9 +877,9 @@ function vistaEquip(){
 
   <div class="plafo" id="plafoCopia" hidden>
     <p class="plafo-t">Còpia de seguretat</p>
-    <p class="plafo-p">Aquest text és tot l'equip i els dotze jugadors. Copia'l i desa'l on vulguis.
+    <p class="plafo-p">Aquest text és tot: equip, registres diaris i avaluacions. Copia'l i desa'l on vulguis.
       Per recuperar-ho, enganxa'l aquí i prem <strong>Restaura</strong>.</p>
-    <textarea id="areaCopia" spellcheck="false" aria-label="Dades de l'equip en text"></textarea>
+    <textarea id="areaCopia" spellcheck="false" aria-label="Dades en text"></textarea>
     <div class="plafo-b">
       <button class="boto principal" type="button" id="copiaText">Copia el text</button>
       <button class="boto" type="button" id="restauraText">Restaura des del text</button>
@@ -939,9 +961,12 @@ function vistaQuadre(){
 
 
   return `
-  <a class="tornar" href="#/equip" style="margin-bottom:14px">← Torna a l'equip</a>
+  <div class="cap-eines">
+    <a class="tornar" href="#/resum">← Torna al resum de l'equip</a>
+    <a class="boto principal" href="#/informe/${p.idx}">Veure l'informe ↗</a>
+  </div>
   <div class="cap-quadre">
-    <h1>Avaluació</h1>
+    <h1>Avaluació trimestral</h1>
     <p>Rúbrica completa: rendiment tàctic i valors socioafectius. Tria la nota d'1 a 4 a cada trimestre;
       la columna de cada nivell diu què vol dir cada puntuació. Tot passa a l'informe del jugador/a.</p>
   </div>
@@ -951,7 +976,6 @@ function vistaQuadre(){
   <div class="fitxa-jug">
     <input class="nom" type="text" placeholder="Nom del jugador/a" value="${esc(p.nom || "")}"
       data-nom="1" aria-label="Nom del jugador ${p.idx}">
-    <a class="boto principal anar" href="#/informe/${p.idx}">Veure l'informe ↗</a>
   </div>
 
   <div class="eines">
@@ -991,18 +1015,34 @@ function resumCaselles(p){
 }
 
 /* comptes del registre diari, per jugador, dins el rang de dates de l'equip */
-function resumRegistre(n){
+function sessionsFiltrades(tipus){
+  return Object.keys(REGISTRES).filter(clau => {
+    const {data, tipus: t} = parteixClau(clau);
+    if (tipus && t !== tipus) return false;
+    if (EQUIP.dataInici && data < EQUIP.dataInici) return false;
+    if (EQUIP.dataFi && data > EQUIP.dataFi) return false;
+    return true;
+  });
+}
+function resumRegistre(n, tipus){
   const c = Object.fromEntries(INDICADORS.map(([k]) => [k, 0]));
-  let dies = 0;
-  Object.keys(REGISTRES).forEach(clau => {
-    const data = clau.split("|")[1] || "";
-    if (EQUIP.dataInici && data < EQUIP.dataInici) return;
-    if (EQUIP.dataFi && data > EQUIP.dataFi) return;
-    dies++;
+  const claus = sessionsFiltrades(tipus);
+  claus.forEach(clau => {
     const r = (REGISTRES[clau] || {})[n];
     if (r) INDICADORS.forEach(([k]) => { if (r[k]) c[k]++; });
   });
-  return Object.assign({dies}, c);
+  return Object.assign({dies: claus.length}, c);
+}
+/* totals de l'equip per tipus de sessió, calculats des dels registres */
+function totalsEquip(tipus){
+  const c = Object.fromEntries(INDICADORS.map(([k]) => [k, 0]));
+  const claus = sessionsFiltrades(tipus);
+  claus.forEach(clau => {
+    const dia = REGISTRES[clau] || {};
+    for (let n = 1; n <= NJUGADORS; n++)
+      if (dia[n]) INDICADORS.forEach(([k]) => { if (dia[n][k]) c[k]++; });
+  });
+  return Object.assign({dies: claus.length, reg: claus.length * NJUGADORS}, c);
 }
 
 /* ============ GRÀFICS ============ */
@@ -1128,7 +1168,7 @@ function vistaInforme(idx){
 
   return `
   <div class="cap-eines">
-    <a class="tornar" href="#/quadre/${p.idx}">← Torna a l'avaluació</a>
+    <a class="tornar" href="#/quadre/${p.idx}">← Torna a l'avaluació de ${esc(p.nom || "el jugador " + p.idx)}</a>
     <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
       <span class="nota-pag">2 pàgines · perfil i informe escrit</span>
       <button class="boto principal" type="button" id="fesPdf">⤓ Descarrega en PDF</button>
@@ -1352,17 +1392,17 @@ function pinta(){
   else if (mQua && mQua[1]) ACTUAL = Number(mQua[1]);
   const vista = mInf ? "informe" : mQua ? "quadre"
     : h.startsWith("#/registre") ? "registre"
-    : h.startsWith("#/equip") ? "equip" : "inici";
+    : (h.startsWith("#/resum") || h.startsWith("#/equip")) ? "resum" : "inici";
   app.innerHTML = {
     informe: () => vistaInforme(ACTUAL), quadre: vistaQuadre,
-    registre: vistaRegistre, equip: vistaEquip, inici: vistaInici
+    registre: vistaRegistre, resum: vistaResum, inici: vistaInici
   }[vista]();
 
+  /* a dalt només hi ha el recorregut principal; avaluació i informe s'obren des de cada jugador */
   document.getElementById("nav").innerHTML = vista === "inici" ? "" :
+    `<a href="#/inici">Inici</a>` +
     `<a href="#/registre"${vista === "registre" ? ' aria-current="page"' : ""}>Registre</a>` +
-    `<a href="#/equip"${vista === "equip" ? ' aria-current="page"' : ""}>Equip</a>` +
-    `<a href="#/quadre/${ACTUAL}"${vista === "quadre" ? ' aria-current="page"' : ""}>Avaluació</a>` +
-    `<a href="#/informe/${ACTUAL}"${vista === "informe" ? ' aria-current="page"' : ""}>Informe</a>`;
+    `<a href="#/resum"${vista === "resum" ? ' aria-current="page"' : ""}>Resum</a>`;
 
   app.querySelectorAll("[data-tip]").forEach(el => {
     el.addEventListener("mouseenter", e => mostraTip(e, el.dataset.tip));
@@ -1384,6 +1424,7 @@ function pinta(){
   if (fe) fe.addEventListener("submit", ev => {
     ev.preventDefault();
     SESSIO.equip = document.getElementById("in-equip").value;
+    SESSIO.tipus = document.getElementById("in-tipus").value;
     SESSIO.data = document.getElementById("in-data").value || avui();
     desa();
     location.hash = "#/registre";
@@ -1399,6 +1440,9 @@ function pinta(){
     if (cel) cel.textContent = Array.from({length: NJUGADORS}, (_, i) => reg[i + 1] && reg[i + 1][k]).filter(Boolean).length;
     desa();
   }));
+
+  const bv = document.getElementById("validar");
+  if (bv) bv.addEventListener("click", () => { desa(); location.hash = "#/resum"; });
 
   const q = id => document.getElementById(id);
   if (q("fesPdf")) q("fesPdf").addEventListener("click", () => fesPdf(actual().nom));
