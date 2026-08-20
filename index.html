@@ -444,14 +444,14 @@ td.cel.mal{--marca-c:var(--st-no)} td.cel.info{--marca-c:var(--q2)} td.cel.neutr
 .cols{display:flex;align-items:flex-end;justify-content:space-around;gap:10px;height:168px;
   padding:0 4px;border-bottom:1.5px solid var(--line-2);position:relative}
 .cols .guia{position:absolute;left:0;right:0;border-top:1px dashed var(--graella);pointer-events:none}
-.col{flex:1 1 0;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;
-  position:relative;min-width:0}
-.col .barra{width:100%;max-width:46px;background:var(--verd-pregon);border-radius:3px 3px 0 0;
-  transition:height .45s cubic-bezier(.2,.7,.3,1)}
-.col .vc{font-family:"Montserrat",sans-serif;font-weight:800;font-size:14px;font-variant-numeric:tabular-nums;
-  margin-bottom:4px}
+.col{flex:1 1 0;position:relative;height:100%;min-width:0}
+.col .columna{position:absolute;left:0;right:0;bottom:0;margin:0 auto;max-width:46px;
+  background:var(--verd-pregon);border-radius:3px 3px 0 0}
+.col .vc{position:absolute;left:0;right:0;text-align:center;font-family:"Montserrat",sans-serif;
+  font-weight:800;font-size:14px;font-variant-numeric:tabular-nums}
 .cols-et{display:flex;justify-content:space-around;gap:10px;padding:7px 4px 0}
-.cols-et span{flex:1 1 0;text-align:center;font-size:10.5px;color:var(--ink-2);line-height:1.25;min-width:0}
+.cols-et span{flex:1 1 0;text-align:center;font-size:10.5px;color:var(--ink-2);line-height:1.2;
+  min-width:0;overflow-wrap:anywhere;hyphens:auto}
 .eix{display:flex;justify-content:space-between;font-size:9.5px;color:var(--muted);margin-top:6px}
 
 /* ---------- IMPRESSIÓ ---------- */
@@ -477,7 +477,12 @@ td.cel.mal{--marca-c:var(--st-no)} td.cel.info{--marca-c:var(--q2)} td.cel.neutr
   .identitat h2{font-size:25px}
   .foto{width:72px;height:72px;font-size:7.5px}
   .fitxa{font-size:10.5px;gap:2px}
-  svg.radar{max-height:190px}
+  svg.radar{max-height:166px}
+  .resum{grid-template-columns:repeat(5,1fr);gap:7px}
+  .resum-c{padding:6px 8px}
+  .resum-c .re{font-size:7.5px;letter-spacing:.06em}
+  .resum-c .rn{font-size:16px}
+  .resum-c .rq{font-size:8px;margin-top:2px}
   .seccio{margin-top:13px;break-inside:avoid}
   .seccio > h3{font-size:11px;padding-bottom:4px}
   .duo{grid-template-columns:1fr 1fr;gap:16px;margin-top:12px}
@@ -498,8 +503,8 @@ td.cel.mal{--marca-c:var(--st-no)} td.cel.info{--marca-c:var(--q2)} td.cel.neutr
   .col .vc{font-size:11px}
   .cols-et span{font-size:8.5px}
   .form-inf{gap:8px;margin-top:11px}
-  .form-c{padding:7px 9px}
-  .form-c .fv{font-size:19px}
+  .form-c{padding:6px 8px}
+  .form-c .fv{font-size:17px}
   .semafor{margin-top:8px}
   .semafor button{font-size:8.5px;padding:5px 9px}
   .peu{margin-top:12px;font-size:9px}
@@ -791,6 +796,64 @@ function vistaRegistre(){
   </div>`;
 }
 
+/* Omple la rúbrica d'un jugador. Cada bloc rep una matriu [item][trimestre]. */
+function omplePerfil(p, dades){
+  Object.assign(p.fitxa, dades.fitxa);
+  p.formalitat = dades.formalitat;
+  p.blocs.forEach(b => {
+    const q = dades.blocs[b.clau];
+    if (q) b.items.forEach((it, i) => { if (q[i]) it.q = q[i].slice(); });
+  });
+  dades.respons.forEach((q, i) => { if (p.respons[i]) p.respons[i].q = q.slice(); });
+  p.textos = dades.textos;
+}
+
+/* Les avaluacions de l'exemple, coherents amb el que diu el registre de cadascun. */
+const EXEMPLE_AVALUACIONS = [
+  {
+    idx: 1,
+    fitxa: {equip: "Juvenil", categoria: "Juvenil", naixement: "2009", dorsal: "4",
+            anysFGE: "6", educador: "Roger Coris", programa: "Fundació GironaEst"},
+    formalitat: {"Assistència": 100, "Puntualitat": 93, "Roba": 93},
+    blocs: {
+      motrius:     [[2,3,3],[3,3,3],[3,3,4],[2,2,3],[2,3,3],[3,3,3]],
+      ambPilota:   [[3,3,3],[2,3,3],[3,3,3],[3,4,4]],
+      sensePilota: [[3,3,4],[3,3,3],[3,3,4],[3,4,4]],
+      valors:      [[4,4,4],[4,4,4],[3,4,4],[4,4,4]]
+    },
+    respons: [[4,4,4],[4,4,4],[3,3,4],[3,3,4],[2,3,3]],
+    textos: {
+      repteEstat: "si",
+      repte: "Atrevir-se més a l'un contra un i buscar la porteria quan té l'espai al davant.",
+      ambPilota: "Sempre s'ofereix i dona continuïtat al joc; juga a pocs tocs i no perd pilotes fàcils. Se li proposa que, quan té espai per encarar, s'atreveixi en comptes de tornar-la enrere.",
+      sensePilota: "Molt constant en la pressió i sempre ben col·locat. Dirigeix la línia amb la veu i avisa els companys abans que arribi el perill.",
+      valors: "És el mirall de l'equip: puntual, cuida el material i tira dels altres quan les coses no van bé. No ha tingut ni una sola incidència de conducta en tot el mes.",
+      final: "En Marc ha estat el jugador més regular del grup. Ha vingut a tots els entrenaments i a tots els partits, i això es nota en com ha crescut trimestre rere trimestre, sobretot en la conducció i en la comunicació dins del camp.\n\nEl salt que li demanem ara és de gosadia: té la tècnica i la lectura per decidir més ell, i encara resol massa sovint cap enrere. Si s'atreveix, guanyarà ell i guanyarà l'equip.\n\nGràcies per l'exemple que ha donat tot el mes."
+    }
+  },
+  {
+    idx: 2,
+    fitxa: {equip: "Juvenil", categoria: "Juvenil", naixement: "2009", dorsal: "10",
+            anysFGE: "2", educador: "Roger Coris", programa: "Fundació GironaEst"},
+    formalitat: {"Assistència": 80, "Puntualitat": 83, "Roba": 100},
+    blocs: {
+      motrius:     [[3,3,4],[3,3,3],[4,4,4],[4,4,4],[3,3,3],[2,2,3]],
+      ambPilota:   [[2,2,3],[3,3,3],[2,3,3],[2,2,2]],
+      sensePilota: [[2,2,2],[2,2,3],[2,2,2],[2,2,3]],
+      valors:      [[2,3,3],[2,2,3],[3,3,3],[2,2,2]]
+    },
+    respons: [[3,3,3],[2,3,3],[2,2,3],[2,2,2],[2,2,2]],
+    textos: {
+      repteEstat: "proces",
+      repte: "Venir a tots els entrenaments del mes i avisar sempre abans si no pot. Sense això, la resta no arrenca.",
+      ambPilota: "Quan té la pilota és dels que més desequilibren: condueix i regateja amb molta facilitat. Se li proposa aixecar el cap abans de sortir i buscar el company lliure quan el tanquen dos rivals.",
+      sensePilota: "És on li queda més camí. Quan l'equip perd la pilota es desconnecta i triga a tornar. Li demanem que la primera reacció sigui córrer cap enrere, encara que no arribi.",
+      valors: "Té bona relació amb els companys, però les faltes d'assistència i les dues incidències de conducta d'aquest mes pesen. Ha reaccionat bé quan se li ha parlat.",
+      final: "En Nil és un dels jugadors amb més talent del grup: amb la pilota als peus fa coses que molt pocs poden fer, i quan ve i està connectat es nota molt al camp.\n\nAra bé, aquest mes ha faltat tres dies i n'hi ha un que no va avisar. També hi ha hagut dues situacions de conducta que hem parlat amb ell. Els números de l'avaluació ho reflecteixen: molt amunt en habilitats, més just en el moment sense pilota i en responsabilitat.\n\nEl repte del proper trimestre és senzill de dir i difícil de fer: ser-hi. Si hi és, el creixement vindrà sol."
+    }
+  }
+];
+
 /* Exemple d'un mes: 5 setmanes × (dimarts i dijous entrenament + dissabte partit).
    Dos jugadors amb perfils contraris perquè es vegi què fa cada indicador. */
 function exempleMes(){
@@ -845,6 +908,9 @@ function exempleMes(){
     }
     REGISTRES[`Juvenil|${se.data}|${se.tipus}`] = dia;
   });
+
+  /* i les avaluacions dels dos jugadors, que és el que alimenta els informes */
+  EXEMPLE_AVALUACIONS.forEach(d => omplePerfil(DADES[d.idx - 1], d));
 
   EQUIP.nom = "Juvenil";
   EQUIP.dataInici = sessions[0].data;
@@ -1242,9 +1308,10 @@ function columnes(items){
     <div class="cols">${guies}
       ${items.map(it => {
         const v = it.v;
+        const alt = v == null ? 0 : Math.max(2, v / 4 * 100);
         return `<div class="col" data-tip="<b>${esc(it.nom)}</b><br>Mitjana ${v == null ? "sense puntuar" : num(v) + " de 4"}">
-          <span class="vc">${v == null ? "·" : num(v)}</span>
-          <span class="barra" style="height:${v == null ? 0 : Math.max(2, v / 4 * 100)}%"></span>
+          <span class="vc" style="bottom:calc(${alt}% + 4px)">${v == null ? "·" : num(v)}</span>
+          ${v == null ? "" : `<span class="columna" style="height:${alt}%"></span>`}
         </div>`;
       }).join("")}
     </div>
@@ -1333,15 +1400,6 @@ function vistaInforme(idx){
         <div class="resum">${resumCaselles(p)}</div>
       </section>
 
-      <section class="seccio">
-        <h3>Moments de joc i valors</h3>
-        <div class="trio">
-          <div><p class="sub">Amb pilota<em>Possessió</em></p>${cols(ambP)}</div>
-          <div><p class="sub">Sense pilota<em>Recuperació</em></p>${cols(senseP)}</div>
-          <div><p class="sub">Valors de club<em>Escala 1 – 4</em></p>${cols(valors)}</div>
-        </div>
-      </section>
-
       <footer class="peu">
         <span>${NIVELLS.map(n => `${n[0]} ${n[1]}`).join("  ·  ")}</span>
         <span>Pàgina 1 de 2 · Perfil</span>
@@ -1359,9 +1417,12 @@ function vistaInforme(idx){
       <section class="seccio">
         <h3>Moments de joc i valors</h3>
         <div class="trio">
-          <div><p class="sub">Amb pilota<em>Possessió</em></p>${camp(p.idx, "ambPilota", "Què destaca i què se li proposa quan l'equip té la pilota.")}</div>
-          <div><p class="sub">Sense pilota<em>Recuperació</em></p>${camp(p.idx, "sensePilota", "Què destaca i què se li proposa quan l'equip no té la pilota.")}</div>
-          <div><p class="sub">Valors<em>Valors de club</em></p>${camp(p.idx, "valors", "Com encaixa amb els valors del club.")}</div>
+          <div><p class="sub">Amb pilota<em>Possessió</em></p>${cols(ambP)}
+            <div style="margin-top:12px">${camp(p.idx, "ambPilota", "Què destaca i què se li proposa quan l'equip té la pilota.")}</div></div>
+          <div><p class="sub">Sense pilota<em>Recuperació</em></p>${cols(senseP)}
+            <div style="margin-top:12px">${camp(p.idx, "sensePilota", "Què destaca i què se li proposa quan l'equip no té la pilota.")}</div></div>
+          <div><p class="sub">Valors de club<em>Escala 1 – 4</em></p>${cols(valors)}
+            <div style="margin-top:12px">${camp(p.idx, "valors", "Com encaixa amb els valors del club.")}</div></div>
         </div>
       </section>
 
