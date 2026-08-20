@@ -1,0 +1,262 @@
+<title>Guia de l'Avaluació FGE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Montserrat:wght@400;600;700;800&display=swap">
+
+<style>
+:root{
+  --ground:#F6F8F4;
+  --surface:#FFFFFF;
+  --ink:#16241A;
+  --ink-2:#48544B;
+  --muted:#7A857C;
+  --line:#DEE4DC;
+  --line-2:#BAC4B8;
+  --fila:#F1F4EE;
+  --nit:#17301C;
+  --verd-pregon:#1E7A2F;
+  --verd:#75B72B;
+  --verd-clar:#93C02C;
+  --verd-text:#3C7A18;
+  --sobre-verd:#17301C;
+  --avis:#8A5A00;
+  --avis-fons:#FBF3E2;
+  --ombra:0 1px 2px rgba(22,36,26,.06), 0 8px 28px rgba(22,36,26,.08);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#0C130E;
+    --surface:#151E17;
+    --ink:#E8EFE9;
+    --ink-2:#B2C0B5;
+    --muted:#87968A;
+    --line:#26332A;
+    --line-2:#394838;
+    --fila:#1A251C;
+    --nit:#0A130C;
+    --verd-pregon:#2A8A3C;
+    --verd-text:#9FCB43;
+    --avis:#E7B24C;
+    --avis-fons:#241D0E;
+    --ombra:0 1px 2px rgba(0,0,0,.4), 0 10px 34px rgba(0,0,0,.5);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0C130E;
+  --surface:#151E17;
+  --ink:#E8EFE9;
+  --ink-2:#B2C0B5;
+  --muted:#87968A;
+  --line:#26332A;
+  --line-2:#394838;
+  --fila:#1A251C;
+  --nit:#0A130C;
+  --verd-pregon:#2A8A3C;
+  --verd-text:#9FCB43;
+  --avis:#E7B24C;
+  --avis-fons:#241D0E;
+  --ombra:0 1px 2px rgba(0,0,0,.4), 0 10px 34px rgba(0,0,0,.5);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--ground);color:var(--ink);
+  font-family:"Archivo","Helvetica Neue",Arial,sans-serif;
+  font-size:16px;line-height:1.62;-webkit-font-smoothing:antialiased;
+}
+h1,h2,h3{margin:0;font-family:"Montserrat","Archivo",sans-serif;text-wrap:balance}
+p{margin:0}
+a{color:var(--verd-text)}
+:focus-visible{outline:2px solid var(--verd-clar);outline-offset:3px}
+code{
+  font-family:ui-monospace,"SF Mono",Menlo,monospace;font-size:.88em;
+  background:var(--fila);border:1px solid var(--line);border-radius:3px;padding:1px 5px;
+}
+
+.cap{background:var(--nit);color:#fff;border-bottom:3px solid var(--verd);padding:44px 24px 40px}
+.cap .dins{max-width:760px;margin:0 auto}
+.cap .marca{font-family:"Montserrat",sans-serif;font-weight:800;letter-spacing:.2em;font-size:11.5px;text-transform:uppercase;color:var(--verd-clar)}
+.cap h1{font-size:clamp(30px,5vw,46px);font-weight:800;letter-spacing:-.025em;line-height:1.06;margin-top:10px}
+.cap p{margin-top:12px;color:rgba(255,255,255,.78);max-width:60ch;font-size:16.5px}
+
+main{max-width:760px;margin:0 auto;padding:40px 24px 90px;display:flex;flex-direction:column;gap:42px}
+
+.enllac{
+  background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--verd-clar);
+  border-radius:3px;padding:20px 22px;box-shadow:var(--ombra);
+}
+.enllac .et{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.enllac a.fitxer{pointer-events:none;text-decoration:none}
+.enllac a.fitxer code{font-size:16px;background:transparent;border:0;padding:0;color:var(--verd-text)}
+.enllac a{
+  display:inline-block;margin-top:7px;font-family:"Montserrat",sans-serif;font-weight:700;
+  font-size:15px;word-break:break-all;line-height:1.4;
+}
+.enllac p{margin-top:10px;color:var(--ink-2);font-size:14.5px}
+
+section > h2{
+  font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--verd-text);font-weight:700;
+  padding-bottom:9px;border-bottom:2px solid var(--verd-clar);display:inline-block;margin-bottom:20px;
+}
+section > p + p{margin-top:14px}
+section p{color:var(--ink-2)}
+section p strong{color:var(--ink);font-weight:600}
+
+.dues{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+.targeta{background:var(--surface);border:1px solid var(--line);border-radius:3px;padding:18px 20px;box-shadow:var(--ombra)}
+.targeta h3{font-size:16px;font-weight:700;letter-spacing:-.01em}
+.targeta .via{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:5px}
+.targeta p{margin-top:9px;font-size:14.5px}
+
+ol.passos{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:20px;counter-reset:pas}
+ol.passos li{display:grid;grid-template-columns:34px minmax(0,1fr);gap:16px;align-items:start;counter-increment:pas}
+ol.passos li::before{
+  content:counter(pas);
+  font-family:"Montserrat",sans-serif;font-weight:800;font-size:14px;
+  width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  background:var(--verd-pregon);color:#fff;
+}
+ol.passos h3{font-size:16.5px;font-weight:700;margin-bottom:4px}
+ol.passos p{font-size:15px}
+
+.avis{
+  background:var(--avis-fons);border:1px solid color-mix(in srgb,var(--avis) 35%,transparent);
+  border-left:4px solid var(--avis);border-radius:3px;padding:16px 18px;
+}
+.avis h3{font-size:14.5px;font-weight:700;color:var(--avis);margin-bottom:5px}
+.avis p{font-size:14.5px}
+.avis + .avis{margin-top:14px}
+
+dl.fets{margin:0;display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px 20px;font-size:14.5px}
+dl.fets dt{font-family:"Montserrat",sans-serif;font-weight:700;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding-top:3px}
+dl.fets dd{margin:0;color:var(--ink-2)}
+@media (max-width:560px){dl.fets{grid-template-columns:1fr;gap:2px 0}dl.fets dd{margin-bottom:12px}}
+
+footer{border-top:1px solid var(--line);padding-top:20px;font-size:13px;color:var(--muted)}
+</style>
+
+<header class="cap">
+  <div class="dins">
+    <div class="marca">Fundació GironaEst</div>
+    <h1>Guia de l'avaluació pedagògica</h1>
+    <p>Com omplir la rúbrica, què hi ha a cada pàgina de l'informe i com treure'n el PDF.</p>
+  </div>
+</header>
+
+<main>
+
+  <div class="enllac">
+    <div class="et">L'eina · un sol fitxer</div>
+    <a href="#" class="fitxer"><code>avaluacio_fge_v1.html</code></a>
+    <p>És a l'escriptori, a <code>ClaudeCode</code>, al costat de l'organitzador de tasques. Funciona com aquell: <strong>hi fas doble clic i s'obre al navegador</strong>. Per donar-lo a algú, envia-li el fitxer per correu, per WhatsApp o per AirDrop; no li cal cap compte ni cap permís.</p>
+    <p>També hi ha una còpia en línia a <a href="https://claude.ai/code/artifact/4cb7e783-235a-4f90-9b6e-79b4b2380125">claude.ai</a>, però aquesta sí que demana permisos, i per això la via bona per repartir-la és el fitxer.</p>
+  </div>
+
+  <section>
+    <h2>Què és</h2>
+    <p>Una versió web de la pestanya <strong>AVALUACIÓ</strong> del full de càlcul <em>Informe FGE Jugador</em>, enllaçada amb l'informe individual que hi ha al full <strong>INFORMES</strong>. Manté la disposició i l'estructura del full original, però amb els colors de la Fundació, presos del logotip: verd fosc <code>#2AA537</code>, verd de marca <code>#75B72B</code> i verd clar <code>#93C02C</code>.</p>
+    <p>Va sortir en blanc, sense cap dada del full original. Tot el que hi surti és el que hi entris tu.</p>
+  </section>
+
+  <section>
+    <h2>Les dues pantalles</h2>
+    <div class="dues">
+      <div class="targeta">
+        <div class="via">Pestanya Quadre</div>
+        <h3>La rúbrica</h3>
+        <p>Les sis estructures amb tots els continguts i el bloc de valors, en columnes de tres per jugador: MP, MR i observacions. Fins a dotze jugadors.</p>
+      </div>
+      <div class="targeta">
+        <div class="via">Pestanya Informe</div>
+        <h3>L'informe individual</h3>
+        <p>Tres pàgines per jugador: perfil, rúbrica i informe escrit. Es fa sol amb les notes del quadre; només hi has d'escriure els textos.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Com s'omple</h2>
+    <ol class="passos">
+      <li>
+        <div>
+          <h3>Posa el nom de cada jugador/a</h3>
+          <p>A la franja verd clar de la capçalera del quadre. Al costat hi ha l'enllaç <strong>JUG. 1 ↗</strong>, que obre el seu informe.</p>
+        </div>
+      </li>
+      <li>
+        <div>
+          <h3>Tria les notes al desplegable</h3>
+          <p>Cada casella MP i MR té un desplegable d'1 a 4, igual que la validació de dades del full. Les caselles verd pàl·lid no són cap error: són continguts que la rúbrica no puntua en aquell moment de joc, com <em>Entrada</em>, que només té MR.</p>
+        </div>
+      </li>
+      <li>
+        <div>
+          <h3>Deixa que les mitjanes es facin soles</h3>
+          <p>Les files <strong>GENERAL</strong> es recalculen a cada nota que tries. No s'hi escriu res a mà.</p>
+        </div>
+      </li>
+      <li>
+        <div>
+          <h3>Obre l'informe i escriu-hi els textos</h3>
+          <p>A la pàgina 1 hi ha la fitxa: equip, categoria, any de naixement, dorsal, anys a la FGE, formalitat, educador/a i el programa. A la pàgina 3, el repte individual, els tres textos de moments i valors, i la valoració final.</p>
+        </div>
+      </li>
+      <li>
+        <div>
+          <h3>Descarrega el PDF</h3>
+          <p>Botó <strong>⤓ Descarrega en PDF</strong> a dalt de l'informe. S'obre el diàleg d'impressió: tria <strong>Desa com a PDF</strong>. Surten tres fulls A4 sense la barra de navegació ni els botons.</p>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>Què hi ha a cada pàgina de l'informe</h2>
+    <dl class="fets">
+      <dt>Pàgina 1<br>Perfil</dt>
+      <dd>Nom, foto, fitxa i programa. Els radars d'estructures i de valors, el resum de les sis estructures amb la nota i el nivell, i els gràfics de moment en possessió i de recuperació.</dd>
+      <dt>Pàgina 2<br>Rúbrica</dt>
+      <dd>Les habilitats coordinatives contingut per contingut, les sis taules amb totes les puntuacions MP i MR, i els valors de club.</dd>
+      <dt>Pàgina 3<br>Informe escrit</dt>
+      <dd>Repte individual, els textos d'amb pilota, sense pilota i valors, i la valoració final.</dd>
+    </dl>
+  </section>
+
+  <section>
+    <h2>On van a parar les dades</h2>
+    <p>Es desen soles al <strong>navegador</strong> de qui les escriu. No pugen enlloc, no es comparteixen i no les veig jo.</p>
+    <p>Això vol dir que van lligades a un ordinador i un navegador concrets. Per moure-les o per no perdre-les, prem <strong>Còpia de seguretat</strong>: s'obre un quadre amb tota l'avaluació en text, el copies i el deses on vulguis. Per recuperar-la, l'enganxes al mateix quadre i prems <strong>Restaura</strong>. També pots carregar un fitxer amb <strong>Carrega una còpia</strong>.</p>
+
+    <div class="avis">
+      <h3>Fes-te la còpia abans de tancar</h3>
+      <p>Si buides les dades del navegador o canvies d'ordinador sense la còpia, el que hi havia escrit es perd. No hi ha cap altra manera de recuperar-ho.</p>
+    </div>
+
+    <div class="avis">
+      <h3>Cada còpia del fitxer té les seves pròpies dades</h3>
+      <p>Si envies el fitxer a algú, ell hi entrarà les seves i tu les teves: no es barregen ni es veuen entre vosaltres. Per passar-vos una avaluació sencera, feu servir el text de la còpia de seguretat.</p>
+    </div>
+
+    <div class="avis">
+      <h3>Compte amb qui la comparteixes</h3>
+      <p>Els informes porten noms de menors i valoracions escrites sobre ells. Si algun dia es publica l'enllaç obertament, qui l'obri veurà la plantilla buida, perquè les dades no viatgen amb la pàgina, però els PDF que en surtin sí que porten tota la informació.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>El fitxer</h2>
+    <dl class="fets">
+      <dt>Fitxer</dt>
+      <dd><code>~/Desktop/ClaudeCode/avaluacio_fge_v1.html</code>, amb una còpia a <code>~/Projects/InformeFGE/informe-fge.html</code>. Un sol HTML sense dependències: es pot enviar tal qual o penjar a qualsevol allotjament web.</dd>
+      <dt>Escala</dt>
+      <dd>0 a 4. Fins a 0,5 nivell entreno · 0,5–1,5 inicial · 1,5–2,5 en desenvolupament · 2,5–3,5 nivell alt · més de 3,5 nivell molt alt.</dd>
+      <dt>MP i MR</dt>
+      <dd>Moment en possessió i moment en recuperació.</dd>
+    </dl>
+  </section>
+
+  <footer>
+    Fundació GironaEst · Temporada 2025-26 · Guia de la plantilla d'avaluació pedagògica.
+  </footer>
+
+</main>

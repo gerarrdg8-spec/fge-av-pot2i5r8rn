@@ -1,0 +1,1047 @@
+<title>AvaluacioJugadorFGE</title>
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Montserrat:wght@400;600;700;800&display=swap">
+
+<style>
+/* Paleta presa del logotip i del web de la Fundació GironaEst (gironaest.cat):
+   verd fosc #2AA537 · verd de marca #75B72B · verd clar #93C02C · gris #838280 */
+:root{
+  --ground:#F6F8F4;
+  --surface:#FFFFFF;
+  --ink:#16241A;
+  --ink-2:#48544B;
+  --muted:#7A857C;
+  --line:#DEE4DC;
+  --line-2:#BAC4B8;
+  --fila:#F1F4EE;
+  --graella:#E5EBE2;
+  --nit:#17301C;
+  --verd-pregon:#1E7A2F;
+  --verd:#75B72B;
+  --verd-viu:#2AA537;
+  --verd-clar:#93C02C;
+  --verd-text:#3C7A18;
+  --sobre-verd:#17301C;
+  --mp:#63A32C;
+  --mr:#00699A;
+  --ombra:0 1px 2px rgba(22,36,26,.06), 0 8px 28px rgba(22,36,26,.08);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#0C130E;
+    --surface:#151E17;
+    --ink:#E8EFE9;
+    --ink-2:#B2C0B5;
+    --muted:#87968A;
+    --line:#26332A;
+    --line-2:#394838;
+    --fila:#1A251C;
+    --graella:#222E25;
+    --nit:#0A130C;
+    --verd-pregon:#1B6A2A;
+    --verd-text:#9FCB43;
+    --mp:#6BA72D;
+    --mr:#5E8FE8;
+    --ombra:0 1px 2px rgba(0,0,0,.4), 0 10px 34px rgba(0,0,0,.5);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0C130E;
+  --surface:#151E17;
+  --ink:#E8EFE9;
+  --ink-2:#B2C0B5;
+  --muted:#87968A;
+  --line:#26332A;
+  --line-2:#394838;
+  --fila:#1A251C;
+  --graella:#222E25;
+  --nit:#0A130C;
+  --verd-pregon:#1B6A2A;
+  --verd-text:#9FCB43;
+  --mp:#6BA72D;
+  --mr:#5E8FE8;
+  --ombra:0 1px 2px rgba(0,0,0,.4), 0 10px 34px rgba(0,0,0,.5);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--ground);color:var(--ink);
+  font-family:"Archivo","Helvetica Neue",Arial,sans-serif;
+  font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased;
+}
+a{color:inherit}
+h1,h2,h3{margin:0;text-wrap:balance;font-family:"Montserrat","Archivo",sans-serif}
+:focus-visible{outline:2px solid var(--verd-clar);outline-offset:2px}
+
+/* ---------- barra superior ---------- */
+.barra{
+  display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+  padding:14px 22px;background:var(--nit);color:#fff;border-bottom:3px solid var(--verd);
+}
+.barra .marca{font-family:"Montserrat",sans-serif;font-weight:800;letter-spacing:.14em;font-size:13px;text-transform:uppercase}
+.barra .sep{width:1px;height:18px;background:rgba(255,255,255,.24)}
+.barra .temp{font-size:12.5px;letter-spacing:.1em;color:rgba(255,255,255,.72);text-transform:uppercase}
+.barra nav{margin-left:auto;display:flex;gap:8px}
+.barra nav a{
+  text-decoration:none;font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;font-weight:600;
+  padding:7px 13px;border-radius:2px;color:rgba(255,255,255,.8);border:1px solid rgba(255,255,255,.2);
+}
+.barra nav a[aria-current="page"]{background:var(--verd-clar);color:var(--nit);border-color:var(--verd-clar)}
+.barra nav a:hover{border-color:var(--verd-clar);color:#fff}
+.barra nav a[aria-current="page"]:hover{color:var(--nit)}
+
+.wrap{max-width:1320px;margin:0 auto;padding:28px 22px 72px}
+.titol-seccio{font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:600;margin:0 0 10px}
+
+/* ---------- botons ---------- */
+.boto{
+  display:inline-flex;align-items:center;gap:8px;cursor:pointer;font:inherit;
+  font-size:12.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  padding:9px 16px;border-radius:2px;border:1px solid var(--line-2);
+  background:var(--surface);color:var(--ink);text-decoration:none;
+}
+.boto:hover{border-color:var(--verd-viu);color:var(--verd-text)}
+.boto.principal{background:var(--verd-pregon);border-color:var(--verd-pregon);color:#fff}
+.boto.principal:hover{background:var(--verd-viu);border-color:var(--verd-viu);color:#fff}
+.eines{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:0 0 18px}
+.eines .nota{font-size:12.5px;color:var(--muted)}
+
+/* ---------- plafó de còpia de seguretat ---------- */
+.plafo{
+  background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--verd-clar);
+  border-radius:3px;padding:18px 20px;margin:0 0 18px;box-shadow:var(--ombra);
+}
+.plafo-t{margin:0;font-family:"Montserrat",sans-serif;font-weight:700;font-size:12px;letter-spacing:.16em;text-transform:uppercase}
+.plafo-p{margin:6px 0 12px;font-size:14px;color:var(--ink-2);max-width:70ch}
+.plafo textarea{
+  width:100%;height:120px;resize:vertical;font-family:ui-monospace,"SF Mono",Menlo,monospace;
+  font-size:11.5px;line-height:1.45;padding:10px 12px;border:1px solid var(--line-2);border-radius:3px;
+  background:var(--fila);color:var(--ink);
+}
+.plafo-b{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:12px}
+
+/* ---------- QUADRE ---------- */
+.cap-quadre{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:18px}
+.cap-quadre h1{font-size:clamp(26px,3.4vw,40px);font-weight:800;letter-spacing:-.02em;line-height:1.05}
+.cap-quadre p{margin:6px 0 0;color:var(--ink-2);max-width:62ch;font-size:14.5px}
+
+.llegenda-nivells{display:flex;gap:0;flex-wrap:wrap;margin:0 0 18px;border:1px solid var(--line);border-radius:3px;overflow:hidden;background:var(--surface)}
+.llegenda-nivells div{padding:8px 14px;font-size:12px;color:var(--ink-2);border-right:1px solid var(--line);flex:1 1 auto}
+.llegenda-nivells div:last-child{border-right:0}
+.llegenda-nivells b{display:block;font-family:"Montserrat",sans-serif;font-size:12.5px;color:var(--ink);font-weight:700}
+
+.marc{background:var(--surface);border:1px solid var(--line);border-radius:3px;box-shadow:var(--ombra);overflow:auto;max-height:78vh}
+table.q{border-collapse:separate;border-spacing:0;font-size:12.5px;width:max-content;min-width:100%}
+table.q th,table.q td{border-right:1px solid var(--graella);border-bottom:1px solid var(--graella);padding:0}
+table.q .num{font-variant-numeric:tabular-nums;text-align:center;width:56px;min-width:56px}
+table.q .obs{width:210px;min-width:210px;padding:0;vertical-align:middle}
+
+.c-titol{position:sticky;top:0;z-index:6;background:var(--nit);color:#fff;font-family:"Montserrat",sans-serif;font-weight:800;letter-spacing:.02em;font-size:15px;padding:12px 14px;text-align:right;height:48px}
+.c-periode{position:sticky;top:48px;z-index:6;background:var(--verd-pregon);color:#fff;text-align:center;font-family:"Montserrat",sans-serif;font-weight:700;letter-spacing:.16em;font-size:11.5px;height:30px}
+.c-jug{position:sticky;top:78px;z-index:6;background:var(--verd-clar);color:var(--sobre-verd);text-align:center;font-family:"Montserrat",sans-serif;font-weight:700;font-size:12px;height:34px;padding:0 8px;white-space:nowrap}
+.c-jug a{color:var(--sobre-verd);text-decoration:none;letter-spacing:.14em;font-size:10.5px;border-bottom:1.5px solid rgba(23,48,28,.4)}
+.c-jug a:hover{border-bottom-color:var(--sobre-verd)}
+.c-sub{position:sticky;top:112px;z-index:6;background:var(--verd-pregon);color:#fff;text-align:center;font-size:10.5px;letter-spacing:.12em;font-weight:600;height:26px}
+.cantonada{position:sticky;left:0;z-index:8}
+.c-titol,.c-periode,.c-sub{border-right-color:rgba(255,255,255,.16)!important;border-bottom-color:rgba(255,255,255,.16)!important}
+.c-jug{border-right-color:rgba(23,48,28,.2)!important;border-bottom-color:rgba(23,48,28,.2)!important}
+
+th.cat{position:sticky;left:0;z-index:5;background:var(--nit);color:#fff;width:92px;min-width:92px;font-family:"Montserrat",sans-serif;font-weight:700;font-size:9.5px;letter-spacing:.03em;line-height:1.3;padding:6px 5px;text-align:center;vertical-align:middle;overflow-wrap:anywhere}
+th.cat.or{background:var(--verd-clar);color:var(--sobre-verd)}
+td.item{position:sticky;left:92px;z-index:5;background:var(--fila);width:230px;min-width:230px;padding:5px 12px;font-weight:500;color:var(--ink);border-right:1px solid var(--line-2)}
+tr.general td.item{background:var(--verd-clar);color:var(--sobre-verd);font-family:"Montserrat",sans-serif;font-weight:700;font-size:11px;letter-spacing:.14em}
+tr.general td.num{background:var(--verd-clar);color:var(--sobre-verd);font-weight:700}
+td.num{background:var(--verd-pregon);color:#fff;font-weight:600;font-size:13px;height:26px}
+td.num.nova{background:color-mix(in srgb,var(--verd-pregon) 10%,transparent)}
+tr.espai td{height:12px;background:transparent;border-right:0;border-bottom:0}
+tr.espai td.item,tr.espai th.cat{background:transparent}
+
+/* caselles editables de la taula */
+select.p,input.o,input.nom{font:inherit;width:100%;border:0;background:transparent;color:inherit;padding:0}
+select.p{
+  -webkit-appearance:none;appearance:none;text-align:center;text-align-last:center;
+  font-weight:600;font-size:13px;height:26px;cursor:pointer;color:#fff;
+}
+select.p:hover{background:color-mix(in srgb,#fff 12%,transparent)}
+select.p option{color:#16241A;background:#fff;font-weight:600}
+select.p.sensenota{color:rgba(255,255,255,.45)}
+select.p:focus,input.o:focus,input.nom:focus{outline:2px solid var(--verd-clar);outline-offset:-2px}
+tr.valor select.p{font-weight:700}
+input.o{padding:4px 9px;font-size:12px;color:var(--ink-2);height:26px}
+input.o::placeholder{color:transparent}
+input.o:hover::placeholder{color:var(--muted)}
+input.nom{text-align:center;font-family:"Montserrat",sans-serif;font-weight:700;font-size:12px;color:var(--sobre-verd)}
+input.nom::placeholder{color:rgba(23,48,28,.45);font-weight:600}
+
+.tria{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;margin-top:14px}
+.tria a{display:block;text-decoration:none;background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--verd-clar);border-radius:2px;padding:13px 15px;box-shadow:var(--ombra)}
+.tria a:hover{border-color:var(--line-2);border-left-color:var(--verd-viu)}
+.tria .n{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.tria .nm{font-family:"Montserrat",sans-serif;font-weight:700;font-size:15px;margin-top:2px}
+.tria .mit{margin-top:8px;font-size:11.5px;color:var(--ink-2);font-variant-numeric:tabular-nums}
+
+/* ---------- INFORME: mateixa disposició que el full de l'Excel ---------- */
+.full{background:var(--surface);border:1px solid var(--line);border-radius:3px;box-shadow:var(--ombra);display:grid;grid-template-columns:66px minmax(0,1fr);overflow:hidden}
+.banda{background:var(--verd-pregon);color:#fff;display:flex;align-items:center;justify-content:center}
+.banda span{writing-mode:vertical-rl;transform:rotate(180deg);font-family:"Montserrat",sans-serif;font-weight:800;font-size:19px;letter-spacing:.26em;text-transform:uppercase;white-space:nowrap}
+.cos{padding:32px clamp(20px,4vw,48px) 36px;min-width:0}
+
+/* 1. capçalera */
+.titol-informe{
+  font-family:"Montserrat",sans-serif;font-weight:800;text-align:center;
+  font-size:clamp(22px,3.6vw,38px);line-height:1.12;letter-spacing:-.015em;
+  padding-bottom:18px;border-bottom:2px solid var(--nit);
+}
+.titol-informe small{display:block;font-size:.42em;font-weight:600;letter-spacing:.22em;color:var(--verd-text);margin-top:8px;text-transform:uppercase}
+.identitat{display:grid;grid-template-columns:96px minmax(0,1fr) auto;gap:22px;align-items:center;margin-top:24px}
+@media (max-width:760px){.identitat{grid-template-columns:1fr;gap:14px}}
+.foto{width:96px;height:96px;border:1px solid var(--line-2);border-radius:2px;background:var(--fila);display:flex;align-items:center;justify-content:center;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);text-align:center;padding:6px}
+.identitat h2{font-family:"Montserrat",sans-serif;font-size:clamp(26px,4.4vw,44px);font-weight:800;letter-spacing:-.03em;line-height:1.02}
+.identitat h2 .buit{color:var(--muted)}
+.fitxa{display:flex;flex-direction:column;gap:5px;text-align:right;font-size:13px}
+.fitxa .l{display:flex;gap:8px;justify-content:flex-end;align-items:baseline;flex-wrap:wrap}
+.fitxa .l b{font-family:"Montserrat",sans-serif;font-weight:700;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.fitxa input{font:inherit;font-family:"Montserrat",sans-serif;font-weight:700;border:0;border-bottom:1px dashed var(--line-2);background:transparent;color:inherit;text-align:right;padding:1px 2px;min-width:36px}
+.fitxa input:hover{border-bottom-color:var(--verd-viu)}
+.fitxa input::placeholder{color:var(--muted);font-weight:500}
+
+/* franja d'apartat: "PERFIL DEL JUGADOR/A" + programa, com la fila 15 del full */
+.fila-seccio{
+  display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  margin-top:20px;padding-bottom:9px;border-bottom:1px solid var(--line);
+}
+.etiqueta-seccio{
+  font-family:"Montserrat",sans-serif;font-weight:800;font-size:13px;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--verd-text);
+}
+.programa select{
+  font:inherit;font-family:"Montserrat",sans-serif;font-weight:700;font-size:11px;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--sobre-verd);
+  background:var(--verd-clar);border:0;border-radius:2px;padding:5px 10px;cursor:pointer;
+  -webkit-appearance:none;appearance:none;text-align:center;
+}
+.programa select option{background:#fff;color:var(--ink);letter-spacing:0}
+.qui{font-family:"Montserrat",sans-serif;font-weight:700;font-size:13px;color:var(--muted)}
+.mitjana-fitxa{font-family:"Montserrat",sans-serif;font-weight:700}
+.nota-pag{font-size:12px;color:var(--muted)}
+
+/* resum d'estructures */
+.resum{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-top:16px}
+.resum-c{
+  border:1px solid var(--line);border-top:3px solid var(--verd-clar);border-radius:2px;
+  padding:10px 12px;background:var(--fila);display:flex;flex-direction:column;gap:1px;
+}
+.resum-c .rn{font-family:"Montserrat",sans-serif;font-weight:800;font-size:24px;line-height:1;font-variant-numeric:tabular-nums}
+.resum-c .re{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2);font-weight:600;margin-top:4px}
+.resum-c .rv{font-size:11px;color:var(--muted)}
+
+.full + .full{margin-top:26px}
+
+/* 2..6 blocs */
+.bloc{margin-top:34px}
+.bloc > h3{font-family:"Montserrat",sans-serif;font-weight:800;font-size:14px;letter-spacing:.2em;text-transform:uppercase;padding-bottom:8px;border-bottom:2px solid var(--verd-clar);display:inline-block}
+.bloc.centrat{text-align:center}
+.bloc.centrat > h3{border-bottom-color:var(--nit)}
+.duo{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:30px;margin-top:20px}
+.trio{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:28px;margin-top:20px}
+.sub{font-family:"Montserrat",sans-serif;font-weight:700;font-size:12px;letter-spacing:.16em;text-transform:uppercase;text-align:center;margin:0 0 12px}
+.sub em{display:block;font-style:normal;font-size:10.5px;letter-spacing:.1em;color:var(--muted);font-weight:600;margin-top:2px}
+
+.llegenda{display:flex;gap:18px;flex-wrap:wrap;justify-content:center;margin:0 0 12px;font-size:12px;color:var(--ink-2)}
+.llegenda i{width:11px;height:11px;border-radius:2px;display:inline-block;margin-right:6px;vertical-align:-1px}
+
+.barres{display:flex;flex-direction:column;gap:6px}
+.barra-fila{display:grid;grid-template-columns:minmax(96px,1.05fr) minmax(0,1.9fr) 30px;gap:10px;align-items:center;font-size:12px}
+.barra-fila .et{color:var(--ink-2);line-height:1.25}
+.pista{position:relative;height:13px;background:var(--graella);border-radius:2px}
+.pista .fill{position:absolute;left:0;top:0;bottom:0;border-radius:0 4px 4px 0}
+.pista .tic{position:absolute;top:-3px;bottom:-3px;width:1px;background:var(--surface);opacity:.75}
+.barra-fila .v{font-family:"Montserrat",sans-serif;font-weight:700;font-variant-numeric:tabular-nums;text-align:right}
+
+/* camps de text lliure */
+.camp-text{
+  border:1px dashed var(--line-2);border-radius:2px;padding:11px 13px;min-height:74px;
+  font-size:13.5px;line-height:1.6;color:var(--ink-2);text-align:left;white-space:pre-wrap;
+}
+.camp-text:hover{border-color:var(--verd-viu)}
+.camp-text:focus{outline:2px solid var(--verd-clar);outline-offset:-1px;border-style:solid}
+.camp-text.gran{min-height:130px;font-size:14.5px;max-width:78ch;margin:0 auto}
+.camp-text.mitja{min-height:88px;max-width:80ch;margin:0 auto}
+.camp-text:empty::before{content:attr(data-ph);color:var(--muted);font-style:italic}
+
+details.detall-rubrica{margin-top:34px;border-top:1px solid var(--line);padding-top:14px}
+details.detall-rubrica summary{cursor:pointer;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:600}
+table.detall{width:100%;border-collapse:collapse;font-size:12.5px}
+table.detall caption{text-align:left;font-family:"Montserrat",sans-serif;font-weight:700;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink);padding:14px 0 6px}
+table.detall th,table.detall td{border-bottom:1px solid var(--line);padding:5px 8px;text-align:left}
+table.detall thead th{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:600}
+table.detall td.n,table.detall th.n{text-align:center;width:56px;font-variant-numeric:tabular-nums;font-weight:600}
+table.detall tr.tot td{border-bottom:2px solid var(--nit);font-weight:700;background:var(--fila)}
+.taules{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:0 36px}
+
+.peu{margin-top:32px;padding-top:14px;border-top:1px solid var(--line);display:flex;gap:20px;flex-wrap:wrap;justify-content:space-between;font-size:11px;color:var(--muted)}
+.tornar{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;color:var(--ink-2);text-decoration:none}
+.tornar:hover{color:var(--ink)}
+.cap-eines{display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:space-between;margin-bottom:16px}
+
+.tip{position:fixed;pointer-events:none;z-index:50;background:var(--nit);color:#fff;padding:6px 9px;border-radius:3px;font-size:11.5px;line-height:1.35;box-shadow:0 6px 20px rgba(0,0,0,.3);opacity:0;transition:opacity .12s}
+.tip b{font-family:"Montserrat",sans-serif}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+/* ---------- IMPRESSIÓ / PDF ---------- */
+@page{size:A4 portrait;margin:11mm}
+@media print{
+  :root{
+    --ground:#FFFFFF;--surface:#FFFFFF;--ink:#16241A;--ink-2:#3B463E;--muted:#6E7A70;
+    --line:#C9D2C6;--line-2:#AEB9AC;--fila:#F2F5F0;--graella:#E3E9E0;
+    --nit:#17301C;--verd-pregon:#1E7A2F;--verd-clar:#93C02C;--verd-text:#3C7A18;
+    --mp:#63A32C;--mr:#00699A;--ombra:none;
+  }
+  html,body{background:#fff!important}
+  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+  .barra,.cap-eines,.tip,.eines,details.detall-rubrica{display:none!important}
+  .wrap{max-width:none;padding:0;margin:0}
+  .full{border:0;box-shadow:none;border-radius:0;grid-template-columns:44px minmax(0,1fr)}
+  .banda span{font-size:15px}
+  .cos{padding:0 0 0 16px}
+  .titol-informe{font-size:23px;padding-bottom:9px}
+  .titol-informe small{margin-top:5px}
+  .identitat{margin-top:12px;grid-template-columns:76px minmax(0,1fr) auto;gap:16px}
+  .identitat h2{font-size:26px}
+  .foto{width:76px;height:76px;font-size:8px}
+  .fitxa{font-size:11px;gap:3px}
+  svg.radar{max-height:196px}
+  .bloc{margin-top:10px;break-inside:avoid}
+  .bloc > h3{font-size:11px;padding-bottom:4px}
+  .camp-text{padding:8px 10px}
+  .duo{grid-template-columns:1fr 1fr;gap:18px;margin-top:14px}
+  .trio{grid-template-columns:1fr 1fr 1fr;gap:14px;margin-top:14px}
+  .barra-fila{grid-template-columns:minmax(64px,1fr) minmax(0,1.5fr) 26px;gap:7px}
+  .sub{font-size:10.5px}
+  .llegenda{font-size:10.5px}
+  .camp-text,.camp-text.mitja,.camp-text.gran{border:1px solid var(--line);min-height:0;font-size:11.5px;line-height:1.5}
+  .camp-text:empty::before{content:""}
+  .barra-fila{font-size:9.5px}
+  .pista{height:11px}
+  .peu{margin-top:14px;font-size:9px}
+  a[href]::after{content:""}
+  .salt{break-before:page}
+  .full + .full{margin-top:0}
+  .fila-seccio{margin-top:12px;padding-bottom:6px}
+  .etiqueta-seccio{font-size:11px}
+  .programa select{font-size:9.5px;padding:3px 7px}
+  .qui{font-size:11px}
+  .resum{grid-template-columns:repeat(6,1fr);gap:6px;margin-top:11px}
+  .resum-c{padding:6px 7px}
+  .resum-c .rn{font-size:17px}
+  .resum-c .re{font-size:7.5px;letter-spacing:.06em}
+  .resum-c .rv{font-size:8px}
+  .nota-pag{display:none}
+  table.detall{font-size:9px}
+  table.detall th,table.detall td{padding:3px 5px}
+  table.detall caption{font-size:9.5px;padding:9px 0 4px}
+  .taules{grid-template-columns:repeat(3,1fr);gap:0 16px}
+  .barres{gap:3px}
+  .sub{margin-bottom:8px}
+  .llegenda{margin-bottom:8px}
+  .barra-fila .pista{height:11px!important}
+  table.detall th,table.detall td{padding:2px 5px}
+  table.detall caption{padding:8px 0 3px}
+}
+</style>
+
+<div class="barra">
+  <span class="marca">Fundació GironaEst</span>
+  <span class="sep"></span>
+  <span class="temp">Temporada 2025-26</span>
+  <nav id="nav"></nav>
+</div>
+
+<div class="wrap" id="app"></div>
+<div class="tip" id="tip"></div>
+
+<script>
+const BASE = [{"idx":1,"label":"JUG. 1","nom":null,"periode":"ANUAL","estructures":[{"titol":"ESTRUCTURA COORDINATIVA","items":[{"nom":"Passada","usa_mp":true,"usa_mr":false,"mp":null,"mr":null,"obs":null},{"nom":"Control","usa_mp":true,"usa_mr":false,"mp":null,"mr":null,"obs":null},{"nom":"Conducció","usa_mp":true,"usa_mr":false,"mp":null,"mr":null,"obs":null},{"nom":"Regat","usa_mp":true,"usa_mr":false,"mp":null,"mr":null,"obs":null},{"nom":"Passada a la xarxa","usa_mp":true,"usa_mr":false,"mp":null,"mr":null,"obs":null},{"nom":"Perfil","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Protecció","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Entrada","usa_mp":false,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Intercepció","usa_mp":false,"usa_mr":true,"mp":null,"mr":null,"obs":null}],"general_mp":null,"general_mr":null},{"titol":"ESTRUCTURA COGNITIVA","items":[{"nom":"Gestiona el temps del joc","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Equilibra el joc de l'equip","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Dona opcions a companys/es","usa_mp":true,"usa_mr":false,"mp":null,"mr":null,"obs":null},{"nom":"Mobilitza contraris amb pilota","usa_mp":true,"usa_mr":false,"mp":null,"mr":null,"obs":null},{"nom":"Identifica opcions amb pilota","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Redueix opcions a contraris","usa_mp":false,"usa_mr":true,"mp":null,"mr":null,"obs":null}],"general_mp":null,"general_mr":null},{"titol":"ESTRUCTURA EMOTIVO-VOLITIVA","items":[{"nom":"Mostra motivació per jugar","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Té voluntat de participar en el joc","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Afavoreix una bona dinàmica","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Regula les seves emocions","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null}],"general_mp":null,"general_mr":null},{"titol":"ESTR. CREATIVA","items":[{"nom":"Troba diferents solucions","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Imprevisible davant contraris","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"S'adapta a diferents situacions","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null}],"general_mp":null,"general_mr":null},{"titol":"ESTRUCTURA MENTAL","items":[{"nom":"Gestiona el resultat","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Gestiona els errors propis","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Gestiona els errors aliens","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Gestiona els factors externs","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null}],"general_mp":null,"general_mr":null},{"titol":"ESTRUCTURA SOCIO-AFECTIVA","items":[{"nom":"Mostra capacitat de relació","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Identifica els rols dins l'equip","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Empatitza durant el joc","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Influencia positivament l'equip","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Comunica assertivament","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null}],"general_mp":null,"general_mr":null}],"valors":[{"nom":"HUMILITAT","punt":null,"obs":null},{"nom":"ESFORÇ","punt":null,"obs":null},{"nom":"AMBICIÓ","punt":null,"obs":null},{"nom":"RESPECTE","punt":null,"obs":null},{"nom":"JOC EN EQUIP","punt":null,"obs":null}],"valoracio":null},{"idx":2,"label":"JUG. 2","nom":null,"periode":"ANUAL","estructures":[{"titol":"ESTRUCTURA COORDINATIVA","items":[{"nom":"Passada","usa_mp":true,"usa_mr":false,"mp":null,"mr":null,"obs":null},{"nom":"Control","usa_mp":true,"usa_mr":false,"mp":null,"mr":null,"obs":null},{"nom":"Conducció","usa_mp":true,"usa_mr":false,"mp":null,"mr":null,"obs":null},{"nom":"Regat","usa_mp":true,"usa_mr":false,"mp":null,"mr":null,"obs":null},{"nom":"Passada a la xarxa","usa_mp":true,"usa_mr":false,"mp":null,"mr":null,"obs":null},{"nom":"Perfil","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Protecció","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Entrada","usa_mp":false,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Intercepció","usa_mp":false,"usa_mr":true,"mp":null,"mr":null,"obs":null}],"general_mp":null,"general_mr":null},{"titol":"ESTRUCTURA COGNITIVA","items":[{"nom":"Gestiona el temps del joc","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Equilibra el joc de l'equip","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Dona opcions a companys/es","usa_mp":true,"usa_mr":false,"mp":null,"mr":null,"obs":null},{"nom":"Mobilitza contraris amb pilota","usa_mp":true,"usa_mr":false,"mp":null,"mr":null,"obs":null},{"nom":"Identifica opcions amb pilota","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Redueix opcions a contraris","usa_mp":false,"usa_mr":true,"mp":null,"mr":null,"obs":null}],"general_mp":null,"general_mr":null},{"titol":"ESTRUCTURA EMOTIVO-VOLITIVA","items":[{"nom":"Mostra motivació per jugar","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Té voluntat de participar en el joc","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Afavoreix una bona dinàmica","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Regula les seves emocions","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null}],"general_mp":null,"general_mr":null},{"titol":"ESTR. CREATIVA","items":[{"nom":"Troba diferents solucions","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Imprevisible davant contraris","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"S'adapta a diferents situacions","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null}],"general_mp":null,"general_mr":null},{"titol":"ESTRUCTURA MENTAL","items":[{"nom":"Gestiona el resultat","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Gestiona els errors propis","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Gestiona els errors aliens","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Gestiona els factors externs","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null}],"general_mp":null,"general_mr":null},{"titol":"ESTRUCTURA SOCIO-AFECTIVA","items":[{"nom":"Mostra capacitat de relació","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Identifica els rols dins l'equip","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Empatitza durant el joc","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Influencia positivament l'equip","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Comunica assertivament","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null}],"general_mp":null,"general_mr":null}],"valors":[{"nom":"HUMILITAT","punt":null,"obs":null},{"nom":"ESFORÇ","punt":null,"obs":null},{"nom":"AMBICIÓ","punt":null,"obs":null},{"nom":"RESPECTE","punt":null,"obs":null},{"nom":"JOC EN EQUIP","punt":null,"obs":null}],"valoracio":null},{"idx":3,"label":"JUG. 3","nom":null,"periode":"ANUAL","estructures":[{"titol":"ESTRUCTURA COORDINATIVA","items":[{"nom":"Passada","usa_mp":true,"usa_mr":false,"mp":null,"mr":null,"obs":null},{"nom":"Control","usa_mp":true,"usa_mr":false,"mp":null,"mr":null,"obs":null},{"nom":"Conducció","usa_mp":true,"usa_mr":false,"mp":null,"mr":null,"obs":null},{"nom":"Regat","usa_mp":true,"usa_mr":false,"mp":null,"mr":null,"obs":null},{"nom":"Passada a la xarxa","usa_mp":true,"usa_mr":false,"mp":null,"mr":null,"obs":null},{"nom":"Perfil","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Protecció","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Entrada","usa_mp":false,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Intercepció","usa_mp":false,"usa_mr":true,"mp":null,"mr":null,"obs":null}],"general_mp":null,"general_mr":null},{"titol":"ESTRUCTURA COGNITIVA","items":[{"nom":"Gestiona el temps del joc","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Equilibra el joc de l'equip","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Dona opcions a companys/es","usa_mp":true,"usa_mr":false,"mp":null,"mr":null,"obs":null},{"nom":"Mobilitza contraris amb pilota","usa_mp":true,"usa_mr":false,"mp":null,"mr":null,"obs":null},{"nom":"Identifica opcions amb pilota","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Redueix opcions a contraris","usa_mp":false,"usa_mr":true,"mp":null,"mr":null,"obs":null}],"general_mp":null,"general_mr":null},{"titol":"ESTRUCTURA EMOTIVO-VOLITIVA","items":[{"nom":"Mostra motivació per jugar","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Té voluntat de participar en el joc","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Afavoreix una bona dinàmica","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Regula les seves emocions","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null}],"general_mp":null,"general_mr":null},{"titol":"ESTR. CREATIVA","items":[{"nom":"Troba diferents solucions","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Imprevisible davant contraris","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"S'adapta a diferents situacions","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null}],"general_mp":null,"general_mr":null},{"titol":"ESTRUCTURA MENTAL","items":[{"nom":"Gestiona el resultat","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Gestiona els errors propis","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Gestiona els errors aliens","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Gestiona els factors externs","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null}],"general_mp":null,"general_mr":null},{"titol":"ESTRUCTURA SOCIO-AFECTIVA","items":[{"nom":"Mostra capacitat de relació","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Identifica els rols dins l'equip","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Empatitza durant el joc","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Influencia positivament l'equip","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Comunica assertivament","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null}],"general_mp":null,"general_mr":null}],"valors":[{"nom":"HUMILITAT","punt":null,"obs":null},{"nom":"ESFORÇ","punt":null,"obs":null},{"nom":"AMBICIÓ","punt":null,"obs":null},{"nom":"RESPECTE","punt":null,"obs":null},{"nom":"JOC EN EQUIP","punt":null,"obs":null}],"valoracio":null},{"idx":4,"label":"JUG. 4","nom":null,"periode":"ANUAL","estructures":[{"titol":"ESTRUCTURA COORDINATIVA","items":[{"nom":"Passada","usa_mp":true,"usa_mr":false,"mp":null,"mr":null,"obs":null},{"nom":"Control","usa_mp":true,"usa_mr":false,"mp":null,"mr":null,"obs":null},{"nom":"Conducció","usa_mp":true,"usa_mr":false,"mp":null,"mr":null,"obs":null},{"nom":"Regat","usa_mp":true,"usa_mr":false,"mp":null,"mr":null,"obs":null},{"nom":"Passada a la xarxa","usa_mp":true,"usa_mr":false,"mp":null,"mr":null,"obs":null},{"nom":"Perfil","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Protecció","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Entrada","usa_mp":false,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Intercepció","usa_mp":false,"usa_mr":true,"mp":null,"mr":null,"obs":null}],"general_mp":null,"general_mr":null},{"titol":"ESTRUCTURA COGNITIVA","items":[{"nom":"Gestiona el temps del joc","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Equilibra el joc de l'equip","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Dona opcions a companys/es","usa_mp":true,"usa_mr":false,"mp":null,"mr":null,"obs":null},{"nom":"Mobilitza contraris amb pilota","usa_mp":true,"usa_mr":false,"mp":null,"mr":null,"obs":null},{"nom":"Identifica opcions amb pilota","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Redueix opcions a contraris","usa_mp":false,"usa_mr":true,"mp":null,"mr":null,"obs":null}],"general_mp":null,"general_mr":null},{"titol":"ESTRUCTURA EMOTIVO-VOLITIVA","items":[{"nom":"Mostra motivació per jugar","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Té voluntat de participar en el joc","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Afavoreix una bona dinàmica","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Regula les seves emocions","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null}],"general_mp":null,"general_mr":null},{"titol":"ESTR. CREATIVA","items":[{"nom":"Troba diferents solucions","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Imprevisible davant contraris","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"S'adapta a diferents situacions","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null}],"general_mp":null,"general_mr":null},{"titol":"ESTRUCTURA MENTAL","items":[{"nom":"Gestiona el resultat","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Gestiona els errors propis","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Gestiona els errors aliens","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Gestiona els factors externs","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null}],"general_mp":null,"general_mr":null},{"titol":"ESTRUCTURA SOCIO-AFECTIVA","items":[{"nom":"Mostra capacitat de relació","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Identifica els rols dins l'equip","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Empatitza durant el joc","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Influencia positivament l'equip","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Comunica assertivament","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null}],"general_mp":null,"general_mr":null}],"valors":[{"nom":"HUMILITAT","punt":null,"obs":null},{"nom":"ESFORÇ","punt":null,"obs":null},{"nom":"AMBICIÓ","punt":null,"obs":null},{"nom":"RESPECTE","punt":null,"obs":null},{"nom":"JOC EN EQUIP","punt":null,"obs":null}],"valoracio":null},{"idx":5,"label":"JUG. 5","nom":null,"periode":"ANUAL","estructures":[{"titol":"ESTRUCTURA COORDINATIVA","items":[{"nom":"Passada","usa_mp":true,"usa_mr":false,"mp":null,"mr":null,"obs":null},{"nom":"Control","usa_mp":true,"usa_mr":false,"mp":null,"mr":null,"obs":null},{"nom":"Conducció","usa_mp":true,"usa_mr":false,"mp":null,"mr":null,"obs":null},{"nom":"Regat","usa_mp":true,"usa_mr":false,"mp":null,"mr":null,"obs":null},{"nom":"Passada a la xarxa","usa_mp":true,"usa_mr":false,"mp":null,"mr":null,"obs":null},{"nom":"Perfil","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Protecció","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Entrada","usa_mp":false,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Intercepció","usa_mp":false,"usa_mr":true,"mp":null,"mr":null,"obs":null}],"general_mp":null,"general_mr":null},{"titol":"ESTRUCTURA COGNITIVA","items":[{"nom":"Gestiona el temps del joc","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Equilibra el joc de l'equip","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Dona opcions a companys/es","usa_mp":true,"usa_mr":false,"mp":null,"mr":null,"obs":null},{"nom":"Mobilitza contraris amb pilota","usa_mp":true,"usa_mr":false,"mp":null,"mr":null,"obs":null},{"nom":"Identifica opcions amb pilota","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Redueix opcions a contraris","usa_mp":false,"usa_mr":true,"mp":null,"mr":null,"obs":null}],"general_mp":null,"general_mr":null},{"titol":"ESTRUCTURA EMOTIVO-VOLITIVA","items":[{"nom":"Mostra motivació per jugar","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Té voluntat de participar en el joc","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Afavoreix una bona dinàmica","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Regula les seves emocions","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null}],"general_mp":null,"general_mr":null},{"titol":"ESTR. CREATIVA","items":[{"nom":"Troba diferents solucions","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Imprevisible davant contraris","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"S'adapta a diferents situacions","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null}],"general_mp":null,"general_mr":null},{"titol":"ESTRUCTURA MENTAL","items":[{"nom":"Gestiona el resultat","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Gestiona els errors propis","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Gestiona els errors aliens","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Gestiona els factors externs","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null}],"general_mp":null,"general_mr":null},{"titol":"ESTRUCTURA SOCIO-AFECTIVA","items":[{"nom":"Mostra capacitat de relació","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Identifica els rols dins l'equip","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Empatitza durant el joc","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Influencia positivament l'equip","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Comunica assertivament","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null}],"general_mp":null,"general_mr":null}],"valors":[{"nom":"HUMILITAT","punt":null,"obs":null},{"nom":"ESFORÇ","punt":null,"obs":null},{"nom":"AMBICIÓ","punt":null,"obs":null},{"nom":"RESPECTE","punt":null,"obs":null},{"nom":"JOC EN EQUIP","punt":null,"obs":null}],"valoracio":null},{"idx":6,"label":"JUG. 6","nom":null,"periode":"ANUAL","estructures":[{"titol":"ESTRUCTURA COORDINATIVA","items":[{"nom":"Passada","usa_mp":true,"usa_mr":false,"mp":null,"mr":null,"obs":null},{"nom":"Control","usa_mp":true,"usa_mr":false,"mp":null,"mr":null,"obs":null},{"nom":"Conducció","usa_mp":true,"usa_mr":false,"mp":null,"mr":null,"obs":null},{"nom":"Regat","usa_mp":true,"usa_mr":false,"mp":null,"mr":null,"obs":null},{"nom":"Passada a la xarxa","usa_mp":true,"usa_mr":false,"mp":null,"mr":null,"obs":null},{"nom":"Perfil","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Protecció","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Entrada","usa_mp":false,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Intercepció","usa_mp":false,"usa_mr":true,"mp":null,"mr":null,"obs":null}],"general_mp":null,"general_mr":null},{"titol":"ESTRUCTURA COGNITIVA","items":[{"nom":"Gestiona el temps del joc","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Equilibra el joc de l'equip","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Dona opcions a companys/es","usa_mp":true,"usa_mr":false,"mp":null,"mr":null,"obs":null},{"nom":"Mobilitza contraris amb pilota","usa_mp":true,"usa_mr":false,"mp":null,"mr":null,"obs":null},{"nom":"Identifica opcions amb pilota","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Redueix opcions a contraris","usa_mp":false,"usa_mr":true,"mp":null,"mr":null,"obs":null}],"general_mp":null,"general_mr":null},{"titol":"ESTRUCTURA EMOTIVO-VOLITIVA","items":[{"nom":"Mostra motivació per jugar","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Té voluntat de participar en el joc","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Afavoreix una bona dinàmica","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Regula les seves emocions","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null}],"general_mp":null,"general_mr":null},{"titol":"ESTR. CREATIVA","items":[{"nom":"Troba diferents solucions","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Imprevisible davant contraris","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"S'adapta a diferents situacions","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null}],"general_mp":null,"general_mr":null},{"titol":"ESTRUCTURA MENTAL","items":[{"nom":"Gestiona el resultat","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Gestiona els errors propis","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Gestiona els errors aliens","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Gestiona els factors externs","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null}],"general_mp":null,"general_mr":null},{"titol":"ESTRUCTURA SOCIO-AFECTIVA","items":[{"nom":"Mostra capacitat de relació","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Identifica els rols dins l'equip","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Empatitza durant el joc","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Influencia positivament l'equip","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Comunica assertivament","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null}],"general_mp":null,"general_mr":null}],"valors":[{"nom":"HUMILITAT","punt":null,"obs":null},{"nom":"ESFORÇ","punt":null,"obs":null},{"nom":"AMBICIÓ","punt":null,"obs":null},{"nom":"RESPECTE","punt":null,"obs":null},{"nom":"JOC EN EQUIP","punt":null,"obs":null}],"valoracio":null},{"idx":7,"label":"JUG. 7","nom":null,"periode":"ANUAL","estructures":[{"titol":"ESTRUCTURA COORDINATIVA","items":[{"nom":"Passada","usa_mp":true,"usa_mr":false,"mp":null,"mr":null,"obs":null},{"nom":"Control","usa_mp":true,"usa_mr":false,"mp":null,"mr":null,"obs":null},{"nom":"Conducció","usa_mp":true,"usa_mr":false,"mp":null,"mr":null,"obs":null},{"nom":"Regat","usa_mp":true,"usa_mr":false,"mp":null,"mr":null,"obs":null},{"nom":"Passada a la xarxa","usa_mp":true,"usa_mr":false,"mp":null,"mr":null,"obs":null},{"nom":"Perfil","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Protecció","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Entrada","usa_mp":false,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Intercepció","usa_mp":false,"usa_mr":true,"mp":null,"mr":null,"obs":null}],"general_mp":null,"general_mr":null},{"titol":"ESTRUCTURA COGNITIVA","items":[{"nom":"Gestiona el temps del joc","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Equilibra el joc de l'equip","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Dona opcions a companys/es","usa_mp":true,"usa_mr":false,"mp":null,"mr":null,"obs":null},{"nom":"Mobilitza contraris amb pilota","usa_mp":true,"usa_mr":false,"mp":null,"mr":null,"obs":null},{"nom":"Identifica opcions amb pilota","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Redueix opcions a contraris","usa_mp":false,"usa_mr":true,"mp":null,"mr":null,"obs":null}],"general_mp":null,"general_mr":null},{"titol":"ESTRUCTURA EMOTIVO-VOLITIVA","items":[{"nom":"Mostra motivació per jugar","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Té voluntat de participar en el joc","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Afavoreix una bona dinàmica","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Regula les seves emocions","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null}],"general_mp":null,"general_mr":null},{"titol":"ESTR. CREATIVA","items":[{"nom":"Troba diferents solucions","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Imprevisible davant contraris","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"S'adapta a diferents situacions","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null}],"general_mp":null,"general_mr":null},{"titol":"ESTRUCTURA MENTAL","items":[{"nom":"Gestiona el resultat","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Gestiona els errors propis","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Gestiona els errors aliens","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Gestiona els factors externs","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null}],"general_mp":null,"general_mr":null},{"titol":"ESTRUCTURA SOCIO-AFECTIVA","items":[{"nom":"Mostra capacitat de relació","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Identifica els rols dins l'equip","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Empatitza durant el joc","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Influencia positivament l'equip","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Comunica assertivament","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null}],"general_mp":null,"general_mr":null}],"valors":[{"nom":"HUMILITAT","punt":null,"obs":null},{"nom":"ESFORÇ","punt":null,"obs":null},{"nom":"AMBICIÓ","punt":null,"obs":null},{"nom":"RESPECTE","punt":null,"obs":null},{"nom":"JOC EN EQUIP","punt":null,"obs":null}],"valoracio":null},{"idx":8,"label":"JUG. 8","nom":null,"periode":"ANUAL","estructures":[{"titol":"ESTRUCTURA COORDINATIVA","items":[{"nom":"Passada","usa_mp":true,"usa_mr":false,"mp":null,"mr":null,"obs":null},{"nom":"Control","usa_mp":true,"usa_mr":false,"mp":null,"mr":null,"obs":null},{"nom":"Conducció","usa_mp":true,"usa_mr":false,"mp":null,"mr":null,"obs":null},{"nom":"Regat","usa_mp":true,"usa_mr":false,"mp":null,"mr":null,"obs":null},{"nom":"Passada a la xarxa","usa_mp":true,"usa_mr":false,"mp":null,"mr":null,"obs":null},{"nom":"Perfil","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Protecció","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Entrada","usa_mp":false,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Intercepció","usa_mp":false,"usa_mr":true,"mp":null,"mr":null,"obs":null}],"general_mp":null,"general_mr":null},{"titol":"ESTRUCTURA COGNITIVA","items":[{"nom":"Gestiona el temps del joc","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Equilibra el joc de l'equip","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Dona opcions a companys/es","usa_mp":true,"usa_mr":false,"mp":null,"mr":null,"obs":null},{"nom":"Mobilitza contraris amb pilota","usa_mp":true,"usa_mr":false,"mp":null,"mr":null,"obs":null},{"nom":"Identifica opcions amb pilota","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Redueix opcions a contraris","usa_mp":false,"usa_mr":true,"mp":null,"mr":null,"obs":null}],"general_mp":null,"general_mr":null},{"titol":"ESTRUCTURA EMOTIVO-VOLITIVA","items":[{"nom":"Mostra motivació per jugar","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Té voluntat de participar en el joc","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Afavoreix una bona dinàmica","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Regula les seves emocions","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null}],"general_mp":null,"general_mr":null},{"titol":"ESTR. CREATIVA","items":[{"nom":"Troba diferents solucions","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Imprevisible davant contraris","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"S'adapta a diferents situacions","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null}],"general_mp":null,"general_mr":null},{"titol":"ESTRUCTURA MENTAL","items":[{"nom":"Gestiona el resultat","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Gestiona els errors propis","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Gestiona els errors aliens","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Gestiona els factors externs","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null}],"general_mp":null,"general_mr":null},{"titol":"ESTRUCTURA SOCIO-AFECTIVA","items":[{"nom":"Mostra capacitat de relació","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Identifica els rols dins l'equip","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Empatitza durant el joc","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Influencia positivament l'equip","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Comunica assertivament","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null}],"general_mp":null,"general_mr":null}],"valors":[{"nom":"HUMILITAT","punt":null,"obs":null},{"nom":"ESFORÇ","punt":null,"obs":null},{"nom":"AMBICIÓ","punt":null,"obs":null},{"nom":"RESPECTE","punt":null,"obs":null},{"nom":"JOC EN EQUIP","punt":null,"obs":null}],"valoracio":null},{"idx":9,"label":"JUG. 9","nom":null,"periode":"ANUAL","estructures":[{"titol":"ESTRUCTURA COORDINATIVA","items":[{"nom":"Passada","usa_mp":true,"usa_mr":false,"mp":null,"mr":null,"obs":null},{"nom":"Control","usa_mp":true,"usa_mr":false,"mp":null,"mr":null,"obs":null},{"nom":"Conducció","usa_mp":true,"usa_mr":false,"mp":null,"mr":null,"obs":null},{"nom":"Regat","usa_mp":true,"usa_mr":false,"mp":null,"mr":null,"obs":null},{"nom":"Passada a la xarxa","usa_mp":true,"usa_mr":false,"mp":null,"mr":null,"obs":null},{"nom":"Perfil","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Protecció","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Entrada","usa_mp":false,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Intercepció","usa_mp":false,"usa_mr":true,"mp":null,"mr":null,"obs":null}],"general_mp":null,"general_mr":null},{"titol":"ESTRUCTURA COGNITIVA","items":[{"nom":"Gestiona el temps del joc","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Equilibra el joc de l'equip","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Dona opcions a companys/es","usa_mp":true,"usa_mr":false,"mp":null,"mr":null,"obs":null},{"nom":"Mobilitza contraris amb pilota","usa_mp":true,"usa_mr":false,"mp":null,"mr":null,"obs":null},{"nom":"Identifica opcions amb pilota","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Redueix opcions a contraris","usa_mp":false,"usa_mr":true,"mp":null,"mr":null,"obs":null}],"general_mp":null,"general_mr":null},{"titol":"ESTRUCTURA EMOTIVO-VOLITIVA","items":[{"nom":"Mostra motivació per jugar","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Té voluntat de participar en el joc","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Afavoreix una bona dinàmica","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Regula les seves emocions","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null}],"general_mp":null,"general_mr":null},{"titol":"ESTR. CREATIVA","items":[{"nom":"Troba diferents solucions","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Imprevisible davant contraris","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"S'adapta a diferents situacions","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null}],"general_mp":null,"general_mr":null},{"titol":"ESTRUCTURA MENTAL","items":[{"nom":"Gestiona el resultat","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Gestiona els errors propis","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Gestiona els errors aliens","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Gestiona els factors externs","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null}],"general_mp":null,"general_mr":null},{"titol":"ESTRUCTURA SOCIO-AFECTIVA","items":[{"nom":"Mostra capacitat de relació","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Identifica els rols dins l'equip","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Empatitza durant el joc","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Influencia positivament l'equip","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Comunica assertivament","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null}],"general_mp":null,"general_mr":null}],"valors":[{"nom":"HUMILITAT","punt":null,"obs":null},{"nom":"ESFORÇ","punt":null,"obs":null},{"nom":"AMBICIÓ","punt":null,"obs":null},{"nom":"RESPECTE","punt":null,"obs":null},{"nom":"JOC EN EQUIP","punt":null,"obs":null}],"valoracio":null},{"idx":10,"label":"JUG. 10","nom":null,"periode":"ANUAL","estructures":[{"titol":"ESTRUCTURA COORDINATIVA","items":[{"nom":"Passada","usa_mp":true,"usa_mr":false,"mp":null,"mr":null,"obs":null},{"nom":"Control","usa_mp":true,"usa_mr":false,"mp":null,"mr":null,"obs":null},{"nom":"Conducció","usa_mp":true,"usa_mr":false,"mp":null,"mr":null,"obs":null},{"nom":"Regat","usa_mp":true,"usa_mr":false,"mp":null,"mr":null,"obs":null},{"nom":"Passada a la xarxa","usa_mp":true,"usa_mr":false,"mp":null,"mr":null,"obs":null},{"nom":"Perfil","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Protecció","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Entrada","usa_mp":false,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Intercepció","usa_mp":false,"usa_mr":true,"mp":null,"mr":null,"obs":null}],"general_mp":null,"general_mr":null},{"titol":"ESTRUCTURA COGNITIVA","items":[{"nom":"Gestiona el temps del joc","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Equilibra el joc de l'equip","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Dona opcions a companys/es","usa_mp":true,"usa_mr":false,"mp":null,"mr":null,"obs":null},{"nom":"Mobilitza contraris amb pilota","usa_mp":true,"usa_mr":false,"mp":null,"mr":null,"obs":null},{"nom":"Identifica opcions amb pilota","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Redueix opcions a contraris","usa_mp":false,"usa_mr":true,"mp":null,"mr":null,"obs":null}],"general_mp":null,"general_mr":null},{"titol":"ESTRUCTURA EMOTIVO-VOLITIVA","items":[{"nom":"Mostra motivació per jugar","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Té voluntat de participar en el joc","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Afavoreix una bona dinàmica","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Regula les seves emocions","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null}],"general_mp":null,"general_mr":null},{"titol":"ESTR. CREATIVA","items":[{"nom":"Troba diferents solucions","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Imprevisible davant contraris","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"S'adapta a diferents situacions","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null}],"general_mp":null,"general_mr":null},{"titol":"ESTRUCTURA MENTAL","items":[{"nom":"Gestiona el resultat","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Gestiona els errors propis","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Gestiona els errors aliens","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Gestiona els factors externs","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null}],"general_mp":null,"general_mr":null},{"titol":"ESTRUCTURA SOCIO-AFECTIVA","items":[{"nom":"Mostra capacitat de relació","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Identifica els rols dins l'equip","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Empatitza durant el joc","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Influencia positivament l'equip","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Comunica assertivament","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null}],"general_mp":null,"general_mr":null}],"valors":[{"nom":"HUMILITAT","punt":null,"obs":null},{"nom":"ESFORÇ","punt":null,"obs":null},{"nom":"AMBICIÓ","punt":null,"obs":null},{"nom":"RESPECTE","punt":null,"obs":null},{"nom":"JOC EN EQUIP","punt":null,"obs":null}],"valoracio":null},{"idx":11,"label":"JUG. 11","nom":null,"periode":"ANUAL","estructures":[{"titol":"ESTRUCTURA COORDINATIVA","items":[{"nom":"Passada","usa_mp":true,"usa_mr":false,"mp":null,"mr":null,"obs":null},{"nom":"Control","usa_mp":true,"usa_mr":false,"mp":null,"mr":null,"obs":null},{"nom":"Conducció","usa_mp":true,"usa_mr":false,"mp":null,"mr":null,"obs":null},{"nom":"Regat","usa_mp":true,"usa_mr":false,"mp":null,"mr":null,"obs":null},{"nom":"Passada a la xarxa","usa_mp":true,"usa_mr":false,"mp":null,"mr":null,"obs":null},{"nom":"Perfil","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Protecció","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Entrada","usa_mp":false,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Intercepció","usa_mp":false,"usa_mr":true,"mp":null,"mr":null,"obs":null}],"general_mp":null,"general_mr":null},{"titol":"ESTRUCTURA COGNITIVA","items":[{"nom":"Gestiona el temps del joc","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Equilibra el joc de l'equip","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Dona opcions a companys/es","usa_mp":true,"usa_mr":false,"mp":null,"mr":null,"obs":null},{"nom":"Mobilitza contraris amb pilota","usa_mp":true,"usa_mr":false,"mp":null,"mr":null,"obs":null},{"nom":"Identifica opcions amb pilota","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Redueix opcions a contraris","usa_mp":false,"usa_mr":true,"mp":null,"mr":null,"obs":null}],"general_mp":null,"general_mr":null},{"titol":"ESTRUCTURA EMOTIVO-VOLITIVA","items":[{"nom":"Mostra motivació per jugar","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Té voluntat de participar en el joc","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Afavoreix una bona dinàmica","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Regula les seves emocions","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null}],"general_mp":null,"general_mr":null},{"titol":"ESTR. CREATIVA","items":[{"nom":"Troba diferents solucions","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Imprevisible davant contraris","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"S'adapta a diferents situacions","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null}],"general_mp":null,"general_mr":null},{"titol":"ESTRUCTURA MENTAL","items":[{"nom":"Gestiona el resultat","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Gestiona els errors propis","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Gestiona els errors aliens","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Gestiona els factors externs","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null}],"general_mp":null,"general_mr":null},{"titol":"ESTRUCTURA SOCIO-AFECTIVA","items":[{"nom":"Mostra capacitat de relació","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Identifica els rols dins l'equip","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Empatitza durant el joc","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Influencia positivament l'equip","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Comunica assertivament","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null}],"general_mp":null,"general_mr":null}],"valors":[{"nom":"HUMILITAT","punt":null,"obs":null},{"nom":"ESFORÇ","punt":null,"obs":null},{"nom":"AMBICIÓ","punt":null,"obs":null},{"nom":"RESPECTE","punt":null,"obs":null},{"nom":"JOC EN EQUIP","punt":null,"obs":null}],"valoracio":null},{"idx":12,"label":"JUG. 12","nom":null,"periode":"ANUAL","estructures":[{"titol":"ESTRUCTURA COORDINATIVA","items":[{"nom":"Passada","usa_mp":true,"usa_mr":false,"mp":null,"mr":null,"obs":null},{"nom":"Control","usa_mp":true,"usa_mr":false,"mp":null,"mr":null,"obs":null},{"nom":"Conducció","usa_mp":true,"usa_mr":false,"mp":null,"mr":null,"obs":null},{"nom":"Regat","usa_mp":true,"usa_mr":false,"mp":null,"mr":null,"obs":null},{"nom":"Passada a la xarxa","usa_mp":true,"usa_mr":false,"mp":null,"mr":null,"obs":null},{"nom":"Perfil","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Protecció","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Entrada","usa_mp":false,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Intercepció","usa_mp":false,"usa_mr":true,"mp":null,"mr":null,"obs":null}],"general_mp":null,"general_mr":null},{"titol":"ESTRUCTURA COGNITIVA","items":[{"nom":"Gestiona el temps del joc","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Equilibra el joc de l'equip","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Dona opcions a companys/es","usa_mp":true,"usa_mr":false,"mp":null,"mr":null,"obs":null},{"nom":"Mobilitza contraris amb pilota","usa_mp":true,"usa_mr":false,"mp":null,"mr":null,"obs":null},{"nom":"Identifica opcions amb pilota","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Redueix opcions a contraris","usa_mp":false,"usa_mr":true,"mp":null,"mr":null,"obs":null}],"general_mp":null,"general_mr":null},{"titol":"ESTRUCTURA EMOTIVO-VOLITIVA","items":[{"nom":"Mostra motivació per jugar","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Té voluntat de participar en el joc","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Afavoreix una bona dinàmica","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Regula les seves emocions","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null}],"general_mp":null,"general_mr":null},{"titol":"ESTR. CREATIVA","items":[{"nom":"Troba diferents solucions","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Imprevisible davant contraris","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"S'adapta a diferents situacions","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null}],"general_mp":null,"general_mr":null},{"titol":"ESTRUCTURA MENTAL","items":[{"nom":"Gestiona el resultat","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Gestiona els errors propis","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Gestiona els errors aliens","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Gestiona els factors externs","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null}],"general_mp":null,"general_mr":null},{"titol":"ESTRUCTURA SOCIO-AFECTIVA","items":[{"nom":"Mostra capacitat de relació","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Identifica els rols dins l'equip","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Empatitza durant el joc","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Influencia positivament l'equip","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null},{"nom":"Comunica assertivament","usa_mp":true,"usa_mr":true,"mp":null,"mr":null,"obs":null}],"general_mp":null,"general_mr":null}],"valors":[{"nom":"HUMILITAT","punt":null,"obs":null},{"nom":"ESFORÇ","punt":null,"obs":null},{"nom":"AMBICIÓ","punt":null,"obs":null},{"nom":"RESPECTE","punt":null,"obs":null},{"nom":"JOC EN EQUIP","punt":null,"obs":null}],"valoracio":null}];
+
+const NIVELLS = [
+  ["–0,5", "Nivell entreno"],
+  ["0,5 – 1,5", "Nivell inicial"],
+  ["1,5 – 2,5", "En desenvolupament"],
+  ["2,5 – 3,5", "Nivell alt"],
+  ["+3,5", "Nivell molt alt"]
+];
+/* camps de la fitxa, com les files 15-20 del bloc de jugador del full INFORMES */
+const CAMPS_FITXA = [
+  ["equip", "Equip", "Aleví A"],
+  ["categoria", "Categoria", "Aleví"],
+  ["naixement", "Any de naixement", "2013"],
+  ["dorsal", "Dorsal", "10"],
+  ["anysFGE", "Anys a la FGE", "3"],
+  ["formalitat", "Formalitat", "75%"],
+  ["educador", "Educador/a · tècnic/a", "Nom i cognoms"]
+];
+const PROGRAMES = ["Fundació GironaEst", "Perfeccionament Catalunya"];
+const CURT = {
+  "ESTRUCTURA COORDINATIVA": "COORD.",
+  "ESTRUCTURA COGNITIVA": "COGN.",
+  "ESTRUCTURA EMOTIVO-VOLITIVA": "EMO-VOL.",
+  "ESTR. CREATIVA": "CREAT.",
+  "ESTRUCTURA MENTAL": "MENTAL",
+  "ESTRUCTURA SOCIO-AFECTIVA": "SOCIO-AF."
+};
+const llarg = t => t.replace("ESTRUCTURA ", "").replace("ESTR. ", "");
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const num = (v, dec = 1) => (v === null || v === undefined || v === "" || isNaN(v)) ? "" : Number(v).toFixed(dec).replace(".", ",");
+
+/* ============ ESTAT I DESAT ============ */
+const CLAU = "fge-avaluacio-v1";
+const POT_DESAR = (() => {
+  try{ localStorage.setItem(CLAU + "-t", "1"); localStorage.removeItem(CLAU + "-t"); return true; }
+  catch(e){ return false; }
+})();
+let DADES = carrega();
+
+function nou(){
+  return JSON.parse(JSON.stringify(BASE)).map(p => {
+    p.fitxa = {}; p.textos = {};
+    return p;
+  });
+}
+function carrega(){
+  try{
+    const cru = localStorage.getItem(CLAU);
+    if (!cru) return nou();
+    const d = JSON.parse(cru);
+    if (!Array.isArray(d) || d.length !== BASE.length) return nou();
+    return fusiona(d);
+  }catch(e){ return nou(); }
+}
+/* els noms de la rúbrica manen sempre; del desat només en surten els valors */
+function fusiona(desat){
+  return nou().map((p, i) => {
+    const q = desat[i]; if (!q) return p;
+    p.nom = q.nom ?? null;
+    p.fitxa = q.fitxa || {};
+    p.textos = q.textos || {};
+    p.estructures.forEach((st, si) => st.items.forEach((it, ii) => {
+      const r = q.estructures?.[si]?.items?.[ii];
+      if (r){ it.mp = r.mp ?? null; it.mr = r.mr ?? null; it.obs = r.obs ?? null; }
+    }));
+    p.valors.forEach((v, vi) => {
+      const r = q.valors?.[vi];
+      if (r){ v.punt = r.punt ?? null; v.obs = r.obs ?? null; }
+    });
+    return p;
+  });
+}
+let pendent = null;
+function desa(){
+  clearTimeout(pendent);
+  pendent = setTimeout(() => {
+    try{ localStorage.setItem(CLAU, JSON.stringify(DADES)); }catch(e){}
+  }, 250);
+}
+
+/* ============ CÀLCULS ============ */
+function general(st, clau){
+  const v = st.items.map(i => i[clau]).filter(x => typeof x === "number");
+  return v.length ? v.reduce((a, b) => a + b, 0) / v.length : null;
+}
+function mitjana(p){
+  const g = [];
+  p.estructures.forEach(st => {
+    ["mp", "mr"].forEach(c => { const x = general(st, c); if (x !== null) g.push(x); });
+  });
+  return g.length ? g.reduce((a, b) => a + b, 0) / g.length : null;
+}
+function nivell(v){
+  if (v === null) return "";
+  if (v < 0.5) return "Nivell entreno";
+  if (v < 1.5) return "Nivell inicial";
+  if (v < 2.5) return "En desenvolupament";
+  if (v < 3.5) return "Nivell alt";
+  return "Nivell molt alt";
+}
+
+/* ============ TOOLTIP ============ */
+const tip = document.getElementById("tip");
+function mostraTip(e, html){
+  tip.innerHTML = html; tip.style.opacity = "1";
+  const r = tip.getBoundingClientRect();
+  let x = e.clientX + 14, y = e.clientY - r.height - 10;
+  if (x + r.width > innerWidth - 8) x = e.clientX - r.width - 14;
+  if (y < 8) y = e.clientY + 16;
+  tip.style.left = x + "px"; tip.style.top = y + "px";
+}
+function amagaTip(){ tip.style.opacity = "0"; }
+document.addEventListener("scroll", amagaTip, true);
+
+/* ============ VISTA: QUADRE ============ */
+function vistaQuadre(){
+  const p0 = DADES[0];
+  let cap1 = `<th class="c-titol cantonada" colspan="2">AVALUACIÓ PEDAGÒGICA</th>`;
+  let cap2 = `<th class="c-periode cantonada" colspan="2"></th>`;
+  let cap3 = `<th class="c-jug cantonada" colspan="2"></th>`;
+  let cap4 = `<th class="c-sub cantonada" colspan="2"></th>`;
+
+  DADES.forEach(p => {
+    cap1 += `<th class="c-titol" colspan="3"></th>`;
+    cap2 += `<th class="c-periode" colspan="3">${esc(p.periode)}</th>`;
+    cap3 += `<th class="c-jug" colspan="2"><a href="#/informe/${p.idx}">${esc(p.label)} ↗</a></th>`
+          + `<th class="c-jug"><input class="nom" type="text" placeholder="Nom del jugador/a"
+               value="${esc(p.nom || "")}" data-p="${p.idx}" data-f="nom" aria-label="Nom del jugador ${p.idx}"></th>`;
+    cap4 += `<th class="c-sub">MP</th><th class="c-sub">MR</th><th class="c-sub">OBSERVACIONS</th>`;
+  });
+
+  let cos = "";
+  p0.estructures.forEach((st, si) => {
+    const nfiles = st.items.length + 1;
+    st.items.forEach((it, ii) => {
+      cos += `<tr>`;
+      if (ii === 0) cos += `<th class="cat" rowspan="${nfiles}">${esc(llarg(st.titol))}</th>`;
+      cos += `<td class="item">${esc(it.nom)}</td>`;
+      DADES.forEach(p => {
+        const c = p.estructures[si].items[ii];
+        cos += cel(p.idx, si, ii, "mp", c.mp, c.usa_mp, it.nom)
+             + cel(p.idx, si, ii, "mr", c.mr, c.usa_mr, it.nom)
+             + `<td class="obs"><input class="o" type="text" placeholder="Observacions"
+                  value="${esc(c.obs || "")}" data-p="${p.idx}" data-e="${si}" data-i="${ii}" data-f="obs"
+                  aria-label="Observacions"></td>`;
+      });
+      cos += `</tr>`;
+    });
+    cos += `<tr class="general"><td class="item">GENERAL</td>`;
+    DADES.forEach(p => {
+      cos += `<td class="num" data-gen="${p.idx}-${si}-mp">${num(general(p.estructures[si], "mp"))}</td>`
+           + `<td class="num" data-gen="${p.idx}-${si}-mr">${num(general(p.estructures[si], "mr"))}</td>`
+           + `<td class="obs" style="background:var(--verd-clar)"></td>`;
+    });
+    cos += `</tr><tr class="espai"><th class="cat"></th><td class="item"></td><td colspan="${DADES.length * 3}"></td></tr>`;
+  });
+
+  p0.valors.forEach((v, vi) => {
+    cos += `<tr class="valor">`;
+    if (vi === 0) cos += `<th class="cat or" rowspan="${p0.valors.length}">VALORS</th>`;
+    cos += `<td class="item">${esc(v.nom)}</td>`;
+    DADES.forEach(p => {
+      const c = p.valors[vi];
+      cos += `<td class="num">${tria(c.punt, `data-p="${p.idx}" data-v="${vi}" data-f="punt"`, v.nom)}</td>`
+           + `<td class="obs" colspan="2"><input class="o" type="text" placeholder="Observacions"
+                value="${esc(c.obs || "")}" data-p="${p.idx}" data-v="${vi}" data-f="obs" aria-label="Observacions"></td>`;
+    });
+    cos += `</tr>`;
+  });
+
+  return `
+  <div class="cap-quadre">
+    <div>
+      <h1>Avaluació pedagògica</h1>
+      <p>Tria la nota d'1 a 4 al desplegable de cada casella, com al full de càlcul. Les files GENERAL fan la mitjana soles i tot el que entris aquí passa a l'informe de cada jugador/a${POT_DESAR ? ", que després pots descarregar en PDF. Les dades es desen al teu navegador" : ""}.</p>
+    </div>
+  </div>
+
+  <div class="llegenda-nivells">${NIVELLS.map(n => `<div><b>${n[0]}</b>${n[1]}</div>`).join("")}</div>
+
+  <div class="eines">
+    <button class="boto" type="button" id="obreCopia">Còpia de seguretat</button>
+    <label class="boto" for="pujaDades">Carrega una còpia</label>
+    <input type="file" id="pujaDades" accept=".json,application/json,.txt,text/plain" hidden>
+    <button class="boto" type="button" id="buida">Buida-ho tot</button>
+    <span class="nota" id="avisDades">${POT_DESAR ? "" : "Aquest navegador no desa res en aquesta finestra (potser és una finestra privada): fes-te la còpia abans de tancar-la."}</span>
+  </div>
+
+  <div class="plafo" id="plafoCopia" hidden>
+    <p class="plafo-t">Còpia de seguretat</p>
+    <p class="plafo-p">Aquest text és tota l'avaluació. Copia'l i desa'l en un fitxer, o guarda'l on vulguis.
+      Per recuperar-la, enganxa'l aquí i prem <strong>Restaura</strong>.</p>
+    <textarea id="areaCopia" spellcheck="false" aria-label="Dades de l'avaluació en text"></textarea>
+    <div class="plafo-b">
+      <button class="boto principal" type="button" id="copiaText">Copia el text</button>
+      <button class="boto" type="button" id="restauraText">Restaura des del text</button>
+      <button class="boto" type="button" id="tancaCopia">Tanca</button>
+      <span class="nota" id="avisCopia"></span>
+    </div>
+  </div>
+
+  <div class="marc">
+    <table class="q">
+      <thead><tr>${cap1}</tr><tr>${cap2}</tr><tr>${cap3}</tr><tr>${cap4}</tr></thead>
+      <tbody>${cos}</tbody>
+    </table>
+  </div>
+
+  <h2 class="titol-seccio" style="margin-top:34px">Informes individuals</h2>
+  <div class="tria">
+    ${DADES.map(p => {
+      const m = mitjana(p);
+      return `<a href="#/informe/${p.idx}">
+        <div class="n">${esc(p.label)}</div>
+        <div class="nm">${esc(p.nom || "Nom del jugador/a")}</div>
+        <div class="mit">${m === null ? "Sense puntuar" : `Mitjana ${num(m)} · ${nivell(m)}`}</div>
+      </a>`;
+    }).join("")}
+  </div>`;
+}
+
+/* desplegable d'1 a 4, com la validació de dades del full de càlcul */
+function tria(v, attrs, etiqueta){
+  const opcions = ["", 1, 2, 3, 4].map(o =>
+    `<option value="${o}"${String(v ?? "") === String(o) ? " selected" : ""}>${o === "" ? "·" : o}</option>`).join("");
+  return `<select class="p${v === null || v === undefined ? " sensenota" : ""}" ${attrs}
+    aria-label="${esc(etiqueta)}">${opcions}</select>`;
+}
+function cel(pid, si, ii, f, v, aplica, nom){
+  if (!aplica) return `<td class="num nova"></td>`;
+  return `<td class="num">${tria(v, `data-p="${pid}" data-e="${si}" data-i="${ii}" data-f="${f}"`, `${nom} — ${f.toUpperCase()}`)}</td>`;
+}
+
+/* ============ GRÀFICS ============ */
+function radar(eixos, series, curts){
+  const N = eixos.length, MAX = 4;
+  const R = 98, cx = 190, cy = 132;
+  const pt = (i, v) => {
+    const a = -Math.PI / 2 + i * 2 * Math.PI / N, r = R * (v / MAX);
+    return [cx + r * Math.cos(a), cy + r * Math.sin(a)];
+  };
+  let s = `<svg class="radar" viewBox="0 0 380 272" width="100%" role="img"
+    aria-label="Perfil de ${esc(eixos.join(", "))}, escala 0 a 4">`;
+  for (let k = 1; k <= MAX; k++){
+    s += `<polygon points="${Array.from({length: N}, (_, i) => pt(i, k).join(",")).join(" ")}"
+      fill="none" stroke="var(--graella)" stroke-width="1"/>`;
+  }
+  for (let i = 0; i < N; i++){
+    const [x, y] = pt(i, MAX);
+    s += `<line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}" stroke="var(--graella)" stroke-width="1"/>`;
+  }
+  series.forEach(se => {
+    if (se.vals.every(v => v === null || v === undefined)) return;
+    const vals = se.vals.map(v => v ?? 0);
+    s += `<polygon points="${vals.map((v, i) => pt(i, v).join(",")).join(" ")}"
+      fill="${se.color}" fill-opacity=".10" stroke="${se.color}" stroke-width="2.2" stroke-linejoin="round"/>`;
+    vals.forEach((v, i) => {
+      const [x, y] = pt(i, v);
+      s += `<circle cx="${x}" cy="${y}" r="4" fill="${se.color}" stroke="var(--surface)" stroke-width="1.6"
+        data-tip="<b>${esc(eixos[i])}</b><br>${esc(se.nom)} · ${num(v)}"/>`;
+    });
+  });
+  for (let i = 0; i < N; i++){
+    const a = -Math.PI / 2 + i * 2 * Math.PI / N;
+    const x = cx + (R + 19) * Math.cos(a), y = cy + (R + 19) * Math.sin(a);
+    const anc = Math.abs(Math.cos(a)) < .25 ? "middle" : (Math.cos(a) > 0 ? "start" : "end");
+    s += `<text x="${x}" y="${y + 3.5}" text-anchor="${anc}" font-size="8.5" letter-spacing=".6"
+      fill="var(--muted)" font-weight="600">${esc((curts || eixos)[i])}</text>`;
+  }
+  s += `<text x="${cx - 5}" y="${cy - R + 10}" text-anchor="end" font-size="8" fill="var(--muted)">4</text>`;
+  s += `</svg>`;
+  return s;
+}
+
+/* dues sèries per fila; les caselles que la rúbrica no té no es dibuixen */
+function barresDobles(files){
+  return `<div class="barres">` + files.map(f => {
+    const traç = (v, usa, col, pos) => {
+      if (!usa || v === null || v === undefined) return "";
+      return `<span class="fill" style="width:${Math.max(0, Math.min(100, v / 4 * 100))}%;background:${col};${pos}"></span>`;
+    };
+    const et = v => (v === null || v === undefined) ? "·" : num(v, f.dec ?? 0);
+    return `<div class="barra-fila">
+      <span class="et">${esc(f.nom)}</span>
+      <span class="pista" style="height:19px" data-tip="<b>${esc(f.nom)}</b><br>${f.usaMp ? "MP " + et(f.mp) : "MP —"} · ${f.usaMr ? "MR " + et(f.mr) : "MR —"}">
+        ${traç(f.mp, f.usaMp, "var(--mp)", "bottom:50%")}${traç(f.mr, f.usaMr, "var(--mr)", "top:52%")}
+      </span>
+      <span class="v">${f.usaMp ? et(f.mp) : "—"}<br><span style="color:var(--mr)">${f.usaMr ? et(f.mr) : "—"}</span></span>
+    </div>`;
+  }).join("") + `</div>`;
+}
+
+function barres(files, color){
+  return `<div class="barres">` + files.map(f => {
+    const buit = f.v === null || f.v === undefined;
+    const v = f.v ?? 0;
+    const tics = [25, 50, 75].map(t => `<span class="tic" style="left:${t}%"></span>`).join("");
+    return `<div class="barra-fila">
+      <span class="et">${esc(f.nom)}</span>
+      <span class="pista" data-tip="<b>${esc(f.nom)}</b><br>${buit ? "sense puntuar" : num(v, f.dec ?? 0) + " de 4"}">
+        ${tics}${buit ? "" : `<span class="fill" style="width:${Math.max(0, Math.min(100, v / 4 * 100))}%;background:${color}"></span>`}
+      </span>
+      <span class="v">${buit ? "·" : num(v, f.dec ?? 0)}</span>
+    </div>`;
+  }).join("") + `</div>`;
+}
+
+/* ============ VISTA: INFORME ============ */
+function camp(pid, clau, ph, classe){
+  const t = DADES.find(x => x.idx === pid)?.textos?.[clau] || "";
+  return `<div class="camp-text ${classe || ""}" contenteditable="true" role="textbox" aria-multiline="true"
+    data-p="${pid}" data-text="${clau}" data-ph="${esc(ph)}">${esc(t)}</div>`;
+}
+
+/* franja resum: una nota per estructura, mitjana de MP i MR (files 61-64 del full) */
+function resumEstructures(p){
+  return `<div class="resum">` + p.estructures.map(st => {
+    const a = general(st, "mp"), b = general(st, "mr");
+    const g = [a, b].filter(x => x !== null);
+    const m = g.length ? g.reduce((x, y) => x + y, 0) / g.length : null;
+    return `<div class="resum-c" data-tip="<b>${esc(st.titol)}</b><br>MP ${num(a) || "·"} · MR ${num(b) || "·"}">
+      <span class="rn">${num(m) || "·"}</span>
+      <span class="re">${esc(llarg(st.titol))}</span>
+      <span class="rv">${m === null ? "Sense puntuar" : nivell(m)}</span>
+    </div>`;
+  }).join("") + `</div>`;
+}
+
+function vistaInforme(idx){
+  const p = DADES.find(x => x.idx === idx);
+  if (!p) return `<p>No s'ha trobat aquest jugador.</p>`;
+
+  const coord = p.estructures[0].items;
+  const m = mitjana(p);
+  const gens = p.estructures.map(st => ({
+    nom: llarg(st.titol), mp: general(st, "mp"), mr: general(st, "mr")
+  }));
+  const programa = p.fitxa?.programa || PROGRAMES[0];
+
+  const radarEstr = radar(
+    gens.map(g => g.nom),
+    [{nom: "MP", color: "var(--mp)", vals: gens.map(g => g.mp)},
+     {nom: "MR", color: "var(--mr)", vals: gens.map(g => g.mr)}],
+    p.estructures.map(st => CURT[st.titol] || llarg(st.titol))
+  );
+  const radarValors = radar(
+    p.valors.map(v => v.nom),
+    [{nom: "Valor", color: "var(--verd-viu)", vals: p.valors.map(v => v.punt)}],
+    p.valors.map(v => v.nom)
+  );
+  const barresCoord = barresDobles(coord.map(i => ({
+    nom: i.nom, mp: i.mp, mr: i.mr, usaMp: i.usa_mp, usaMr: i.usa_mr
+  })));
+
+  const taules = p.estructures.map(st => `
+    <table class="detall">
+      <caption>${esc(st.titol)}</caption>
+      <thead><tr><th>Contingut</th><th class="n">MP</th><th class="n">MR</th></tr></thead>
+      <tbody>
+        ${st.items.map(it => `<tr><td>${esc(it.nom)}</td>`
+          + `<td class="n">${it.usa_mp ? (num(it.mp, 0) || "&nbsp;") : "·"}</td>`
+          + `<td class="n">${it.usa_mr ? (num(it.mr, 0) || "&nbsp;") : "·"}</td></tr>`).join("")}
+        <tr class="tot"><td>General</td><td class="n">${num(general(st, "mp"))}</td><td class="n">${num(general(st, "mr"))}</td></tr>
+      </tbody>
+    </table>`).join("");
+
+  const capcalera = full => `
+    <div class="banda"><span>${esc(p.periode)}</span></div>
+    <div class="cos">
+      <h1 class="titol-informe">Informe Fundació GironaEst<small>Temporada 2025-26</small></h1>`;
+
+  return `
+  <div class="cap-eines">
+    <a class="tornar" href="#/quadre">← Torna al quadre d'avaluació</a>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+      <span class="nota-pag">3 pàgines · perfil, rúbrica i informe escrit</span>
+      <button class="boto principal" type="button" id="fesPdf">⤓ Descarrega en PDF</button>
+    </div>
+  </div>
+
+  <!-- ============ PÀGINA 1 · PERFIL ============ -->
+  <div class="full" id="fullInforme">
+    ${capcalera()}
+
+      <div class="fila-seccio">
+        <h2 class="etiqueta-seccio">Perfil del jugador/a</h2>
+        <div class="programa">
+          <select data-p="${p.idx}" data-fitxa="programa" aria-label="Programa">
+            ${PROGRAMES.map(x => `<option${x === programa ? " selected" : ""}>${esc(x)}</option>`).join("")}
+          </select>
+        </div>
+      </div>
+
+      <div class="identitat">
+        <div class="foto">Fotografia</div>
+        <h2>${p.nom ? esc(p.nom) : `<span class="buit">Nom del jugador/a</span>`}</h2>
+        <div class="fitxa">
+          ${CAMPS_FITXA.map(([k, et, ph]) => `<span class="l"><b>${esc(et)}</b>
+            <input type="text" value="${esc(p.fitxa?.[k] || "")}" placeholder="${esc(ph)}"
+              data-p="${p.idx}" data-fitxa="${k}" aria-label="${esc(et)}" size="${k === "educador" || k === "equip" ? 14 : 6}"></span>`).join("")}
+          <span class="l"><b>Mitjana</b> <span class="mitjana-fitxa">${num(m) || "—"}${m === null ? "" : " · " + nivell(m)}</span></span>
+        </div>
+      </div>
+
+      <section class="bloc">
+        <h3>Característiques del jugador/a</h3>
+        <div class="llegenda">
+          <span><i style="background:var(--mp)"></i>MP · moment en possessió</span>
+          <span><i style="background:var(--mr)"></i>MR · moment en recuperació</span>
+        </div>
+        <div class="duo">
+          <div>
+            <p class="sub">Estructures<em>Les sis estructures · MP i MR</em></p>
+            ${radarEstr}
+          </div>
+          <div>
+            <p class="sub">Valors<em>Valors de club · escala 0 – 4</em></p>
+            ${radarValors}
+          </div>
+        </div>
+      </section>
+
+      <section class="bloc">
+        <h3>Resum per estructures</h3>
+        ${resumEstructures(p)}
+      </section>
+
+      <section class="bloc">
+        <h3>Moments de joc</h3>
+        <div class="duo">
+          <div>
+            <p class="sub">Moment en possessió<em>MP</em></p>
+            ${barres(gens.map(g => ({nom: g.nom, v: g.mp, dec: 1})), "var(--mp)")}
+          </div>
+          <div>
+            <p class="sub">Moment en recuperació<em>MR</em></p>
+            ${barres(gens.map(g => ({nom: g.nom, v: g.mr, dec: 1})), "var(--mr)")}
+          </div>
+        </div>
+      </section>
+
+      <footer class="peu">
+        <span>${NIVELLS.map(n => `${n[0]} ${n[1]}`).join("  ·  ")}</span>
+        <span>Pàgina 1 de 3 · Perfil</span>
+      </footer>
+    </div>
+  </div>
+
+  <!-- ============ PÀGINA 2 · RÚBRICA ============ -->
+  <div class="full salt">
+    ${capcalera()}
+
+      <div class="fila-seccio">
+        <h2 class="etiqueta-seccio">Detall de la rúbrica</h2>
+        <div class="qui">${p.nom ? esc(p.nom) : "Nom del jugador/a"}</div>
+      </div>
+
+      <section class="bloc">
+        <h3>Habilitats coordinatives</h3>
+        <div class="llegenda">
+          <span><i style="background:var(--mp)"></i>MP</span>
+          <span><i style="background:var(--mr)"></i>MR</span>
+          <span>— la rúbrica no puntua aquesta casella</span>
+        </div>
+        ${barresCoord}
+      </section>
+
+      <section class="bloc">
+        <h3>Totes les estructures, contingut per contingut</h3>
+        <div class="taules">${taules}</div>
+      </section>
+
+      <section class="bloc">
+        <h3>Valors de club</h3>
+        ${barres(p.valors.map(v => ({nom: v.nom, v: v.punt})), "var(--verd-viu)")}
+      </section>
+
+      <footer class="peu">
+        <span>MP moment en possessió · MR moment en recuperació · escala 0 – 4</span>
+        <span>Pàgina 2 de 3 · Rúbrica</span>
+      </footer>
+    </div>
+  </div>
+
+  <!-- ============ PÀGINA 3 · INFORME ESCRIT ============ -->
+  <div class="full salt">
+    ${capcalera()}
+
+      <div class="fila-seccio">
+        <h2 class="etiqueta-seccio">Informe escrit</h2>
+        <div class="qui">${p.nom ? esc(p.nom) : "Nom del jugador/a"}</div>
+      </div>
+
+      <section class="bloc centrat">
+        <h3>Repte individual</h3>
+        <div style="margin-top:14px">${camp(p.idx, "repte", "Quin repte es proposa al jugador/a per al proper període.", "mitja")}</div>
+      </section>
+
+      <section class="bloc">
+        <h3>Moments de joc i valors</h3>
+        <div class="trio">
+          <div>
+            <p class="sub">Amb pilota<em>Moment en possessió</em></p>
+            ${camp(p.idx, "ambPilota", "Què destaca i què se li proposa quan l'equip té la pilota.")}
+          </div>
+          <div>
+            <p class="sub">Sense pilota<em>Moment en recuperació</em></p>
+            ${camp(p.idx, "sensePilota", "Què destaca i què se li proposa quan l'equip no té la pilota.")}
+          </div>
+          <div>
+            <p class="sub">Valors<em>Valors de club</em></p>
+            ${camp(p.idx, "valors", "Com encaixa amb els valors del club.")}
+          </div>
+        </div>
+      </section>
+
+      <section class="bloc centrat">
+        <h3>Valoració final</h3>
+        <div style="margin-top:14px">${camp(p.idx, "final", "Descripció del jugador/a i la seva relació amb l'equip, què destaca dins del camp, què se li proposa millorar i el tancament de temporada.", "gran")}</div>
+      </section>
+
+      <footer class="peu">
+        <span>${NIVELLS.map(n => `${n[0]} ${n[1]}`).join("  ·  ")}</span>
+        <span>A destacar (negreta) · A millorar (cursiva) — Pàgina 3 de 3</span>
+      </footer>
+    </div>
+  </div>`;
+}
+
+
+/* ============ EDICIÓ ============ */
+function jugador(el){ return DADES.find(p => p.idx === Number(el.dataset.p)); }
+
+function onEntrada(e){
+  const el = e.target;
+  const p = el.dataset.p ? jugador(el) : null;
+  if (!p) return;
+
+  if (el.dataset.text !== undefined){
+    p.textos[el.dataset.text] = el.innerText.replace(/ /g, " ").trim();
+    desa(); return;
+  }
+  if (el.dataset.fitxa !== undefined){
+    p.fitxa[el.dataset.fitxa] = el.value.trim();
+    desa(); return;
+  }
+  const f = el.dataset.f;
+  if (f === "nom"){ p.nom = el.value.trim() || null; desa(); return; }
+
+  if (el.dataset.v !== undefined){
+    const v = p.valors[Number(el.dataset.v)];
+    if (f === "obs") v.obs = el.value.trim() || null;
+    else v.punt = puntuacio(el);
+    desa(); return;
+  }
+  const si = Number(el.dataset.e), it = p.estructures[si].items[Number(el.dataset.i)];
+  if (f === "obs"){ it.obs = el.value.trim() || null; desa(); return; }
+  it[f] = puntuacio(el);
+  ["mp", "mr"].forEach(c => {
+    const cel = document.querySelector(`[data-gen="${p.idx}-${si}-${c}"]`);
+    if (cel) cel.textContent = num(general(p.estructures[si], c));
+  });
+  desa();
+}
+function puntuacio(el){
+  const buit = el.value === "";
+  el.classList.toggle("sensenota", buit);
+  if (buit) return null;
+  const n = Number(el.value);
+  return isNaN(n) ? null : n;
+}
+
+/* ============ CÒPIES DE SEGURETAT ============ */
+/* Sense capacitats especials: el text es copia i s'enganxa, i també
+   s'accepta un fitxer. Així la pàgina no demana cap permís al visor. */
+function textCopia(){
+  return JSON.stringify({versio: 1, desat: new Date().toISOString(), jugadors: DADES}, null, 1);
+}
+function obreCopia(){
+  const plafo = document.getElementById("plafoCopia");
+  plafo.hidden = false;
+  const area = document.getElementById("areaCopia");
+  area.value = textCopia();
+  area.focus();
+  area.setSelectionRange(0, 0);
+  document.getElementById("avisCopia").textContent = "";
+}
+async function copiaText(){
+  const area = document.getElementById("areaCopia");
+  const avis = document.getElementById("avisCopia");
+  area.select();
+  try{
+    if (navigator.clipboard && navigator.clipboard.writeText){
+      await navigator.clipboard.writeText(area.value);
+      avis.textContent = "Copiat. Enganxa-ho en un fitxer de text i desa'l.";
+      return;
+    }
+    throw new Error("sense API");
+  }catch(e){
+    avis.textContent = "Prem Cmd+C per copiar el text seleccionat.";
+  }
+}
+function aplicaCopia(cru, avis){
+  try{
+    const d = JSON.parse(cru);
+    const j = Array.isArray(d) ? d : d.jugadors;
+    if (!Array.isArray(j)) throw new Error("format");
+    DADES = fusiona(j);
+    try{ localStorage.setItem(CLAU, JSON.stringify(DADES)); }catch(e){}
+    pinta();
+    document.getElementById(avis).textContent = "Còpia restaurada.";
+    return true;
+  }catch(err){
+    const el = document.getElementById(avis);
+    if (el) el.textContent = "Això no és una còpia d'aquesta avaluació.";
+    return false;
+  }
+}
+function carregaCopia(fitxer){
+  const lector = new FileReader();
+  lector.onload = () => aplicaCopia(lector.result, "avisDades");
+  lector.readAsText(fitxer);
+}
+
+/* ============ PDF ============ */
+function fesPdf(nom){
+  const original = document.title;
+  document.title = "Informe FGE" + (nom ? " - " + nom : "");
+  addEventListener("afterprint", () => { document.title = original; }, {once: true});
+  setTimeout(() => window.print(), 60);
+}
+
+/* ============ ROUTER ============ */
+function pinta(){
+  const h = location.hash || "#/quadre";
+  const app = document.getElementById("app");
+  const mInf = h.match(/^#\/informe\/(\d+)/);
+  app.innerHTML = mInf ? vistaInforme(Number(mInf[1])) : vistaQuadre();
+
+  document.getElementById("nav").innerHTML =
+    `<a href="#/quadre"${mInf ? "" : ' aria-current="page"'}>Quadre</a>` +
+    `<a href="#/informe/${mInf ? mInf[1] : 1}"${mInf ? ' aria-current="page"' : ""}>Informe</a>`;
+
+  app.querySelectorAll("[data-tip]").forEach(el => {
+    el.addEventListener("mouseenter", e => mostraTip(e, el.dataset.tip));
+    el.addEventListener("mousemove", e => mostraTip(e, el.dataset.tip));
+    el.addEventListener("mouseleave", amagaTip);
+  });
+
+  const pdf = document.getElementById("fesPdf");
+  if (pdf) pdf.addEventListener("click", () => {
+    const p = DADES.find(x => x.idx === Number(mInf[1]));
+    fesPdf(p && p.nom);
+  });
+
+  const obre = document.getElementById("obreCopia");
+  if (obre) obre.addEventListener("click", obreCopia);
+  const copia = document.getElementById("copiaText");
+  if (copia) copia.addEventListener("click", copiaText);
+  const restaura = document.getElementById("restauraText");
+  if (restaura) restaura.addEventListener("click", () => aplicaCopia(document.getElementById("areaCopia").value, "avisCopia"));
+  const tanca = document.getElementById("tancaCopia");
+  if (tanca) tanca.addEventListener("click", () => { document.getElementById("plafoCopia").hidden = true; });
+  const puja = document.getElementById("pujaDades");
+  if (puja) puja.addEventListener("change", e => { if (e.target.files[0]) carregaCopia(e.target.files[0]); });
+  const buida = document.getElementById("buida");
+  if (buida) buida.addEventListener("click", () => {
+    if (!confirm("Segur que vols esborrar totes les dades entrades? No es pot desfer.")) return;
+    DADES = nou();
+    try{ localStorage.removeItem(CLAU); }catch(e){}
+    pinta();
+  });
+
+  scrollTo(0, 0);
+}
+document.addEventListener("input", onEntrada);
+document.addEventListener("change", onEntrada);
+addEventListener("hashchange", pinta);
+pinta();
+</script>
