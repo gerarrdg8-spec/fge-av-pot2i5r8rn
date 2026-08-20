@@ -263,6 +263,63 @@ table.detall tr.tot td{border-bottom:2px solid var(--nit);font-weight:700;backgr
 .tip b{font-family:"Montserrat",sans-serif}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 
+/* ---------- PÀGINA D'ENTRADA ---------- */
+.portada{min-height:calc(100vh - 190px);display:flex;align-items:center;justify-content:center;padding:20px 0}
+.porta{background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--verd-clar);
+  border-radius:4px;box-shadow:var(--ombra);padding:38px clamp(24px,5vw,44px);width:100%;max-width:460px}
+.porta .marca-p{font-family:"Montserrat",sans-serif;font-weight:800;letter-spacing:.2em;font-size:11px;
+  text-transform:uppercase;color:var(--verd-text);text-align:center}
+.porta h1{font-size:clamp(24px,4vw,32px);font-weight:800;letter-spacing:-.02em;text-align:center;margin-top:8px}
+.porta .peu-p{text-align:center;color:var(--muted);font-size:13.5px;margin-top:8px}
+.porta form{display:flex;flex-direction:column;gap:18px;margin-top:28px}
+.porta .c{display:flex;flex-direction:column;gap:6px}
+.porta label{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.porta select,.porta input{font:inherit;font-family:"Montserrat",sans-serif;font-weight:700;font-size:17px;
+  padding:12px 14px;border:1px solid var(--line-2);border-radius:3px;background:var(--surface);
+  color:var(--ink);width:100%}
+.porta select{-webkit-appearance:none;appearance:none;cursor:pointer;
+  background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),linear-gradient(135deg,var(--muted) 50%,transparent 50%);
+  background-position:calc(100% - 20px) 22px,calc(100% - 14px) 22px;background-size:6px 6px;background-repeat:no-repeat}
+.porta select:focus,.porta input:focus{border-color:var(--verd-viu);outline:2px solid var(--verd-clar);outline-offset:-1px}
+.porta .entrar{font:inherit;font-family:"Montserrat",sans-serif;font-weight:800;font-size:14px;
+  letter-spacing:.16em;text-transform:uppercase;padding:15px;border:0;border-radius:3px;cursor:pointer;
+  background:var(--verd-pregon);color:#fff;margin-top:4px}
+.porta .entrar:hover{background:var(--verd-viu)}
+.porta .entrar:disabled{background:var(--line-2);cursor:not-allowed}
+
+/* ---------- REGISTRE DIARI ---------- */
+.cap-registre{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--verd-clar);
+  border-radius:3px;padding:16px 20px;box-shadow:var(--ombra);margin-bottom:20px}
+.cap-registre .qui-r{font-family:"Montserrat",sans-serif;font-weight:800;font-size:22px;letter-spacing:-.02em}
+.cap-registre .quan{font-size:13px;color:var(--muted);margin-top:2px}
+.reg-marc{background:var(--surface);border:1px solid var(--line);border-radius:3px;
+  box-shadow:var(--ombra);overflow-x:auto}
+table.reg{border-collapse:separate;border-spacing:0;width:100%;min-width:900px;font-size:12.5px}
+table.reg th,table.reg td{border-right:1px solid var(--graella);border-bottom:1px solid var(--graella);
+  padding:0;text-align:center}
+table.reg thead th{background:var(--nit);color:#fff;font-family:"Montserrat",sans-serif;font-weight:700;
+  font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;padding:9px 5px;
+  border-right-color:rgba(255,255,255,.16);vertical-align:middle;line-height:1.25}
+table.reg thead th:first-child{text-align:left;padding-left:14px}
+table.reg td.jug-r{text-align:left;padding:8px 14px;background:var(--fila);min-width:190px;
+  font-weight:600;white-space:nowrap}
+table.reg td.jug-r .d{font-family:"Montserrat",sans-serif;font-weight:800;color:var(--muted);
+  display:inline-block;width:24px;font-variant-numeric:tabular-nums}
+table.reg td.cl{min-width:64px;padding:3px}
+table.reg tfoot td{background:var(--fila);font-family:"Montserrat",sans-serif;font-weight:800;
+  font-size:14px;padding:9px 4px;font-variant-numeric:tabular-nums;border-top:2px solid var(--nit)}
+table.reg tfoot td:first-child{text-align:left;padding-left:14px;font-size:11px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--muted)}
+
+.marca-b{width:100%;height:34px;border:1.5px solid var(--line);border-radius:3px;background:transparent;
+  cursor:pointer;font:inherit;font-family:"Montserrat",sans-serif;font-weight:800;font-size:13px;
+  color:var(--line-2);display:flex;align-items:center;justify-content:center;transition:none}
+.marca-b:hover{border-color:var(--marca-c);color:var(--marca-c)}
+.marca-b[aria-pressed="true"]{background:var(--marca-c);border-color:var(--marca-c);color:#fff}
+td.cl.bo{--marca-c:var(--st-si)} td.cl.avis{--marca-c:var(--st-proces)}
+td.cl.mal{--marca-c:var(--st-no)} td.cl.info{--marca-c:var(--q2)} td.cl.neutre{--marca-c:var(--muted)}
+
 /* ---------- PÀGINA D'EQUIP ---------- */
 .cap-equip{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--verd-clar);
   border-radius:3px;padding:22px 24px;box-shadow:var(--ombra);margin-bottom:26px}
@@ -512,6 +569,8 @@ function carrega(){
     if (Array.isArray(d)) return d.length === 12 ? fusiona(d) : nou();
     if (d && Array.isArray(d.jugadors)){
       EQUIP = Object.assign(equipBuit(), d.equip || {});
+      REGISTRES = d.registres || {};
+      if (d.sessio) SESSIO = Object.assign(SESSIO, d.sessio);
       TIPUS_SESSIO.forEach(([k]) => { EQUIP.indicadors[k] = Object.assign({dies: null, reg: null}, (d.equip?.indicadors || {})[k] || {}); });
       return d.jugadors.length === 12 ? fusiona(d.jugadors) : nou();
     }
@@ -524,7 +583,8 @@ let pendent = null;
 function desa(){
   clearTimeout(pendent);
   pendent = setTimeout(() => {
-    try{ localStorage.setItem(CLAU, JSON.stringify({equip: EQUIP, jugadors: DADES})); }catch(e){}
+    try{ localStorage.setItem(CLAU, JSON.stringify(
+      {equip: EQUIP, jugadors: DADES, registres: REGISTRES, sessio: SESSIO})); }catch(e){}
   }, 250);
 }
 
@@ -544,6 +604,7 @@ function equipBuit(){
   };
 }
 let EQUIP = equipBuit();
+let REGISTRES = {};
 
 /* ============ CÀLCULS ============ */
 const mitjanaDe = xs => { const v = xs.filter(x => typeof x === "number"); return v.length ? v.reduce((a, b) => a + b, 0) / v.length : null; };
@@ -585,6 +646,109 @@ function tria(valor, attrs, etiqueta){
   const opcions = ["", 1, 2, 3, 4].map(o =>
     `<option value="${o}"${String(valor ?? "") === String(o) ? " selected" : ""}>${o === "" ? "·" : o}</option>`).join("");
   return `<select class="p${valor == null ? " buida" : ""}" ${attrs} aria-label="${esc(etiqueta)}">${opcions}</select>`;
+}
+
+/* ============ ENTRADA I REGISTRE DIARI ============ */
+const EQUIPS = ["Juvenil"];
+const NJUGADORS = 15;
+let SESSIO = {equip: EQUIPS[0], data: ""};
+
+function avui(){
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+}
+function dataLlarga(iso){
+  if (!iso) return "";
+  const [a, m, d] = iso.split("-").map(Number);
+  const dies = ["diumenge", "dilluns", "dimarts", "dimecres", "dijous", "divendres", "dissabte"];
+  const mesos = ["gener", "febrer", "març", "abril", "maig", "juny", "juliol",
+                 "agost", "setembre", "octubre", "novembre", "desembre"];
+  const dt = new Date(a, m - 1, d);
+  const mes = mesos[m - 1];
+  const de = "aeiouàèéíòóú".includes(mes[0]) ? "d'" : "de ";
+  return `${dies[dt.getDay()]}, ${d} ${de}${mes} de ${a}`;
+}
+const clauSessio = () => `${SESSIO.equip}|${SESSIO.data}`;
+function registreDe(){
+  if (!REGISTRES[clauSessio()]) REGISTRES[clauSessio()] = {};
+  return REGISTRES[clauSessio()];
+}
+function nomJugador(n){
+  const p = DADES.find(x => x.idx === n);
+  return p && p.nom ? p.nom : null;
+}
+
+function vistaInici(){
+  return `
+  <div class="portada">
+    <div class="porta">
+      <div class="marca-p">Fundació GironaEst</div>
+      <h1>Registre diari</h1>
+      <p class="peu-p">Tria l'equip i el dia per passar llista.</p>
+      <form id="formEntrar">
+        <div class="c">
+          <label for="in-equip">Equip</label>
+          <select id="in-equip">
+            ${EQUIPS.map(e => `<option${e === SESSIO.equip ? " selected" : ""}>${esc(e)}</option>`).join("")}
+          </select>
+        </div>
+        <div class="c">
+          <label for="in-data">Dia</label>
+          <input id="in-data" type="date" value="${esc(SESSIO.data || avui())}">
+        </div>
+        <button class="entrar" type="submit">Entrar</button>
+      </form>
+    </div>
+  </div>`;
+}
+
+function vistaRegistre(){
+  const reg = registreDe();
+  const totals = Object.fromEntries(INDICADORS.map(([k]) => [k, 0]));
+
+  const files = Array.from({length: NJUGADORS}, (_, i) => {
+    const n = i + 1;
+    const r = reg[n] || {};
+    INDICADORS.forEach(([k]) => { if (r[k]) totals[k]++; });
+    const nom = nomJugador(n);
+    return `<tr>
+      <td class="jug-r"><span class="d">${n}</span>${nom ? esc(nom) : `<span style="color:var(--muted);font-weight:500">Jugador ${n}</span>`}</td>
+      ${INDICADORS.map(([k, et, to]) => `<td class="cl ${to}">
+        <button type="button" class="marca-b" data-reg="${n}" data-item="${k}"
+          aria-pressed="${!!r[k]}" aria-label="${esc(et)} · jugador ${n}">${r[k] ? "✓" : ""}</button>
+      </td>`).join("")}
+    </tr>`;
+  }).join("");
+
+  return `
+  <div class="cap-registre">
+    <div>
+      <div class="qui-r">${esc(SESSIO.equip)}</div>
+      <div class="quan">${esc(dataLlarga(SESSIO.data))}</div>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <a class="boto" href="#/inici">Canvia equip o dia</a>
+      <a class="boto" href="#/equip">Informes de l'equip</a>
+    </div>
+  </div>
+
+  <div class="reg-marc">
+    <table class="reg">
+      <thead><tr>
+        <th>Jugador/a</th>
+        ${INDICADORS.map(([, et]) => `<th>${esc(et)}</th>`).join("")}
+      </tr></thead>
+      <tbody>${files}</tbody>
+      <tfoot><tr>
+        <td>Total del dia</td>
+        ${INDICADORS.map(([k]) => `<td data-tot="${k}">${totals[k]}</td>`).join("")}
+      </tr></tfoot>
+    </table>
+  </div>
+
+  <p style="margin-top:14px;font-size:13px;color:var(--muted)">
+    Clica una casella per marcar-la. Es desa sol; pots tornar-hi quan vulguis.
+  </p>`;
 }
 
 /* ============ VISTA: EQUIP ============ */
@@ -1107,7 +1271,7 @@ function refrescaResum(p){
 }
 
 /* ============ CÒPIES DE SEGURETAT ============ */
-const textCopia = () => JSON.stringify({versio: 3, desat: new Date().toISOString(), equip: EQUIP, jugadors: DADES}, null, 1);
+const textCopia = () => JSON.stringify({versio: 4, desat: new Date().toISOString(), equip: EQUIP, jugadors: DADES, registres: REGISTRES, sessio: SESSIO}, null, 1);
 function obreCopia(){
   const plafo = document.getElementById("plafoCopia");
   plafo.hidden = false;
@@ -1130,6 +1294,7 @@ function aplicaCopia(cru, avisId){
     const d = JSON.parse(cru);
     const j = Array.isArray(d) ? d : d.jugadors;
     if (!Array.isArray(j)) throw new Error("format");
+    if (d && d.registres) REGISTRES = d.registres;
     if (d && d.equip){
       EQUIP = Object.assign(equipBuit(), d.equip);
       TIPUS_SESSIO.forEach(([k]) => { EQUIP.indicadors[k] = Object.assign({dies: null, reg: null}, (d.equip.indicadors || {})[k] || {}); });
@@ -1160,16 +1325,22 @@ function fesPdf(nom){
 
 /* ============ ROUTER ============ */
 function pinta(){
-  const h = location.hash || "#/equip";
+  const h = location.hash || "#/inici";
   const app = document.getElementById("app");
   const mInf = h.match(/^#\/informe\/(\d+)/);
   const mQua = h.match(/^#\/quadre(?:\/(\d+))?/);
   if (mInf) ACTUAL = Number(mInf[1]);
   else if (mQua && mQua[1]) ACTUAL = Number(mQua[1]);
-  const vista = mInf ? "informe" : (mQua ? "quadre" : "equip");
-  app.innerHTML = vista === "informe" ? vistaInforme(ACTUAL) : vista === "quadre" ? vistaQuadre() : vistaEquip();
+  const vista = mInf ? "informe" : mQua ? "quadre"
+    : h.startsWith("#/registre") ? "registre"
+    : h.startsWith("#/equip") ? "equip" : "inici";
+  app.innerHTML = {
+    informe: () => vistaInforme(ACTUAL), quadre: vistaQuadre,
+    registre: vistaRegistre, equip: vistaEquip, inici: vistaInici
+  }[vista]();
 
-  document.getElementById("nav").innerHTML =
+  document.getElementById("nav").innerHTML = vista === "inici" ? "" :
+    `<a href="#/registre"${vista === "registre" ? ' aria-current="page"' : ""}>Registre</a>` +
     `<a href="#/equip"${vista === "equip" ? ' aria-current="page"' : ""}>Equip</a>` +
     `<a href="#/quadre/${ACTUAL}"${vista === "quadre" ? ' aria-current="page"' : ""}>Avaluació</a>` +
     `<a href="#/informe/${ACTUAL}"${vista === "informe" ? ' aria-current="page"' : ""}>Informe</a>`;
@@ -1187,6 +1358,26 @@ function pinta(){
     p.textos.repteEstat = p.textos.repteEstat === b.dataset.estat ? "" : b.dataset.estat;
     app.querySelectorAll(".semafor button").forEach(o =>
       o.setAttribute("aria-pressed", String(o.dataset.estat === p.textos.repteEstat)));
+    desa();
+  }));
+
+  const fe = document.getElementById("formEntrar");
+  if (fe) fe.addEventListener("submit", ev => {
+    ev.preventDefault();
+    SESSIO.equip = document.getElementById("in-equip").value;
+    SESSIO.data = document.getElementById("in-data").value || avui();
+    desa();
+    location.hash = "#/registre";
+    if (!location.hash.startsWith("#/registre")) pinta();
+  });
+  app.querySelectorAll(".marca-b").forEach(b => b.addEventListener("click", () => {
+    const reg = registreDe(), n = b.dataset.reg, k = b.dataset.item;
+    if (!reg[n]) reg[n] = {};
+    reg[n][k] = !reg[n][k];
+    b.setAttribute("aria-pressed", String(reg[n][k]));
+    b.textContent = reg[n][k] ? "✓" : "";
+    const cel = document.querySelector(`[data-tot="${k}"]`);
+    if (cel) cel.textContent = Array.from({length: NJUGADORS}, (_, i) => reg[i + 1] && reg[i + 1][k]).filter(Boolean).length;
     desa();
   }));
 
