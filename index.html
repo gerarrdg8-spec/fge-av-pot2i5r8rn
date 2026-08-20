@@ -394,6 +394,7 @@ table.ind td.tipus .comptes input{width:46px;font:inherit;font-family:"Montserra
 table.ind .vt{font-family:"Montserrat",sans-serif;font-weight:800;font-size:17px;
   font-variant-numeric:tabular-nums;display:block;padding-top:9px}
 table.ind .cel small{display:block;font-size:10px;color:var(--muted);padding-bottom:9px;margin-top:1px}
+table.ind td.cel.calc{background:color-mix(in srgb,var(--st-si) 8%,transparent)}
 table.ind td.cel.buida{color:var(--line-2);font-size:16px;font-weight:700}
 table.ind td.tipus .marca-d{font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;
   color:var(--muted);font-weight:700;border:1px solid var(--line);border-radius:2px;padding:2px 6px}
@@ -601,13 +602,20 @@ function desa(){
   }, 250);
 }
 
+/* El que es marca al registre és sempre allò que s'ha de fer constar.
+   Els tres comportaments són els únics negatius de conducta; no marcar-ne cap
+   vol dir que el comportament ha estat correcte. */
+const COMPORTAMENTS = ["compLleu", "compGreu", "compMoltGreu"];
 const INDICADORS = [
   ["assistencia", "Assistència", "bo"], ["retard", "Retard", "avis"],
   ["justif", "Justif.", "info"], ["noPres", "No pres.", "mal"],
-  ["noRoba", "No roba", "neutre"], ["noDutxa", "No dutxa", "neutre"],
+  ["noRoba", "No roba", "neutre"],
   ["compLleu", "Comp. lleu", "avis"], ["compGreu", "Comp. greu", "mal"],
+  ["compMoltGreu", "Comp. molt greu", "mal"],
   ["familia", "Família", "neutre", "partit"], ["transport", "Transport", "neutre", "partit"]
 ];
+/* comportament correcte: va assistir i no se li ha marcat cap conducta */
+const esCorrecte = r => !!(r && r.assistencia) && !COMPORTAMENTS.some(k => r && r[k]);
 /* els indicadors amb quart element "partit" no s'apliquen als entrenaments */
 const indicadorsDe = tipus => INDICADORS.filter(i => !i[3] || i[3] === tipus);
 const TIPUS_SESSIO = [["entrenament", "Entrenament"], ["partit", "Partit"]];
@@ -778,7 +786,13 @@ function vistaResum(){
   const camp = (k, cls, ph, tipus) => `<input class="${cls}" type="${tipus || "text"}"
     value="${esc(EQUIP[k] || "")}" placeholder="${esc(ph)}" data-equip="${k}" aria-label="${esc(ph)}">`;
 
-  const capIndicadors = INDICADORS.map(([, et]) => `<th>${esc(et)}</th>`).join("");
+  /* la columna de comportament correcte es calcula, no es marca enlloc */
+  const COLS = [];
+  INDICADORS.forEach(i => {
+    if (i[0] === "compLleu") COLS.push(["correcte", "Comp. correcte", "bo", null, true]);
+    COLS.push(i);
+  });
+  const capIndicadors = COLS.map(([, et]) => `<th>${esc(et)}</th>`).join("");
   const files = TIPUS_SESSIO.map(([k, et]) => {
     const t = totalsEquip(k);
     return `<tr>
@@ -788,10 +802,12 @@ function vistaResum(){
           <span class="marca-d">Dies ${t.dies}</span><span class="marca-d">Reg. ${t.reg}</span>
         </span>
       </td>
-      ${INDICADORS.map(([ck, , to, nomes]) => {
+      ${COLS.map(([ck, , to, nomes, calc]) => {
         if (nomes && nomes !== k) return `<td class="cel neutre buida">–</td>`;
-        const pct = t.reg ? Math.round(t[ck] / t.reg * 100) : null;
-        return `<td class="cel ${to}"><span class="vt">${t[ck]}</span>${
+        /* el comportament correcte es mesura sobre les assistències, no sobre els registres */
+        const base = calc ? t.assistencia : t.reg;
+        const pct = base ? Math.round(t[ck] / base * 100) : null;
+        return `<td class="cel ${to}${calc ? " calc" : ""}"><span class="vt">${t[ck]}</span>${
           pct === null ? "" : `<small>${pct}%</small>`}</td>`;
       }).join("")}
     </tr>`;
@@ -803,7 +819,7 @@ function vistaResum(){
     const p = DADES.find(x => x.idx === n);
     const r = resumRegistre(n);
     const pct = r.dies ? Math.round(r.assistencia / r.dies * 100) : null;
-    const incid = r.compLleu + r.compGreu + r.noPres;
+    const pctComp = r.assistencia ? Math.round(r.correcte / r.assistencia * 100) : null;
     const m = p ? mitjanaGlobal(p) : null;
     const est = p?.textos?.repteEstat || "";
     const nom = nomJugador(n);
@@ -813,7 +829,8 @@ function vistaResum(){
       <td class="n">${r.dies ? `${r.assistencia}/${r.dies}` : "·"}<small>${pct === null ? "sense registres" : pct + "% assistència"}</small></td>
       <td class="n">${r.dies ? r.retard : "·"}<small>retards</small></td>
       <td class="n">${r.dies ? r.justif : "·"}<small>justificats</small></td>
-      <td class="n">${r.dies ? incid : "·"}<small>incidències</small></td>
+      <td class="n">${r.assistencia ? `${r.correcte}/${r.assistencia}` : "·"}<small>${
+        pctComp === null ? "comportament" : pctComp + "% correcte"}</small></td>
       <td class="n">${num(m) || "·"}<small>${m === null ? "sense avaluar" : nivell(m)}</small></td>
       <td><span class="xip ${est || "cap"}"><span class="llum"></span>${est ? XIP[est] : "Sense repte"}</span></td>
       <td class="acc">${p ? `<a class="acc-p" href="#/quadre/${n}">Avaluació trimestral</a>` : ""}</td>
@@ -861,7 +878,7 @@ function vistaResum(){
         <th style="text-align:center">Assistència</th>
         <th style="text-align:center">Retards</th>
         <th style="text-align:center">Justificats</th>
-        <th style="text-align:center">Incidències</th>
+        <th style="text-align:center">Comportament</th>
         <th style="text-align:center">Mitjana</th><th>Repte</th><th></th>
       </tr></thead>
       <tbody>${jugadors}</tbody>
@@ -1026,21 +1043,29 @@ function sessionsFiltrades(tipus){
 }
 function resumRegistre(n, tipus){
   const c = Object.fromEntries(INDICADORS.map(([k]) => [k, 0]));
+  c.correcte = 0;
   const claus = sessionsFiltrades(tipus);
   claus.forEach(clau => {
     const r = (REGISTRES[clau] || {})[n];
-    if (r) INDICADORS.forEach(([k]) => { if (r[k]) c[k]++; });
+    if (!r) return;
+    INDICADORS.forEach(([k]) => { if (r[k]) c[k]++; });
+    if (esCorrecte(r)) c.correcte++;
   });
   return Object.assign({dies: claus.length}, c);
 }
 /* totals de l'equip per tipus de sessió, calculats des dels registres */
 function totalsEquip(tipus){
   const c = Object.fromEntries(INDICADORS.map(([k]) => [k, 0]));
+  c.correcte = 0;
   const claus = sessionsFiltrades(tipus);
   claus.forEach(clau => {
     const dia = REGISTRES[clau] || {};
-    for (let n = 1; n <= NJUGADORS; n++)
-      if (dia[n]) INDICADORS.forEach(([k]) => { if (dia[n][k]) c[k]++; });
+    for (let n = 1; n <= NJUGADORS; n++){
+      const r = dia[n];
+      if (!r) continue;
+      INDICADORS.forEach(([k]) => { if (r[k]) c[k]++; });
+      if (esCorrecte(r)) c.correcte++;
+    }
   });
   return Object.assign({dies: claus.length, reg: claus.length * NJUGADORS}, c);
 }
