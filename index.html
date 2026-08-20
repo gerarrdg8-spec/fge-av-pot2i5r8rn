@@ -778,11 +778,17 @@ function vistaEquip(){
   const jugadors = DADES.map(p => {
     const m = mitjanaGlobal(p), ft = formalitatTotal(p);
     const est = p.textos?.repteEstat || "";
+    const r = resumRegistre(p.idx);
+    const pct = r.dies ? Math.round(r.assistencia / r.dies * 100) : null;
+    const incid = r.compLleu + r.compGreu + r.noPres;
     return `<tr>
       <td class="dorsal">${esc(p.fitxa?.dorsal || p.idx)}</td>
       <td class="jug">${p.nom
         ? `<a href="#/quadre/${p.idx}">${esc(p.nom)}</a>`
         : `<a href="#/quadre/${p.idx}" class="sense">Jugador ${p.idx} · sense nom</a>`}</td>
+      <td class="n">${r.dies ? `${r.assistencia}/${r.dies}` : "·"}<small>${pct === null ? "sense registres" : pct + "% assistència"}</small></td>
+      <td class="n">${r.dies ? r.retard : "·"}<small>retards</small></td>
+      <td class="n">${r.dies ? incid : "·"}<small>incidències</small></td>
       <td class="n">${num(m) || "·"}<small>${m === null ? "sense puntuar" : nivell(m)}</small></td>
       <td class="n">${ft === null ? "·" : Math.round(ft) + "%"}<small>formalitat</small></td>
       <td><span class="xip ${est || "cap"}"><span class="llum"></span>${est ? XIP[est] : "Sense repte"}</span></td>
@@ -826,14 +832,18 @@ function vistaEquip(){
   </section>
 
   <section class="bloc">
-    <h2>Plantilla <span class="cua">${DADES.filter(p => p.nom).length} de 12 amb nom</span></h2>
-    <table class="plantilla-t">
+    <h2>Plantilla <span class="cua">assistència i incidències, del registre diari</span></h2>
+    <div class="ind-marc" style="box-shadow:none;border:0"><table class="plantilla-t">
       <thead><tr>
-        <th>#</th><th>Jugador/a</th><th style="text-align:center">Mitjana</th>
+        <th>#</th><th>Jugador/a</th>
+        <th style="text-align:center">Assistència</th>
+        <th style="text-align:center">Retards</th>
+        <th style="text-align:center">Incidències</th>
+        <th style="text-align:center">Mitjana</th>
         <th style="text-align:center">Formalitat</th><th>Repte</th><th></th>
       </tr></thead>
       <tbody>${jugadors}</tbody>
-    </table>
+    </table></div>
   </section>
 
   <div class="eines" style="margin-top:24px">
@@ -927,12 +937,6 @@ function vistaQuadre(){
       </div>
     </section>`).join("");
 
-  const resum = `
-    <section class="bloc">
-      <h2>Evolució trimestral <span class="cua">mitjana per bloc</span></h2>
-      <div class="llegenda">${QS.map((q, i) => `<span><i style="background:${COLQ[i]}"></i>${q}</span>`).join("")}</div>
-      <div class="resum" id="resumBlocs">${resumCaselles(p)}</div>
-    </section>`;
 
   return `
   <a class="tornar" href="#/equip" style="margin-bottom:14px">← Torna a l'equip</a>
@@ -973,19 +977,32 @@ function vistaQuadre(){
 
   ${formalitat}
   ${respons}
-  ${blocs}
-  ${resum}`;
+  ${blocs}`;
 }
 
 function resumCaselles(p){
-  const files = p.blocs.map(b => ({et: b.titol, mit: mitjanaBloc(b), qs: [0,1,2].map(qi => mitjanaBlocQ(b, qi))}));
-  files.push({et: "RESPONSABILITAT PERSONAL I SOCIAL", mit: mitjanaRespons(p),
-    qs: [0,1,2].map(qi => mitjanaDe(p.respons.map(r => r.q[qi])))});
+  const files = p.blocs.map(b => ({et: b.titol, mit: mitjanaBloc(b)}));
+  files.push({et: "RESPONSABILITAT PERSONAL I SOCIAL", mit: mitjanaRespons(p)});
   return files.map(f => `<div class="resum-c">
       <div class="re">${esc(f.et)}</div>
       <div class="rn">${num(f.mit) || "·"}</div>
-      <div class="rq">${f.qs.map((v, i) => `<span><i style="background:${COLQ[i]}"></i>${num(v, 1) || "·"}</span>`).join("")}</div>
+      <div class="rq">${f.mit === null ? "sense puntuar" : nivell(f.mit)}</div>
     </div>`).join("");
+}
+
+/* comptes del registre diari, per jugador, dins el rang de dates de l'equip */
+function resumRegistre(n){
+  const c = Object.fromEntries(INDICADORS.map(([k]) => [k, 0]));
+  let dies = 0;
+  Object.keys(REGISTRES).forEach(clau => {
+    const data = clau.split("|")[1] || "";
+    if (EQUIP.dataInici && data < EQUIP.dataInici) return;
+    if (EQUIP.dataFi && data > EQUIP.dataFi) return;
+    dies++;
+    const r = (REGISTRES[clau] || {})[n];
+    if (r) INDICADORS.forEach(([k]) => { if (r[k]) c[k]++; });
+  });
+  return Object.assign({dies}, c);
 }
 
 /* ============ GRÀFICS ============ */
@@ -1167,6 +1184,11 @@ function vistaInforme(idx){
       </section>
 
       <section class="seccio">
+        <h3>Evolució trimestral</h3>
+        <div class="resum">${resumCaselles(p)}</div>
+      </section>
+
+      <section class="seccio">
         <h3>Moments de joc i valors</h3>
         <div class="trio">
           <div><p class="sub">Amb pilota<em>Possessió</em></p>${cols(ambP)}</div>
@@ -1265,10 +1287,7 @@ function puntuacio(el){
   const n = Number(el.value);
   return isNaN(n) ? null : n;
 }
-function refrescaResum(p){
-  const c = document.getElementById("resumBlocs");
-  if (c) c.innerHTML = resumCaselles(p);
-}
+function refrescaResum(){ /* el resum viu a l'informe; res a refrescar aquí */ }
 
 /* ============ CÒPIES DE SEGURETAT ============ */
 const textCopia = () => JSON.stringify({versio: 4, desat: new Date().toISOString(), equip: EQUIP, jugadors: DADES, registres: REGISTRES, sessio: SESSIO}, null, 1);
