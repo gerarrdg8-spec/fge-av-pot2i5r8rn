@@ -286,6 +286,9 @@ table.detall tr.tot td{border-bottom:2px solid var(--nit);font-weight:700;backgr
   background:var(--verd-pregon);color:#fff;margin-top:4px}
 .porta .entrar:hover{background:var(--verd-viu)}
 .porta .entrar:disabled{background:var(--line-2);cursor:not-allowed}
+.enllac-ex{font:inherit;font-size:13px;background:none;border:0;padding:0;cursor:pointer;
+  color:var(--verd-text);text-decoration:underline;text-underline-offset:3px}
+.enllac-ex:hover{color:var(--verd-viu)}
 
 /* ---------- REGISTRE DIARI ---------- */
 .cap-registre{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
@@ -606,6 +609,10 @@ function desa(){
    Els tres comportaments són els únics negatius de conducta; no marcar-ne cap
    vol dir que el comportament ha estat correcte. */
 const COMPORTAMENTS = ["compLleu", "compGreu", "compMoltGreu"];
+/* Indicadors que descriuen l'absència: es compten sobre tots els registres.
+   La resta només tenen sentit si el jugador hi era, i van sobre les assistències. */
+const DABSENCIA = ["assistencia", "noPres", "justif"];
+const sobreRegistres = k => DABSENCIA.includes(k);
 const INDICADORS = [
   ["assistencia", "Assistència", "bo"], ["retard", "Retard", "avis"],
   ["justif", "Justif.", "info"], ["noPres", "No pres.", "mal"],
@@ -728,6 +735,9 @@ function vistaInici(){
         </div>
         <button class="entrar" type="submit">Entrar</button>
       </form>
+      <p class="peu-p" style="margin-top:20px">
+        <button type="button" class="enllac-ex" id="verExemple">Veure un exemple d'un mes sencer</button>
+      </p>
     </div>
   </div>`;
 }
@@ -781,6 +791,68 @@ function vistaRegistre(){
   </div>`;
 }
 
+/* Exemple d'un mes: 5 setmanes × (dimarts i dijous entrenament + dissabte partit).
+   Dos jugadors amb perfils contraris perquè es vegi què fa cada indicador. */
+function exempleMes(){
+  REGISTRES = {};
+  const inici = new Date(2026, 8, 1);           // dimarts 1 de setembre de 2026
+  const iso = d => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+  const sessions = [];
+  for (let w = 0; w < 5; w++){
+    [[0, "entrenament"], [2, "entrenament"], [4, "partit"]].forEach(([dif, tipus]) => {
+      const d = new Date(inici); d.setDate(inici.getDate() + w * 7 + dif);
+      sessions.push({data: iso(d), tipus});
+    });
+  }
+
+  DADES[0].nom = "Marc Puig";     // molt regular
+  DADES[1].nom = "Nil Ferrer";    // irregular
+  for (let n = 3; n <= NJUGADORS; n++) if (!DADES[n - 1].nom) DADES[n - 1].nom = null;
+
+  sessions.forEach((se, i) => {
+    const dia = {};
+    for (let n = 1; n <= NJUGADORS; n++) dia[n] = {};
+
+    /* Marc Puig: hi és sempre; un retard i un dia sense la roba */
+    dia[1].assistencia = true;
+    if (i === 4) dia[1].retard = true;
+    if (i === 9) dia[1].noRoba = true;
+
+    /* Nil Ferrer: falta tres dies, dos justificats, i dues conductes */
+    if (i === 3 || i === 10 || i === 11){
+      dia[2].noPres = true;
+      if (i !== 11) dia[2].justif = true;
+    } else {
+      dia[2].assistencia = true;
+      if (i === 1 || i === 7) dia[2].retard = true;
+      if (i === 6) dia[2].compLleu = true;
+      if (i === 13) dia[2].compGreu = true;
+    }
+
+    /* la resta de l'equip, per donar volum als totals */
+    for (let n = 3; n <= NJUGADORS; n++){
+      const falta = (n + i) % 11 === 0;
+      if (falta){ dia[n].noPres = true; if ((n + i) % 22 === 0) dia[n].justif = true; }
+      else {
+        dia[n].assistencia = true;
+        if ((n * 3 + i) % 13 === 0) dia[n].retard = true;
+        if ((n + i * 2) % 17 === 0) dia[n].compLleu = true;
+      }
+    }
+    if (se.tipus === "partit"){
+      dia[4].familia = dia[4].assistencia || false;
+      dia[7].transport = dia[7].assistencia || false;
+    }
+    REGISTRES[`Juvenil|${se.data}|${se.tipus}`] = dia;
+  });
+
+  EQUIP.nom = "Juvenil";
+  EQUIP.dataInici = sessions[0].data;
+  EQUIP.dataFi = sessions[sessions.length - 1].data;
+  SESSIO = {equip: "Juvenil", data: sessions[sessions.length - 1].data, tipus: "partit"};
+  desa();
+}
+
 /* ============ VISTA: RESUM DE L'EQUIP ============ */
 function vistaResum(){
   const camp = (k, cls, ph, tipus) => `<input class="${cls}" type="${tipus || "text"}"
@@ -804,8 +876,7 @@ function vistaResum(){
       </td>
       ${COLS.map(([ck, , to, nomes, calc]) => {
         if (nomes && nomes !== k) return `<td class="cel neutre buida">–</td>`;
-        /* el comportament correcte es mesura sobre les assistències, no sobre els registres */
-        const base = calc ? t.assistencia : t.reg;
+        const base = (calc || !sobreRegistres(ck)) ? t.assistencia : t.reg;
         const pct = base ? Math.round(t[ck] / base * 100) : null;
         return `<td class="cel ${to}${calc ? " calc" : ""}"><span class="vt">${t[ck]}</span>${
           pct === null ? "" : `<small>${pct}%</small>`}</td>`;
@@ -853,7 +924,7 @@ function vistaResum(){
   </div>
 
   <section class="bloc">
-    <h2>Indicadors <span class="cua">totals i percentatge sobre els registres</span></h2>
+    <h2>Indicadors <span class="cua">percentatge sobre les assistències, excepte assistència, no presentats i justificats, que van sobre els registres</span></h2>
     <div class="ind-marc">
       <table class="ind">
         <thead><tr><th>Tipus</th>${capIndicadors}</tr></thead>
@@ -1048,7 +1119,12 @@ function resumRegistre(n, tipus){
   claus.forEach(clau => {
     const r = (REGISTRES[clau] || {})[n];
     if (!r) return;
-    INDICADORS.forEach(([k]) => { if (r[k]) c[k]++; });
+    /* si no ha vingut, només compten els indicadors d'absència */
+    INDICADORS.forEach(([k]) => {
+      if (!r[k]) return;
+      if (!r.assistencia && !sobreRegistres(k)) return;
+      c[k]++;
+    });
     if (esCorrecte(r)) c.correcte++;
   });
   return Object.assign({dies: claus.length}, c);
@@ -1063,7 +1139,11 @@ function totalsEquip(tipus){
     for (let n = 1; n <= NJUGADORS; n++){
       const r = dia[n];
       if (!r) continue;
-      INDICADORS.forEach(([k]) => { if (r[k]) c[k]++; });
+      INDICADORS.forEach(([k]) => {
+        if (!r[k]) return;
+        if (!r.assistencia && !sobreRegistres(k)) return;
+        c[k]++;
+      });
       if (esCorrecte(r)) c.correcte++;
     }
   });
@@ -1465,6 +1545,14 @@ function pinta(){
     if (cel) cel.textContent = Array.from({length: NJUGADORS}, (_, i) => reg[i + 1] && reg[i + 1][k]).filter(Boolean).length;
     desa();
   }));
+
+  const bx = document.getElementById("verExemple");
+  if (bx) bx.addEventListener("click", () => {
+    if (!confirm("Carrego un exemple d'un mes: 5 setmanes amb 2 entrenaments i 1 partit cada una.\n\nSubstituirà els registres que tinguis ara. Vols continuar?")) return;
+    exempleMes();
+    location.hash = "#/resum";
+    pinta();
+  });
 
   const bv = document.getElementById("validar");
   if (bv) bv.addEventListener("click", () => { desa(); location.hash = "#/resum"; });
